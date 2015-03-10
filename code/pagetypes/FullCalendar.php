@@ -48,14 +48,22 @@ class FullCalendar_Controller extends Page_Controller
         Requirements::block(THIRDPARTY_DIR . '/jquery/jquery.js');
         Requirements::block(THIRDPARTY_DIR . '/jquery-ui/jquery-ui.js');
 
-        Requirements::css("calendar/css/lib/fullcalendar.css");
-        Requirements::css("calendar/css/style.css");
+        // Standard stylesheets
+        Requirements::combine_files('silverstripe-calendar.css', array(
+            "calendar/css/lib/fullcalendar.css",
+            "calendar/css/style.css"
+        ));
 
-        Requirements::javascript("calendar/javascript/lib/jquery.min.js");
-        Requirements::javascript("calendar/javascript/lib/jquery-ui.custom.min.js");
+        // Print stylesheet
+        Requirements::css('silverstripe-calendar-print.css', 'calendar/css/lib/fullcalendar.print.css', 'print');
+
+        //Moment breaks silverstripes minimisation process so is loaded normally.
         Requirements::javascript("calendar/javascript/lib/moment.min.js");
-        Requirements::javascript("calendar/javascript/lib/fullcalendar.min.js");
-        Requirements::javascript("calendar/javascript/functions.js");
+        Requirements::combine_files('silverstripe-calendar.js', array(
+            "calendar/javascript/lib/jquery.min.js",
+            "calendar/javascript/lib/fullcalendar.min.js",
+            "calendar/javascript/functions.js",
+        ));
     }
 
     /**
