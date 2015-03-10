@@ -15,13 +15,22 @@ jQuery(function ($) {
             type: "GET",
             cache: true,
             success: function (json) {
-                $('#calendar').fullCalendar({
-                    events: json,
-                    firstDay: 1,
-                    columnFormat: 'dddd'
-                })
+                calendarSettings(json);
             }
         });
+    }
+
+    /**
+     * Settings for the calendar, see http://fullcalendar.io/docs/ for further options
+     *
+     * @param json
+     */
+    function calendarSettings(json) {
+        $('#calendar').fullCalendar({
+            events: json,
+            firstDay: 1,
+            columnFormat: 'dddd'
+        })
     }
 
     /**
