@@ -48,22 +48,19 @@ class FullCalendar_Controller extends Page_Controller
         Requirements::block(THIRDPARTY_DIR . '/jquery/jquery.js');
         Requirements::block(THIRDPARTY_DIR . '/jquery-ui/jquery-ui.js');
 
-        // Standard stylesheets
         Requirements::combine_files('silverstripe-calendar.css', array(
             "calendar/css/lib/fullcalendar.css",
             "calendar/css/style.css"
         ));
 
-        // Print stylesheet
-        Requirements::css('silverstripe-calendar-print.css', 'calendar/css/lib/fullcalendar.print.css', 'print');
-
-        //Moment breaks silverstripes minimisation process so is loaded normally.
         Requirements::javascript("calendar/javascript/lib/moment.min.js");
         Requirements::combine_files('silverstripe-calendar.js', array(
             "calendar/javascript/lib/jquery.min.js",
             "calendar/javascript/lib/fullcalendar.min.js",
             "calendar/javascript/functions.js",
         ));
+
+        Requirements::set_combined_files_folder(ASSETS_DIR . '/_combinedfiles/calendar-module');
     }
 
     /**
@@ -89,10 +86,10 @@ class FullCalendar_Controller extends Page_Controller
     }
 
     /**
-     * Builds a cache of events if one doesn't exist, store the cache for 12 hours. The cache is cleared/reset
-     * when a new event is published.
+     * Builds a cache of events if one doesn't exist, store the cache for 12 hours . The cache is cleared / reset
+    * when a new event is published .
      *
-     * Only return events that are set to IncludeOnCalendar and the EndDate is greater than today (Don't show
+     * Only return events that are set to IncludeOnCalendar and the EndDate is greater than today(Don't show
      * legacy events)
      *
      * @return json load of events to display
