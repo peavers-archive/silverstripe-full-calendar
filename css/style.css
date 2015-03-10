@@ -1,0 +1,38 @@
+/* Calendar overwrites
+ ====================*/
+.fc button {
+    height: auto;
+}
+
+.fc-day-grid-event {
+    margin: 0;
+    padding: 10px;
+}
+
+.fc-event {
+    border-radius: 0;
+}
+
+
+
+/* Loading animation
+ ====================*/
+#calendar {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.8s linear;
+}
+
+.document-overlay {
+    width: inherit;
+    height: inherit;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s linear;
+}
+
+.document-overlay img {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+}
