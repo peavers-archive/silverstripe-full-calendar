@@ -41,50 +41,49 @@
     display: none;
 }
 
-#fancy-title {
+.event-header {
     font-size: 24px;
-    padding: 100px 50px 20px 50px;
-    background-color: #3a87ad;
+    padding: 80px 50px 20px 50px;
+    background-color: #658fcd;
     color: #ffffff;
 }
 
-#fancy-start-date {
-    padding: 10px 20px;
+.event-dates {
     font-size: 18px;
-    display: block;
+    padding: 10px 50px;
+    color: #848484;
 }
 
-#fancy-start-date:before {
+.event-dates:before {
     font-family: "FontAwesome";
     content: "\f017";
     padding-right: 15px;
     color: #878787;
+    position: absolute;
+    left: 18px;
 }
 
-#fancy-end-date {
-    padding: 10px 20px;
-    font-size: 18px;
-    display: block;
+.event-content {
+    font-size: 14px;
+    padding: 10px 50px;
+    color: #848484;
 }
 
-#fancy-end-date:before {
-    font-family: "FontAwesome";
-    content: "\f017";
-    padding-right: 15px;
-    color: #878787;
-}
-
-#fancy-body {
-    padding: 10px 20px;
-    font-size: 16px;
-    display: block;
-}
-
-#fancy-body:before {
+.event-content:before {
     font-family: "FontAwesome";
     content: "\f0f6";
     padding-right: 15px;
     color: #878787;
+    position: absolute;
+    font-size: 18px;
+    left: 18px;
+}
+
+.event-button {
+    font-size: 14px;
+    padding: 10px 50px;
+    color: #848484;
+    float: right;
 }
 
 /* Fancybox overwrites
@@ -104,11 +103,18 @@
 .fancybox-close {
     position: absolute;
     top: 5px;
+    right: 8px;
     font-size: 12px;
     cursor: pointer;
     z-index: 8040;
     color: #ffffff;
     display: inline-block;
+    width: auto;
+    height: auto;
+}
+
+.fancybox-skin {
+    border-radius: 0;
 }
 
 .fancybox-close:hover {

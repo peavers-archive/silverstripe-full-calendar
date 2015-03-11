@@ -23,6 +23,12 @@ class FullCalendarEvent extends Page
         'TextColor'         => 'Varchar(255)',
     );
 
+    private static $defaults = array(
+        'IncludeOnCalendar' => true,
+        'TextColor'         => '#ffffff', //white
+        'BackgroundColor'   => '#658fcd' //blue
+    );
+
     /**
      * Setup the basic CMS user fields
      *
@@ -34,14 +40,13 @@ class FullCalendarEvent extends Page
 
         $fields->addFieldsToTab("Root.Main", array(
 
-            DropdownField::create('IncludeOnCalendar', 'Include on calendar')
-                ->setSource(array(true => "Yes", false => "No"))
-                ->setEmptyString('(Select one)'),
+            DropdownField::create('IncludeOnCalendar', 'Include on calendar')->setSource(array(
+                true  => "Yes",
+                false => "No"
+            )),
 
-            FieldGroup::create(
-                DateField::create("StartDate", "Start date"),
-                DateField::create("EndDate", "End date")
-            )->setTitle("Event Time"),
+            DateField::create("StartDate", "Start date"),
+            DateField::create("EndDate", "End date"),
 
             DropdownField::create("TextColor", "Text colour")->setSource(array(
                 "#ffffff" => "white",
@@ -55,8 +60,6 @@ class FullCalendarEvent extends Page
                 "#658fcd" => "blue",
                 "#c3c6a8" => "tan",
             )),
-
-            HtmlEditorField::create("Content", "Page content")
         ));
 
         return $fields;

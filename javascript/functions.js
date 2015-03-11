@@ -33,11 +33,11 @@ jQuery(function ($) {
             events: json,
             columnFormat: 'dddd',
             eventClick: function (event) {
-                $('#fancy-title').html(event.title).css('background-color', event.color);
+                $('.event-header').html(event.title).css('background-color', event.color);
                 $('#fancy-start-date').html(event.startDate);
                 $('#fancy-end-date').html(event.endDate);
-                $('#fancy-body').html(event.content);
-                $('#event-url').attr('href', event.eventUrl);
+                $('.event-content').html(event.content);
+                $('.event-button').attr('href', event.eventUrl);
                 fancyboxSettings();
             }
         })
@@ -50,7 +50,7 @@ jQuery(function ($) {
         $.fancybox({
             padding: '',
             width: 600,
-            height: 400,
+            height: 325,
             scrolling: 'no',
             fitToView: true,
             autoCenter: true,
