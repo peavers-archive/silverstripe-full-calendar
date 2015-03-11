@@ -25,12 +25,12 @@ class FullCalendar extends Page
         $fields = parent::getCMSFields();
 
         $fields->addFieldsToTab('Root.FullCalendarSettings', array(
-            HeaderField::create("", "Developer"),
+            HeaderField::create("", "General settings"),
             CheckboxField::create("CacheSetting", 'Enable caching')
                 ->setDescription("Should only disable for debugging/development purposes"),
-            HeaderField::create("", "User"),
+            HeaderField::create("", "Display settings"),
             CheckboxField::create("LegacyEvents", 'Enable past events')
-                ->setDescription("Automatically remove old events from the calendar view"),
+                ->setDescription("Show events that end date has passed today's date"),
         ));
 
         return $fields;
