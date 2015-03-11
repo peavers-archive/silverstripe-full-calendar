@@ -30,7 +30,7 @@ class FullCalendar extends Page
                 ->setDescription("Should only disable for debugging/development purposes"),
             HeaderField::create("", "Display settings"),
             CheckboxField::create("LegacyEvents", 'Enable past events')
-                ->setDescription("Show events that end date has passed today's date"),
+                ->setDescription("Show events where the end date has passed today's date"),
         ));
 
         return $fields;
