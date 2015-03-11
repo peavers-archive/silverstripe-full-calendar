@@ -13,8 +13,6 @@
     border-radius: 0;
 }
 
-
-
 /* Loading animation
  ====================*/
 #calendar {
@@ -35,4 +33,89 @@
     display: block;
     position: relative;
     margin: 0 auto;
+}
+
+/* Fancybox style
+ ====================*/
+#fancy-box {
+    display: none;
+}
+
+#fancy-title {
+    font-size: 24px;
+    padding: 100px 50px 20px 50px;
+    background-color: #3a87ad;
+    color: #ffffff;
+}
+
+#fancy-start-date {
+    padding: 10px 20px;
+    font-size: 18px;
+    display: block;
+}
+
+#fancy-start-date:before {
+    font-family: "FontAwesome";
+    content: "\f017";
+    padding-right: 15px;
+    color: #878787;
+}
+
+#fancy-end-date {
+    padding: 10px 20px;
+    font-size: 18px;
+    display: block;
+}
+
+#fancy-end-date:before {
+    font-family: "FontAwesome";
+    content: "\f017";
+    padding-right: 15px;
+    color: #878787;
+}
+
+#fancy-body {
+    padding: 10px 20px;
+    font-size: 16px;
+    display: block;
+}
+
+#fancy-body:before {
+    font-family: "FontAwesome";
+    content: "\f0f6";
+    padding-right: 15px;
+    color: #878787;
+}
+
+/* Fancybox overwrites
+ ====================*/
+#fancybox-loading div {
+    background: url('../images/fancybox/fancybox_loading.gif') center center no-repeat;
+}
+
+.fancybox-nav {
+    background: transparent url('../images/fancybox/fancybox_loading.gif'); /* helps IE */
+}
+
+.fancybox-overlay {
+    background: url('../images/fancybox/fancybox_overlay.png');
+}
+
+.fancybox-close {
+    position: absolute;
+    top: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    z-index: 8040;
+    color: #ffffff;
+    display: inline-block;
+}
+
+.fancybox-close:hover {
+    text-decoration: none;
+}
+
+.fancybox-close:before {
+    font-family: "FontAwesome";
+    content: "\f111";
 }

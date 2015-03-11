@@ -26,11 +26,46 @@ jQuery(function ($) {
      * @param json
      */
     function calendarSettings(json) {
+
+        console.log(json);
+
         $('#calendar').fullCalendar({
             events: json,
-            firstDay: 1,
-            columnFormat: 'dddd'
+            columnFormat: 'dddd',
+            eventClick: function (event) {
+                $('#fancy-title').html(event.title);
+                $('#fancy-title').css('background-color', event.color);
+                $('#fancy-start-date').html(event.startDate);
+                $('#fancy-end-date').html(event.endDate);
+
+                $('#fancy-body').html(event.content);
+                $('#event-url').attr('href', event.eventUrl);
+                openFancybox();
+            }
         })
+    }
+
+    function openFancybox() {
+        $.fancybox({
+            padding: '',
+            width: 600,
+            height: 400,
+            scrolling: 'no',
+            fitToView: true,
+            autoCenter: true,
+            autoSize: false,
+            closeBtn: true,
+            openEffect: 'elastic',
+            closeEffect: 'elastic',
+            openSpeed: 350,
+            closeSpeed: 250,
+            'href': '#fancy-box',
+            helpers: {
+                overlay: {
+                    locked: false
+                }
+            }
+        });
     }
 
     /**
