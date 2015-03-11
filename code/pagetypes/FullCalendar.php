@@ -39,7 +39,10 @@ class FullCalendar_Controller extends Page_Controller
     );
 
     /**
-     * Blocks default silverstripe jquery, and loads all required JS and CSS
+     * Blocks default silverstripe jquery, and loads all required JS and CSS.
+     *
+     * Note: moment.min.js breaks javascript minimisation so is excluded from the
+     * combine_files call.
      */
     public function init()
     {
