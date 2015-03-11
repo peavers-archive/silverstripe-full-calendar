@@ -87,7 +87,7 @@ class FullCalendar_Controller extends Page_Controller
 
     /**
      * Builds a cache of events if one doesn't exist, store the cache for 12 hours . The cache is cleared / reset
-    * when a new event is published .
+     * when a new event is published .
      *
      * Only return events that are set to IncludeOnCalendar and the EndDate is greater than today(Don't show
      * legacy events)
