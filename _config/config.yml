@@ -1,6 +1,0 @@
----
-name: full-calendar
----
-FullCalendar:
-  extensions:
-    - FullCalendarSettings
