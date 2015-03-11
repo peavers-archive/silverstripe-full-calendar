@@ -15,9 +15,23 @@ class FullCalendar extends Page
         "FullCalendarEvent"
     );
 
+    private static $db = array(
+        'CacheSetting' => 'Boolean',
+        'LegacyEvents' => 'Boolean'
+    );
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
+
+        $fields->addFieldsToTab('Root.FullCalendarSettings', array(
+            HeaderField::create("", "Developer"),
+            CheckboxField::create("CacheSetting", 'Enable caching')
+                ->setDescription("Should only disable for debugging/development purposes"),
+            HeaderField::create("", "User"),
+            CheckboxField::create("LegacyEvents", 'Enable past events')
+                ->setDescription("Automatically remove old events from the calendar view"),
+        ));
 
         return $fields;
     }
@@ -88,7 +102,7 @@ class FullCalendar_Controller extends Page_Controller
             $this->setStatusCode(400, $message);
         }
 
-        if ($this->Cache == 0) {
+        if ($this->CacheSetting) {
             return $this->cachedData();
         } else {
             return $this->getData();
@@ -119,8 +133,20 @@ class FullCalendar_Controller extends Page_Controller
 
     public function getData()
     {
+
+        if ($this->LegacyEvents) {
+            $filter = array(
+                'IncludeOnCalendar' => true,
+            );
+        } else {
+            $filter = array(
+                'IncludeOnCalendar' => true,
+                'EndDate:GreaterThan' => date("Y-m-d")
+            );
+        }
+
         $result = array();
-        foreach (FullCalendarEvent::get()->filter(array('IncludeOnCalendar' => true, 'EndDate:GreaterThan' => date("Y-m-d"))) as $event) {
+        foreach (FullCalendarEvent::get()->filter($filter) as $event) {
 
             $result[] = array(
                 "title" => $event->Title,

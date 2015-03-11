@@ -43,12 +43,18 @@ class FullCalendarEvent extends Page
                 DateField::create("EndDate", "End date")
             )->setTitle("Event Time"),
 
-            TextField::create("TextColor", "Text colour")
-                ->setDescription("You can use any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red."),
+            DropdownField::create("TextColor", "Text colour")->setSource(array(
+                "#ffffff" => "white",
+                "#000000" => "black",
+            )),
 
-            TextField::create("BackgroundColor", "Background colour")
-                ->setDescription("You can use any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red."),
-
+            DropdownField::create("BackgroundColor", "Background colour")->setSource(array(
+                "#e6b31b" => "yellow",
+                "#a6c03c" => "green",
+                "#c35441" => "red",
+                "#658fcd" => "blue",
+                "#c3c6a8" => "tan",
+            )),
 
             HtmlEditorField::create("Content", "Page content")
         ));

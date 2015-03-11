@@ -33,19 +33,20 @@ jQuery(function ($) {
             events: json,
             columnFormat: 'dddd',
             eventClick: function (event) {
-                $('#fancy-title').html(event.title);
-                $('#fancy-title').css('background-color', event.color);
+                $('#fancy-title').html(event.title).css('background-color', event.color);
                 $('#fancy-start-date').html(event.startDate);
                 $('#fancy-end-date').html(event.endDate);
-
                 $('#fancy-body').html(event.content);
                 $('#event-url').attr('href', event.eventUrl);
-                openFancybox();
+                fancyboxSettings();
             }
         })
     }
 
-    function openFancybox() {
+    /**
+     * Fancybox
+     */
+    function fancyboxSettings() {
         $.fancybox({
             padding: '',
             width: 600,
