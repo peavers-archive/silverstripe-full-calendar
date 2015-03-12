@@ -1,0 +1,137 @@
+/* Loading animation
+ ====================*/
+#calendar {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.8s linear;
+}
+
+.document-overlay {
+    visibility: hidden;
+    width: inherit;
+    height: inherit;
+    opacity: 0;
+    transition: opacity 0.5s linear;
+}
+
+.document-overlay img {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Fancybox style
+ ====================*/
+#fancy-box {
+    display: none;
+    font-size: 14px;
+}
+
+.event-header {
+    padding: 60px 50px 20px 50px;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 24px;
+}
+
+.event-dates {
+    padding: 10px 50px;
+    color: #848484;
+}
+
+.event-dates:before {
+    position: absolute;
+    left: 18px;
+    padding-right: 15px;
+    color: #878787;
+    content: "\f017";
+    font-family: "FontAwesome";
+}
+
+.event-content {
+    padding: 10px 50px;
+    color: #848484;
+}
+
+.event-content:before {
+    position: absolute;
+    left: 18px;
+    padding-right: 15px;
+    color: #878787;
+    content: "\f0f6";
+    font-family: "FontAwesome";
+}
+
+.event-button {
+    padding: 15px;
+    color: #848484;
+    position: absolute;
+    bottom: 0;
+    right: 6px;
+}
+
+/* Fancybox overwrites
+ ====================*/
+#fancybox-loading div {
+    background: url('../images/fancybox/fancybox_loading.gif') center center no-repeat;
+}
+
+.fancybox-nav {
+    background: transparent url('../images/fancybox/fancybox_loading.gif'); /* helps IE */
+}
+
+.fancybox-overlay {
+    background: url('../images/fancybox/fancybox_overlay.png');
+}
+
+.fancybox-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    z-index: 8040;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.fancybox-skin {
+    border-radius: 0;
+    background: #ffffff;
+}
+
+.fancybox-opened .fancybox-skin {
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.fancybox-close:hover {
+    text-decoration: none;
+}
+
+.fancybox-close:before {
+    content: "\f111";
+    font-family: "FontAwesome";
+}
+
+/* Calendar overwrites
+ ====================*/
+.fc button {
+    height: auto;
+}
+
+.fc-day-grid-event {
+    margin: 0;
+    padding: 10px;
+}
+
+.fc-event {
+    border-radius: 0;
+    font-size: 1.3em;
+}
+
+.fc-event-container:hover {
+    cursor: pointer;
+}
