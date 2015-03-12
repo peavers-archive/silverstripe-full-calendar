@@ -53,16 +53,17 @@ class FullCalendarEvent extends Page
             DateField::create("EndDate", "End date"),
 
             DropdownField::create("TextColor", "Text colour")->setSource(array(
-                "#ffffff" => "white",
-                "#000000" => "black",
+                "#ffffff" => "White",
+                "#000000" => "Black",
             )),
 
             DropdownField::create("BackgroundColor", "Background colour")->setSource(array(
-                "#e6b31b" => "yellow",
-                "#a6c03c" => "green",
-                "#c35441" => "red",
-                "#658fcd" => "blue",
-                "#c3c6a8" => "tan",
+                "#e6b31b" => "Yellow",
+                "#a6c03c" => "Green",
+                "#c35441" => "Red",
+                "#658fcd" => "Blue",
+                "#c3c6a8" => "Tan",
+                "#000000" => "Black"
             )),
         ));
 
