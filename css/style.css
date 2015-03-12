@@ -24,6 +24,7 @@
  ====================*/
 #fancy-box {
     display: none;
+    font-size: 14px;
 }
 
 .event-header {
@@ -36,7 +37,6 @@
 .event-dates {
     padding: 10px 50px;
     color: #848484;
-    font-size: 18px;
 }
 
 .event-dates:before {
@@ -51,7 +51,6 @@
 .event-content {
     padding: 10px 50px;
     color: #848484;
-    font-size: 14px;
 }
 
 .event-content:before {
@@ -60,14 +59,12 @@
     padding-right: 15px;
     color: #878787;
     content: "\f0f6";
-    font-size: 18px;
     font-family: "FontAwesome";
 }
 
 .event-button {
     padding: 15px;
     color: #848484;
-    font-size: 14px;
     position: absolute;
     bottom: 0;
     right: 0;
