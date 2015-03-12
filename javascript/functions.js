@@ -26,9 +26,6 @@ jQuery(function ($) {
      * @param json
      */
     function calendarSettings(json) {
-
-        console.log(json);
-
         $('#calendar').fullCalendar({
             events: json,
             columnFormat: 'dddd',
@@ -37,7 +34,7 @@ jQuery(function ($) {
                 $('#fancy-start-date').html(event.startDate);
                 $('#fancy-end-date').html(event.endDate);
                 $('.event-content').html(event.content);
-                $('.event-button').find('a').attr('href', event.eventUrl);
+                $('.event-button').find('a').attr('href', event.eventUrl).css('color', event.color);
                 fancyboxSettings();
             }
         })
@@ -56,10 +53,8 @@ jQuery(function ($) {
             autoCenter: true,
             autoSize: false,
             closeBtn: true,
-            openEffect: 'elastic',
-            closeEffect: 'elastic',
-            openSpeed: 350,
-            closeSpeed: 250,
+            openEffect: 'fade',
+            closeEffect: 'fade',
             'href': '#fancy-box',
             helpers: {
                 overlay: {
