@@ -66,9 +66,9 @@ class FullCalendar_Controller extends Page_Controller
         Requirements::block(THIRDPARTY_DIR . '/jquery-ui/jquery-ui.js');
 
         Requirements::combine_files('silverstripe-calendar.css', array(
+            "calendar/css/lib/font-awesome.css",
             "calendar/css/lib/fullcalendar.css",
             "calendar/css/lib/jquery.fancybox.css",
-            "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css",
             "calendar/css/style.css"
         ));
 
@@ -94,8 +94,7 @@ class FullCalendar_Controller extends Page_Controller
     {
         $this->getResponse()->addHeader(
             "Content-Type",
-            "application/json; charset=utf-8",
-            "Cache-Control: public, max-age=290304000"
+            "application/json; charset=utf-8"
         );
 
         if ($status != "success") {
@@ -103,7 +102,7 @@ class FullCalendar_Controller extends Page_Controller
         }
 
         if ($this->CacheSetting) {
-            return $this->cachedData();
+            return $this->getCachedData();
         } else {
             return $this->getData();
         }
@@ -113,12 +112,9 @@ class FullCalendar_Controller extends Page_Controller
      * Builds a cache of events if one doesn't exist, store the cache for 12 hours . The cache is cleared / reset
      * when a new event is published .
      *
-     * Only return events that are set to IncludeOnCalendar and the EndDate is greater than today(Don't show
-     * legacy events)
-     *
      * @return json load of events to display
      */
-    public function cachedData()
+    public function getCachedData()
     {
         $cache = SS_Cache::factory('calendar');
         SS_Cache::set_cache_lifetime('calendar', 60 * 60 * 12);
@@ -131,9 +127,13 @@ class FullCalendar_Controller extends Page_Controller
         return $result;
     }
 
+    /**
+     * Decides what filter to use based on user settings, returns all events that match
+     *
+     * @return string
+     */
     public function getData()
     {
-
         if ($this->LegacyEvents) {
             $filter = array(
                 'IncludeOnCalendar' => true,
@@ -155,8 +155,8 @@ class FullCalendar_Controller extends Page_Controller
                 "color"     => $event->BackgroundColor,
                 "textColor" => $event->TextColor,
 
-                "startDate" => date('l jS F Y', strtotime($event->StartDate)),
-                "endDate"   => date('l jS F Y', strtotime($event->EndDate)),
+                "startDate" => $this->getDateFormat($event, 'StartDate'),
+                "endDate" => $this->getDateFormat($event, 'EndDate'),
 
                 "eventUrl"  => $event->URLSegment,
                 "content"   => $this->getShortDescription($event),
@@ -180,6 +180,18 @@ class FullCalendar_Controller extends Page_Controller
         } else {
             return $event;
         }
+    }
+
+    /**
+     * Returns a formatted date
+     *
+     * @param $event
+     * @param $date
+     * @return bool|string
+     */
+    public function getDateFormat($event, $date)
+    {
+        return date('l jS F Y', strtotime($event->$date));
     }
 
 }
