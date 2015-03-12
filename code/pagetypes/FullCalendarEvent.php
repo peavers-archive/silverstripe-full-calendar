@@ -21,6 +21,7 @@ class FullCalendarEvent extends Page
         'Url'               => 'Varchar(255)',
         'BackgroundColor'   => 'Varchar(255)',
         'TextColor'         => 'Varchar(255)',
+        'ShortDescription'  => 'Varchar(255)'
     );
 
     private static $defaults = array(
@@ -39,6 +40,9 @@ class FullCalendarEvent extends Page
         $fields = parent::getCMSFields();
 
         $fields->addFieldsToTab("Root.Main", array(
+
+            TextareaField::create('ShortDescription', 'A short description')
+                ->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event"),
 
             DropdownField::create('IncludeOnCalendar', 'Include on calendar')->setSource(array(
                 true  => "Yes",

@@ -1,18 +1,3 @@
-/* Calendar overwrites
- ====================*/
-.fc button {
-    height: auto;
-}
-
-.fc-day-grid-event {
-    margin: 0;
-    padding: 10px;
-}
-
-.fc-event {
-    border-radius: 0;
-}
-
 /* Loading animation
  ====================*/
 #calendar {
@@ -22,16 +7,16 @@
 }
 
 .document-overlay {
+    visibility: hidden;
     width: inherit;
     height: inherit;
     opacity: 0;
-    visibility: hidden;
     transition: opacity 0.5s linear;
 }
 
 .document-overlay img {
-    display: block;
     position: relative;
+    display: block;
     margin: 0 auto;
 }
 
@@ -42,48 +27,50 @@
 }
 
 .event-header {
-    font-size: 24px;
     padding: 80px 50px 20px 50px;
     background-color: #658fcd;
     color: #ffffff;
+    font-size: 24px;
 }
 
 .event-dates {
-    font-size: 18px;
     padding: 10px 50px;
     color: #848484;
+    font-size: 18px;
 }
 
 .event-dates:before {
-    font-family: "FontAwesome";
-    content: "\f017";
-    padding-right: 15px;
-    color: #878787;
     position: absolute;
     left: 18px;
+    padding-right: 15px;
+    color: #878787;
+    content: "\f017";
+    font-family: "FontAwesome";
 }
 
 .event-content {
-    font-size: 14px;
     padding: 10px 50px;
     color: #848484;
+    font-size: 14px;
 }
 
 .event-content:before {
-    font-family: "FontAwesome";
-    content: "\f0f6";
+    position: absolute;
+    left: 18px;
     padding-right: 15px;
     color: #878787;
-    position: absolute;
+    content: "\f0f6";
     font-size: 18px;
-    left: 18px;
+    font-family: "FontAwesome";
 }
 
 .event-button {
-    font-size: 14px;
-    padding: 10px 50px;
+    padding: 15px;
     color: #848484;
-    float: right;
+    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 /* Fancybox overwrites
@@ -104,17 +91,24 @@
     position: absolute;
     top: 5px;
     right: 8px;
-    font-size: 12px;
-    cursor: pointer;
     z-index: 8040;
-    color: #ffffff;
     display: inline-block;
     width: auto;
     height: auto;
+    color: #ffffff;
+    font-size: 12px;
+    cursor: pointer;
 }
 
 .fancybox-skin {
     border-radius: 0;
+    background: #ffffff;
+}
+
+.fancybox-opened .fancybox-skin {
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 .fancybox-close:hover {
@@ -122,6 +116,26 @@
 }
 
 .fancybox-close:before {
-    font-family: "FontAwesome";
     content: "\f111";
+    font-family: "FontAwesome";
+}
+
+/* Calendar overwrites
+ ====================*/
+.fc button {
+    height: auto;
+}
+
+.fc-day-grid-event {
+    margin: 0;
+    padding: 10px;
+}
+
+.fc-event {
+    border-radius: 0;
+    font-size: 1.3em;
+}
+
+.fc-event-container:hover {
+    cursor: pointer;
 }
