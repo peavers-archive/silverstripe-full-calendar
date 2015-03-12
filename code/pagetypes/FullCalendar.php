@@ -140,7 +140,7 @@ class FullCalendar_Controller extends Page_Controller
             );
         } else {
             $filter = array(
-                'IncludeOnCalendar' => true,
+                'IncludeOnCalendar'   => true,
                 'EndDate:GreaterThan' => date("Y-m-d")
             );
         }
@@ -149,20 +149,37 @@ class FullCalendar_Controller extends Page_Controller
         foreach (FullCalendarEvent::get()->filter($filter) as $event) {
 
             $result[] = array(
-                "title" => $event->Title,
-                "start" => $event->StartDate,
-                "end" => $event->EndDate,
-                "color" => $event->BackgroundColor,
+                "title"     => $event->Title,
+                "start"     => $event->StartDate,
+                "end"       => $event->EndDate,
+                "color"     => $event->BackgroundColor,
                 "textColor" => $event->TextColor,
 
                 "startDate" => date('l jS F Y', strtotime($event->StartDate)),
-                "endDate" => date('l jS F Y', strtotime($event->EndDate)),
+                "endDate"   => date('l jS F Y', strtotime($event->EndDate)),
 
-                "eventUrl" => $event->URLSegment,
-                "content" => strip_tags($event->Content),
+                "eventUrl"  => $event->URLSegment,
+                "content"   => $this->getShortDescription($event),
             );
         }
         return json_encode($result);
+    }
+
+    /**
+     * Returns the description, or a placeholder message if no description
+     *
+     * @param $event
+     * @return string either a description or a message saying no description
+     */
+    public function getShortDescription($event)
+    {
+        $event = strip_tags($event->ShortDescription);
+
+        if ($event == "") {
+            return "No description is set";
+        } else {
+            return $event;
+        }
     }
 
 }

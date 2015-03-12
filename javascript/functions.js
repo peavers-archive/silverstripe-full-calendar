@@ -37,7 +37,7 @@ jQuery(function ($) {
                 $('#fancy-start-date').html(event.startDate);
                 $('#fancy-end-date').html(event.endDate);
                 $('.event-content').html(event.content);
-                $('.event-button').attr('href', event.eventUrl);
+                $('.event-button').find('a').attr('href', event.eventUrl);
                 fancyboxSettings();
             }
         })
