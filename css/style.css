@@ -28,8 +28,8 @@
 }
 
 .event-header {
-    padding: 80px 50px 20px 50px;
-    background-color: #658fcd;
+    padding: 60px 50px 20px 50px;
+    background-color: #000000;
     color: #ffffff;
     font-size: 24px;
 }
@@ -67,7 +67,7 @@
     color: #848484;
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: 6px;
 }
 
 /* Fancybox overwrites
@@ -86,14 +86,13 @@
 
 .fancybox-close {
     position: absolute;
-    top: 5px;
-    right: 8px;
+    top: 18px;
+    right: 22px;
     z-index: 8040;
     display: inline-block;
     width: auto;
     height: auto;
     color: #ffffff;
-    font-size: 12px;
     cursor: pointer;
 }
 

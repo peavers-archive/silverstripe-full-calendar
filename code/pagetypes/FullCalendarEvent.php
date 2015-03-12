@@ -42,7 +42,7 @@ class FullCalendarEvent extends Page
         $fields->addFieldsToTab("Root.Main", array(
 
             TextareaField::create('ShortDescription', 'A short description')
-                ->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event"),
+                ->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event. </br><strong>Limit 255 characters</strong>"),
 
             DropdownField::create('IncludeOnCalendar', 'Include on calendar')->setSource(array(
                 true  => "Yes",
