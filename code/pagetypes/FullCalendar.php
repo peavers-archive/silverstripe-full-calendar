@@ -15,9 +15,23 @@ class FullCalendar extends Page
         "FullCalendarEvent"
     );
 
+    private static $db = array(
+        'CacheSetting' => 'Boolean',
+        'LegacyEvents' => 'Boolean'
+    );
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
+
+        $fields->addFieldsToTab('Root.FullCalendarSettings', array(
+            HeaderField::create("", "General settings"),
+            CheckboxField::create("CacheSetting", 'Enable caching')
+                ->setDescription("Should only disable for debugging/development purposes"),
+            HeaderField::create("", "Display settings"),
+            CheckboxField::create("LegacyEvents", 'Enable past events')
+                ->setDescription("Show events where the end date has passed today's date"),
+        ));
 
         return $fields;
     }
@@ -53,6 +67,8 @@ class FullCalendar_Controller extends Page_Controller
 
         Requirements::combine_files('silverstripe-calendar.css', array(
             "calendar/css/lib/fullcalendar.css",
+            "calendar/css/lib/jquery.fancybox.css",
+            "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css",
             "calendar/css/style.css"
         ));
 
@@ -60,6 +76,7 @@ class FullCalendar_Controller extends Page_Controller
         Requirements::combine_files('silverstripe-calendar.js', array(
             "calendar/javascript/lib/jquery.min.js",
             "calendar/javascript/lib/fullcalendar.min.js",
+            "calendar/javascript/lib/jquery.fancybox.js",
             "calendar/javascript/functions.js",
         ));
 
@@ -85,7 +102,11 @@ class FullCalendar_Controller extends Page_Controller
             $this->setStatusCode(400, $message);
         }
 
-        return $this->cachedData();
+        if ($this->CacheSetting) {
+            return $this->cachedData();
+        } else {
+            return $this->getData();
+        }
     }
 
     /**
@@ -103,22 +124,45 @@ class FullCalendar_Controller extends Page_Controller
         SS_Cache::set_cache_lifetime('calendar', 60 * 60 * 12);
 
         if (!($result = unserialize($cache->load('events')))) {
-            $result = array();
-
-            foreach (FullCalendarEvent::get()->filter(array('IncludeOnCalendar' => true, 'EndDate:GreaterThan' => date("Y-m-d"))) as $event) {
-                $result[] = array(
-                    "title"     => $event->Title,
-                    "start"     => $event->StartDate,
-                    "end"       => $event->EndDate,
-                    "url"       => $event->URLSegment,
-                    "color"     => $event->BackgroundColor,
-                    "textColor" => $event->TextColor,
-                    "content"   => $event->Content,
-                );
-            }
+            $result = $this->getData();
             $cache->save(serialize($result), 'events');
         }
 
+        return $result;
+    }
+
+    public function getData()
+    {
+
+        if ($this->LegacyEvents) {
+            $filter = array(
+                'IncludeOnCalendar' => true,
+            );
+        } else {
+            $filter = array(
+                'IncludeOnCalendar' => true,
+                'EndDate:GreaterThan' => date("Y-m-d")
+            );
+        }
+
+        $result = array();
+        foreach (FullCalendarEvent::get()->filter($filter) as $event) {
+
+            $result[] = array(
+                "title" => $event->Title,
+                "start" => $event->StartDate,
+                "end" => $event->EndDate,
+                "color" => $event->BackgroundColor,
+                "textColor" => $event->TextColor,
+
+                "startDate" => date('l jS F Y', strtotime($event->StartDate)),
+                "endDate" => date('l jS F Y', strtotime($event->EndDate)),
+
+                "eventUrl" => $event->URLSegment,
+                "content" => strip_tags($event->Content),
+            );
+        }
         return json_encode($result);
     }
+
 }
