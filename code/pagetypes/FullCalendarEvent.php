@@ -23,6 +23,12 @@ class FullCalendarEvent extends Page
         'TextColor'         => 'Varchar(255)',
     );
 
+    private static $defaults = array(
+        'IncludeOnCalendar' => true,
+        'TextColor'         => '#ffffff', //white
+        'BackgroundColor'   => '#658fcd' //blue
+    );
+
     /**
      * Setup the basic CMS user fields
      *
@@ -34,22 +40,26 @@ class FullCalendarEvent extends Page
 
         $fields->addFieldsToTab("Root.Main", array(
 
-            DropdownField::create('IncludeOnCalendar', 'Include on calendar')
-                ->setSource(array(true => "Yes", false => "No"))
-                ->setEmptyString('(Select one)'),
+            DropdownField::create('IncludeOnCalendar', 'Include on calendar')->setSource(array(
+                true  => "Yes",
+                false => "No"
+            )),
 
-            FieldGroup::create(
-                DateField::create("StartDate", "Start date"),
-                DateField::create("EndDate", "End date")
-            )->setTitle("Event Time"),
+            DateField::create("StartDate", "Start date"),
+            DateField::create("EndDate", "End date"),
 
-            TextField::create("BackgroundColor", "Text colour")
-                ->setDescription("You can use any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red."),
+            DropdownField::create("TextColor", "Text colour")->setSource(array(
+                "#ffffff" => "white",
+                "#000000" => "black",
+            )),
 
-            TextField::create("TextColor", "Background colour")
-                ->setDescription("You can use any of the CSS color formats such #f00, #ff0000, rgb(255,0,0), or red."),
-
-            HtmlEditorField::create("Content", "Page content")
+            DropdownField::create("BackgroundColor", "Background colour")->setSource(array(
+                "#e6b31b" => "yellow",
+                "#a6c03c" => "green",
+                "#c35441" => "red",
+                "#658fcd" => "blue",
+                "#c3c6a8" => "tan",
+            )),
         ));
 
         return $fields;
