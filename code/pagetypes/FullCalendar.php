@@ -66,21 +66,21 @@ class FullCalendar_Controller extends Page_Controller
         Requirements::block(THIRDPARTY_DIR . '/jquery-ui/jquery-ui.js');
 
         Requirements::combine_files('silverstripe-calendar.css', array(
-            "calendar/css/lib/font-awesome.css",
-            "calendar/css/lib/fullcalendar.css",
-            "calendar/css/lib/jquery.fancybox.css",
-            "calendar/css/style.css"
+            "full-calendar/css/lib/font-awesome.css",
+            "full-calendar/css/lib/fullcalendar.css",
+            "full-calendar/css/lib/jquery.fancybox.css",
+            "full-calendar/css/style.css"
         ));
 
-        Requirements::javascript("calendar/javascript/lib/moment.min.js");
+        Requirements::javascript("full-calendar/javascript/lib/moment.min.js");
         Requirements::combine_files('silverstripe-calendar.js', array(
-            "calendar/javascript/lib/jquery.min.js",
-            "calendar/javascript/lib/fullcalendar.min.js",
-            "calendar/javascript/lib/jquery.fancybox.js",
-            "calendar/javascript/functions.js",
+            "full-calendar/javascript/lib/jquery.min.js",
+            "full-calendar/javascript/lib/fullcalendar.min.js",
+            "full-calendar/javascript/lib/jquery.fancybox.js",
+            "full-calendar/javascript/functions.js",
         ));
 
-        Requirements::set_combined_files_folder(ASSETS_DIR . '/_combinedfiles/calendar-module');
+//        Requirements::set_combined_files_folder(ASSETS_DIR . '/_combinedfiles/calendar-module');
     }
 
     /**
