@@ -73,15 +73,15 @@
 /* Fancybox overwrites
  ====================*/
 #fancybox-loading div {
-    background: url('../images/fancybox/fancybox_loading.gif') center center no-repeat;
+    background: url('../../../../full-calendar/images/fancybox/fancybox_loading.gif') center center no-repeat;
 }
 
 .fancybox-nav {
-    background: transparent url('../images/fancybox/fancybox_loading.gif'); /* helps IE */
+    background: transparent url('../../../../full-calendar/images/fancybox/fancybox_loading.gif'); /* helps IE */
 }
 
 .fancybox-overlay {
-    background: url('../images/fancybox/fancybox_overlay.png');
+    background: url('../../../../full-calendar/images/fancybox/fancybox_overlay.png');
 }
 
 .fancybox-close {
