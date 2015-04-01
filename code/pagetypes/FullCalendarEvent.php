@@ -39,18 +39,16 @@ class FullCalendarEvent extends Page
 
         $fields->addFieldsToTab("Root.Main", array(
 
-            TextareaField::create('ShortDescription', 'A short description')
-                ->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event. </br><strong>Limit 255 characters</strong>"),
+            DateField::create("StartDate", "Start date"),
+            DateField::create("EndDate", "End date"),
 
             DropdownField::create('IncludeOnCalendar', 'Include on calendar')->setSource(array(
                 true  => "Yes",
                 false => "No"
             )),
 
-            DateField::create("StartDate", "Start date"),
-            DateField::create("EndDate", "End date"),
-
             DropdownField::create("TextColor", "Text colour")
+                ->setDescription('Colors are created on under Full Calendar Settings')
                 ->setSource(EventColor::get()
                     ->filter(array('FullCalendarID' => $this->ParentID))
                     ->where("Type = 'Both' OR Type = 'Text'")
@@ -58,12 +56,17 @@ class FullCalendarEvent extends Page
                     ->map('HexCode', 'Title')),
 
             DropdownField::create("BackgroundColor", "Background colour")
+                ->setDescription('Colors are created on under Full Calendar Settings')
                 ->setSource(EventColor::get()
                     ->filter(array('FullCalendarID' => $this->ParentID))
                     ->where("Type = 'Both' OR Type = 'Background'")
                     ->sort(array("Title" => "ASC"))
                     ->map('HexCode', 'Title')),
-        ));
+
+            TextareaField::create('ShortDescription', 'A short description')
+                ->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event. <strong>Limit 255 characters</strong>")
+
+        ), "Content");
 
         return $fields;
     }
