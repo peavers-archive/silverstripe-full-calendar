@@ -11,7 +11,7 @@ jQuery(function ($) {
      */
     function loadCalendar() {
         $.ajax({
-            url: rootUrl + "/eventsAsJSON",
+            url: rootUrl + "eventsAsJSON",
             type: "GET",
             cache: true,
             success: function (json) {
@@ -26,9 +26,13 @@ jQuery(function ($) {
      * @param json
      */
     function calendarSettings(json) {
+
         $('#calendar').fullCalendar({
+
             events: json,
             columnFormat: 'dddd',
+            defaultView: json[0].view,
+
             eventClick: function (event) {
                 $('.event-header').html(event.title).css('background-color', event.color);
                 $('#fancy-start-date').html(event.startDate);
