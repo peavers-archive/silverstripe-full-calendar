@@ -5,14 +5,14 @@
  */
 class FullCalendar extends Page
 {
-    private static $singular_name = "Full Calendar";
+    private static $singular_name = 'Full Calendar';
 
-    private static $description = "Calendar page that displays events";
+    private static $description = 'Calendar page that displays events';
 
     private static $can_be_root = true;
 
     private static $allowed_children = array(
-        "FullCalendarEvent"
+        'FullCalendarEvent'
     );
 
     private static $defaults = array(
@@ -41,14 +41,14 @@ class FullCalendar extends Page
 
         $fields->addFieldsToTab('Root.FullCalendarSettings', array(
 
-            HeaderField::create("", "Functional settings"),
-            CheckboxField::create("CacheSetting", 'Enable caching')
-                ->setDescription("Should only disable for debugging/development purposes"),
-            CheckboxField::create("LegacyEvents", 'Enable past events')
-                ->setDescription("Show events where the end date has passed today's date"),
+            HeaderField::create('', 'Functional settings'),
+            CheckboxField::create('CacheSetting', 'Enable caching')
+                ->setDescription('Should only disable for debugging/development purposes'),
+            CheckboxField::create('LegacyEvents', 'Enable past events')
+                ->setDescription('Show events where the end date has passed today\'s date'),
 
-            HeaderField::create("", "Display settings"),
-            UploadField::create("LoadAnimation", "Loading animation"),
+            HeaderField::create('', 'Display settings'),
+            UploadField::create('LoadAnimation', 'Loading animation'),
             GridField::create('EventColor', 'Create color', $this->EventColor(), GridFieldConfig_RecordEditor::create()),
         ));
 
@@ -85,18 +85,18 @@ class FullCalendar_Controller extends Page_Controller
         Requirements::block(THIRDPARTY_DIR . '/jquery-ui/jquery-ui.js');
 
         Requirements::combine_files('silverstripe-calendar.css', array(
-            "full-calendar/css/lib/font-awesome.css",
-            "full-calendar/css/lib/fullcalendar.css",
-            "full-calendar/css/lib/jquery.fancybox.css",
-            "full-calendar/css/style.css"
+            'full-calendar/css/lib/font-awesome.css',
+            'full-calendar/css/lib/fullcalendar.css',
+            'full-calendar/css/lib/jquery.fancybox.css',
+            'full-calendar/css/style.css'
         ));
 
-        Requirements::javascript("full-calendar/javascript/lib/moment.min.js");
+        Requirements::javascript('full-calendar/javascript/lib/moment.min.js');
         Requirements::combine_files('silverstripe-calendar.js', array(
-            "full-calendar/javascript/lib/jquery.min.js",
-            "full-calendar/javascript/lib/fullcalendar.min.js",
-            "full-calendar/javascript/lib/jquery.fancybox.js",
-            "full-calendar/javascript/functions.js",
+            'full-calendar/javascript/lib/jquery.min.js',
+            'full-calendar/javascript/lib/fullcalendar.min.js',
+            'full-calendar/javascript/lib/jquery.fancybox.js',
+            'full-calendar/javascript/functions.js',
         ));
 
         Requirements::set_combined_files_folder(ASSETS_DIR . '/_combinedfiles/calendar-module');
@@ -113,8 +113,8 @@ class FullCalendar_Controller extends Page_Controller
     public function eventsAsJson($message = "", $status = "success")
     {
         $this->getResponse()->addHeader(
-            "Content-Type",
-            "application/json; charset=utf-8"
+            'Content-Type',
+            'application/json; charset=utf-8'
         );
 
         if ($status != "success") {

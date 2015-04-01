@@ -17,7 +17,7 @@ class EventColor extends DataObject implements PermissionProvider
     );
 
     private static $defaults = array(
-        'HexCode' => "#"
+        'HexCode' => '#'
     );
 
     private static $summary_fields = array(
@@ -33,11 +33,11 @@ class EventColor extends DataObject implements PermissionProvider
         $fields->addFieldsToTab("Root.Main", array(
 
                 TextField::create('Title', 'Friendly name')
-                    ->setDescription("A name to identify this color"),
+                    ->setDescription('A name to identify this color'),
 
                 TextField::create('HexCode', 'Hex code')
                     ->setDescription("Remember to include the '#'")
-                    ->setAttribute('Placeholder', "#000000"),
+                    ->setAttribute('Placeholder', '#000000'),
 
                 OptionsetField::create('Type', 'Color type')
                     ->setSource(array(
@@ -49,7 +49,7 @@ class EventColor extends DataObject implements PermissionProvider
             )
         );
 
-        $fields->removeByName("FullCalendarID");
+        $fields->removeByName('FullCalendarID');
 
         return $fields;
     }
