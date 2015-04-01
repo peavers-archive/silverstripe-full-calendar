@@ -48,7 +48,7 @@ class FullCalendarEvent extends Page
             )),
 
             DropdownField::create("TextColor", "Text colour")
-                ->setDescription('Colors are created on under Full Calendar Settings')
+                ->setDescription('Colors are created via Full Calendar Settings')
                 ->setSource(EventColor::get()
                     ->filter(array('FullCalendarID' => $this->ParentID))
                     ->where("Type = 'Both' OR Type = 'Text'")
@@ -56,7 +56,7 @@ class FullCalendarEvent extends Page
                     ->map('HexCode', 'Title')),
 
             DropdownField::create("BackgroundColor", "Background colour")
-                ->setDescription('Colors are created on under Full Calendar Settings')
+                ->setDescription('Colors are created via Full Calendar Settings')
                 ->setSource(EventColor::get()
                     ->filter(array('FullCalendarID' => $this->ParentID))
                     ->where("Type = 'Both' OR Type = 'Background'")
