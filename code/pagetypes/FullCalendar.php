@@ -22,7 +22,8 @@ class FullCalendar extends Page
 
     private static $db = array(
         'CacheSetting' => 'Boolean',
-        'LegacyEvents' => 'Boolean'
+        'LegacyEvents' => 'Boolean',
+        'CalendarView' => 'Varchar(255)',
     );
 
     private static $has_one = array(
@@ -47,6 +48,15 @@ class FullCalendar extends Page
             CheckboxField::create('LegacyEvents', 'Enable past events')
                 ->setDescription('Show events where the end date has passed today\'s date'),
 
+            OptionsetField::create('CalendarView', 'Calendar type')
+                ->setSource(array(
+                    'month'      => 'Month <a href="http://fullcalendar.io/views/month/" target="_blank">example</a>',
+                    'basicWeek'  => 'Basic week <a href="http://fullcalendar.io/views/basicWeek/" target="_blank">example</a>',
+                    'basicDay'   => 'Basic day <a href="http://fullcalendar.io/views/basicDay/" target="_blank">example</a>',
+                    'agendaWeek' => 'Agenda week <a href="http://fullcalendar.io/views/agendaWeek/" target="_blank">example</a>',
+                    'agendaDay'  => 'Agenda day <a href="http://fullcalendar.io/views/agendaDay/" target="_blank">example</a>'
+                )),
+
             HeaderField::create('', 'Display settings'),
             UploadField::create('LoadAnimation', 'Loading animation'),
             GridField::create('EventColor', 'Create color', $this->EventColor(), GridFieldConfig_RecordEditor::create()),
@@ -68,7 +78,8 @@ class FullCalendar_Controller extends Page_Controller
 {
 
     private static $allowed_actions = array(
-        'eventsAsJson',
+        'eventsAsJSON',
+        'settingsAsJSON'
     );
 
     /**
@@ -170,6 +181,7 @@ class FullCalendar_Controller extends Page_Controller
         foreach (FullCalendarEvent::get()->filter($filter) as $event) {
 
             $result[] = array(
+                "view"      => $this->CalendarView,
                 "title"     => $event->Title,
                 "start"     => $event->StartDate,
                 "end"       => $event->EndDate,
