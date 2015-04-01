@@ -17,7 +17,8 @@ class FullCalendar extends Page
 
     private static $defaults = array(
         'CacheSetting' => '1',
-        'LegacyEvents' => '0'
+        'LegacyEvents' => '0',
+        'CalendarView' => 'month',
     );
 
     private static $db = array(
@@ -48,13 +49,14 @@ class FullCalendar extends Page
             CheckboxField::create('LegacyEvents', 'Enable past events')
                 ->setDescription('Show events where the end date has passed today\'s date'),
 
-            OptionsetField::create('CalendarView', 'Calendar type')
+            DropdownField::create('CalendarView', 'Display type')
+                ->setDescription('<a href="http://fullcalendar.io/docs/views/Available_Views/" target="_blank">Examples here</a>')
                 ->setSource(array(
-                    'month'      => 'Month <a href="http://fullcalendar.io/views/month/" target="_blank">example</a>',
-                    'basicWeek'  => 'Basic week <a href="http://fullcalendar.io/views/basicWeek/" target="_blank">example</a>',
-                    'basicDay'   => 'Basic day <a href="http://fullcalendar.io/views/basicDay/" target="_blank">example</a>',
-                    'agendaWeek' => 'Agenda week <a href="http://fullcalendar.io/views/agendaWeek/" target="_blank">example</a>',
-                    'agendaDay'  => 'Agenda day <a href="http://fullcalendar.io/views/agendaDay/" target="_blank">example</a>'
+                    'month'      => 'Month',
+                    'basicWeek'  => 'Basic week',
+                    'basicDay'   => 'Basic day',
+                    'agendaWeek' => 'Agenda week',
+                    'agendaDay'  => 'Agenda day'
                 )),
 
             HeaderField::create('', 'Display settings'),
@@ -79,7 +81,6 @@ class FullCalendar_Controller extends Page_Controller
 
     private static $allowed_actions = array(
         'eventsAsJSON',
-        'settingsAsJSON'
     );
 
     /**
