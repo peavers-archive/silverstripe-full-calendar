@@ -11,7 +11,7 @@ jQuery(function ($) {
      */
     function loadCalendar() {
         $.ajax({
-            url: rootUrl + "/eventsAsJson",
+            url: rootUrl + "/eventsAsJSON",
             type: "GET",
             cache: true,
             success: function (json) {

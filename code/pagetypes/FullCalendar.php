@@ -104,13 +104,14 @@ class FullCalendar_Controller extends Page_Controller
     }
 
     /**
-     * Ajax call to return all events to the calendar frontend
+     * Ajax call to return all events to the calendar frontend, if told to use cache get the cached version otherwise
+     * create a new version of data to return
      *
      * @param string $message
      * @param string $status
      * @return string
      */
-    public function eventsAsJson($message = "", $status = "success")
+    public function eventsAsJSON($message = "", $status = "success")
     {
         $this->getResponse()->addHeader(
             'Content-Type',
