@@ -19,8 +19,8 @@ class FullCalendarEvent extends Page
         'StartDate'         => 'Date',
         'EndDate'           => 'Date',
         'Url'               => 'Varchar(255)',
-        'BackgroundColor'   => 'Varchar(255)',
-        'TextColor'         => 'Varchar(255)',
+        'BackgroundColor'   => 'Varchar(7)',
+        'TextColor'         => 'Varchar(7)',
         'ShortDescription'  => 'Varchar(255)'
     );
 
@@ -54,12 +54,14 @@ class FullCalendarEvent extends Page
                 ->setSource(EventColor::get()
                     ->filter(array('FullCalendarID' => $this->ParentID))
                     ->where("Type = 'Both' OR Type = 'Text'")
+                    ->sort(array("Title" => "ASC"))
                     ->map('HexCode', 'Title')),
 
             DropdownField::create("BackgroundColor", "Background colour")
                 ->setSource(EventColor::get()
                     ->filter(array('FullCalendarID' => $this->ParentID))
                     ->where("Type = 'Both' OR Type = 'Background'")
+                    ->sort(array("Title" => "ASC"))
                     ->map('HexCode', 'Title')),
         ));
 
