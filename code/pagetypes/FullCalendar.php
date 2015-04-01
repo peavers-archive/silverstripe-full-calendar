@@ -41,18 +41,14 @@ class FullCalendar extends Page
 
         $fields->addFieldsToTab('Root.FullCalendarSettings', array(
 
-            HeaderField::create("", "General settings"),
+            HeaderField::create("", "Functional settings"),
             CheckboxField::create("CacheSetting", 'Enable caching')
                 ->setDescription("Should only disable for debugging/development purposes"),
-
-            HeaderField::create("", "Display settings"),
             CheckboxField::create("LegacyEvents", 'Enable past events')
                 ->setDescription("Show events where the end date has passed today's date"),
 
-            UploadField::create("LoadAnimation", "Loading animation")
-                ->setFolderName(FullCalendarConst::UPLOAD_PREFIX)
-                ->setDescription("Displayed while the calendar is loading"),
-
+            HeaderField::create("", "Display settings"),
+            UploadField::create("LoadAnimation", "Loading animation"),
             GridField::create('EventColor', 'Create color', $this->EventColor(), GridFieldConfig_RecordEditor::create()),
         ));
 
