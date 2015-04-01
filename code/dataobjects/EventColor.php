@@ -4,9 +4,8 @@
  * Class EventColor
  * @package: full-calendar
  */
-class EventColor extends DataObject
+class EventColor extends DataObject implements PermissionProvider
 {
-
     private static $db = array(
         'Title'   => 'Varchar(255)',
         'HexCode' => 'Varchar(7)',
@@ -24,7 +23,7 @@ class EventColor extends DataObject
     private static $summary_fields = array(
         'Title'   => 'Title',
         'HexCode' => 'HexCode',
-        'Type'    => 'Allowed'
+        'Type'    => 'Can be used for'
     );
 
     public function getCMSFields()
@@ -64,6 +63,49 @@ class EventColor extends DataObject
         $this->HexCode = strtolower($this->HexCode);
 
         parent::OnBeforeWrite();
+    }
+
+    //
+    // Permission providers
+    //
+    public function canEdit($member = null)
+    {
+        return Permission::check('FULL_CALENDAR_COLOR_EDIT');
+    }
+
+    public function canDelete($member = null)
+    {
+        return Permission::check('FULL_CALENDAR_COLOR_DELETE');
+    }
+
+    public function canCreate($member = null)
+    {
+        return Permission::check('FULL_CALENDAR_COLOR_CREATE');
+    }
+
+    public function canView($member = null)
+    {
+        return true;
+    }
+
+    public function providePermissions()
+    {
+        return array(
+            'FULL_CALENDAR_COLOR_EDIT'   => array(
+                'name'     => 'Edit colors',
+                'category' => 'Full Calendar permissions'
+            ),
+
+            'FULL_CALENDAR_COLOR_DELETE' => array(
+                'name'     => 'Delete colors',
+                'category' => 'Full Calendar permissions'
+            ),
+
+            'FULL_CALENDAR_COLOR_CREATE' => array(
+                'name'     => 'Create colors',
+                'category' => 'Full Calendar permissions'
+            ),
+        );
     }
 
 }
