@@ -49,7 +49,8 @@ class FullCalendar extends Page
             CheckboxField::create('LegacyEvents', 'Enable past events')
                 ->setDescription('Show events where the end date has passed today\'s date'),
 
-            DropdownField::create('CalendarView', 'Display type')
+            HeaderField::create('', 'Display settings'),
+            DropdownField::create('CalendarView', 'Calendar view')
                 ->setDescription('<a href="http://fullcalendar.io/docs/views/Available_Views/" target="_blank">Examples here</a>')
                 ->setSource(array(
                     'month'      => 'Month',
@@ -58,8 +59,6 @@ class FullCalendar extends Page
                     'agendaWeek' => 'Agenda week',
                     'agendaDay'  => 'Agenda day'
                 )),
-
-            HeaderField::create('', 'Display settings'),
             UploadField::create('LoadAnimation', 'Loading animation'),
             GridField::create('EventColor', 'Create color', $this->EventColor(), GridFieldConfig_RecordEditor::create()),
         ));
