@@ -5,9 +5,9 @@
  */
 class FullCalendar extends Page
 {
-    private static $singular_name = "[Calendar] Page";
+    private static $singular_name = "Full Calendar";
 
-    private static $plural_name = "[Calendar] Page";
+    private static $description = "Calendar page that displays events";
 
     private static $can_be_root = true;
 
@@ -15,22 +15,45 @@ class FullCalendar extends Page
         "FullCalendarEvent"
     );
 
+    private static $defaults = array(
+        'CacheSetting' => '1',
+        'LegacyEvents' => '0'
+    );
+
     private static $db = array(
         'CacheSetting' => 'Boolean',
         'LegacyEvents' => 'Boolean'
     );
+
+    private static $has_one = array(
+        'LoadAnimation' => 'Image'
+    );
+
+    private static $has_many = array(
+        'EventColor' => 'EventColor'
+    );
+
+    private static $icon = 'full-calendar/images/icons/sitetree_images/holder.png';
 
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
 
         $fields->addFieldsToTab('Root.FullCalendarSettings', array(
+
             HeaderField::create("", "General settings"),
             CheckboxField::create("CacheSetting", 'Enable caching')
                 ->setDescription("Should only disable for debugging/development purposes"),
+
             HeaderField::create("", "Display settings"),
             CheckboxField::create("LegacyEvents", 'Enable past events')
                 ->setDescription("Show events where the end date has passed today's date"),
+
+            UploadField::create("LoadAnimation", "Loading animation")
+                ->setFolderName(FullCalendarConst::UPLOAD_PREFIX)
+                ->setDescription("Displayed while the calendar is loading"),
+
+            GridField::create('EventColor', 'Create color', $this->EventColor(), GridFieldConfig_RecordEditor::create()),
         ));
 
         return $fields;
@@ -80,7 +103,8 @@ class FullCalendar_Controller extends Page_Controller
             "full-calendar/javascript/functions.js",
         ));
 
-//        Requirements::set_combined_files_folder(ASSETS_DIR . '/_combinedfiles/calendar-module');
+        Requirements::set_combined_files_folder(ASSETS_DIR . '/_combinedfiles/calendar-module');
+
     }
 
     /**
@@ -156,7 +180,7 @@ class FullCalendar_Controller extends Page_Controller
                 "textColor" => $event->TextColor,
 
                 "startDate" => $this->getDateFormat($event, 'StartDate'),
-                "endDate" => $this->getDateFormat($event, 'EndDate'),
+                "endDate"   => $this->getDateFormat($event, 'EndDate'),
 
                 "eventUrl"  => $event->URLSegment,
                 "content"   => $this->getShortDescription($event),

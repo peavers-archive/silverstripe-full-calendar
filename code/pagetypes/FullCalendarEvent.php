@@ -5,9 +5,9 @@
  */
 class FullCalendarEvent extends Page
 {
-    private static $singular_name = "[Calendar] Event item";
+    private static $singular_name = "Full Calendar event";
 
-    private static $plural_name = "[Calendar] Event items";
+    private static $plural_name = "Event item that belongs has a start and end date";
 
     private static $can_be_root = false;
 
@@ -26,8 +26,6 @@ class FullCalendarEvent extends Page
 
     private static $defaults = array(
         'IncludeOnCalendar' => true,
-        'TextColor'         => '#ffffff', //white
-        'BackgroundColor'   => '#658fcd' //blue
     );
 
     /**
@@ -52,19 +50,17 @@ class FullCalendarEvent extends Page
             DateField::create("StartDate", "Start date"),
             DateField::create("EndDate", "End date"),
 
-            DropdownField::create("TextColor", "Text colour")->setSource(array(
-                "#ffffff" => "White",
-                "#000000" => "Black",
-            )),
+            DropdownField::create("TextColor", "Text colour")
+                ->setSource(EventColor::get()
+                    ->filter(array('FullCalendarID' => $this->ParentID))
+                    ->where("Type = 'Both' OR Type = 'Text'")
+                    ->map('HexCode', 'Title')),
 
-            DropdownField::create("BackgroundColor", "Background colour")->setSource(array(
-                "#e6b31b" => "Yellow",
-                "#a6c03c" => "Green",
-                "#c35441" => "Red",
-                "#658fcd" => "Blue",
-                "#c3c6a8" => "Tan",
-                "#000000" => "Black"
-            )),
+            DropdownField::create("BackgroundColor", "Background colour")
+                ->setSource(EventColor::get()
+                    ->filter(array('FullCalendarID' => $this->ParentID))
+                    ->where("Type = 'Both' OR Type = 'Background'")
+                    ->map('HexCode', 'Title')),
         ));
 
         return $fields;
