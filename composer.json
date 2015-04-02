@@ -1,12 +1,25 @@
 {
   "name": "moe/full-calendar",
-  "description": "",
+  "description": "A lightweight calendar module for Silverstripe. Implements the popular javascript http://fullcalendar.io/ library.",
   "type": "silverstripe-module",
+  "homepage": "https://github.com/peavers/silverstripe-full-calendar",
+  "keywords": [
+    "silverstripe",
+    "calendar",
+    "events"
+  ],
+  "license": "BSD-3-Clause",
   "authors": [
     {
       "name": "Chris Turner",
       "email": "chris.turner@minedu.govt.nz"
     }
   ],
+  "extra": {
+    "screenshots": [
+      "https://dl.dropboxusercontent.com/u/5616402/Website%20Hosting/Github%20Images/full-calendar/calendar.png",
+      "https://dl.dropboxusercontent.com/u/5616402/Website%20Hosting/Github%20Images/full-calendar/calendar-event.png"
+    ]
+  },
   "minimum-stability": "dev"
 }
