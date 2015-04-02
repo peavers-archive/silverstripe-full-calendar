@@ -28,11 +28,13 @@ jQuery(function ($) {
     function calendarSettings(json) {
 
         $('#calendar').fullCalendar({
-
-            events: json,
-            columnFormat: 'dddd',
+            // Settings
+            columnFormat: json[0].columnFormat,
             defaultView: json[0].view,
+            firstDay: json[0].firstDay,
 
+            // Events
+            events: json,
             eventClick: function (event) {
                 $('.event-header').html(event.title).css('background-color', event.color);
                 $('#fancy-start-date').html(event.startDate);
