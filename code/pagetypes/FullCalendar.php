@@ -25,6 +25,8 @@ class FullCalendar extends Page
         'CacheSetting' => 'Boolean',
         'LegacyEvents' => 'Boolean',
         'CalendarView' => 'Varchar(255)',
+        'FirstDay'     => 'Int',
+        'ColumnFormat' => 'Varchar(255)',
     );
 
     private static $has_one = array(
@@ -43,26 +45,48 @@ class FullCalendar extends Page
 
         $fields->addFieldsToTab('Root.FullCalendarSettings', array(
 
-            HeaderField::create('', 'Functional'),
-            CheckboxField::create('CacheSetting', 'Enable caching')
-                ->setDescription('Should only disable for debugging/development purposes'),
-            CheckboxField::create('LegacyEvents', 'Enable past events')
-                ->setDescription('Show events where the end date has passed today\'s date'),
+            // Functional, how things work
+            ToggleCompositeField::create('', 'Functional Settings', array(
+                CheckboxField::create('CacheSetting', 'Enable caching')
+                    ->setDescription('Should only disable for debugging/development purposes'),
+                CheckboxField::create('LegacyEvents', 'Enable past events')
+                    ->setDescription('Show events where the end date has passed today\'s date'),
+            )),
 
-            HeaderField::create('', 'Display'),
-            DropdownField::create('CalendarView', 'Calendar view')
-                ->setDescription('<a href="http://fullcalendar.io/docs/views/Available_Views/" target="_blank">Examples here</a>')
-                ->setSource(array(
-                    'month'      => 'Month',
-                    'basicWeek'  => 'Basic week',
-                    'basicDay'   => 'Basic day',
-                    'agendaWeek' => 'Agenda week',
-                    'agendaDay'  => 'Agenda day'
-                )),
-            UploadField::create('LoadAnimation', 'Loading animation'),
+            // Display, how the calendar looks to the end user
+            ToggleCompositeField::create('', 'Display Settings', array(
+                DropdownField::create('CalendarView', 'Calendar view')
+                    ->setDescription('<a href="http://fullcalendar.io/docs/views/Available_Views/" target="_blank">Examples here</a>')
+                    ->setSource(array(
+                        'month'      => 'Month',
+                        'basicWeek'  => 'Basic week',
+                        'basicDay'   => 'Basic day',
+                        'agendaWeek' => 'Agenda week',
+                        'agendaDay'  => 'Agenda day'
+                    )),
+                DropdownField::create('FirstDay', 'First day of the week')
+                    ->setDescription('The day that each week begins.')
+                    ->setSource(array(
+                        0 => 'Sunday',
+                        1 => 'Monday',
+                        2 => 'Tuesday',
+                        3 => 'Wednesday',
+                        4 => 'Thursday',
+                        5 => 'Friday',
+                        6 => 'Saturday'
+                    )),
+                DropdownField::create('ColumnFormat', 'Column format')
+                    ->setDescription("Determines the text that will be displayed on the calendar's column headings.")
+                    ->setSource(array(
+                        'ddd'     => 'Mon',
+                        'ddd M/D' => 'Mon 9/7',
+                        'dddd'    => 'Monday'
+                    )),
+                UploadField::create('LoadAnimation', 'Loading animation'),
+            )),
 
-            HeaderField::create('', 'Color'),
             GridField::create('EventColor', 'Create color', $this->EventColor(), GridFieldConfig_RecordEditor::create()),
+
         ));
 
         return $fields;
@@ -183,18 +207,21 @@ class FullCalendar_Controller extends Page_Controller
         foreach (FullCalendarEvent::get()->filter($filter) as $event) {
 
             $result[] = array(
-                "view"      => $this->CalendarView,
-                "title"     => $event->Title,
-                "start"     => $event->StartDate,
-                "end"       => $event->EndDate,
-                "color"     => $event->BackgroundColor,
-                "textColor" => $event->TextColor,
+                "view"         => $this->CalendarView,
+                "firstDay"     => $this->FirstDay,
+                "columnFormat" => $this->ColumnFormat,
 
-                "startDate" => $this->getDateFormat($event, 'StartDate'),
-                "endDate"   => $this->getDateFormat($event, 'EndDate'),
+                "title"        => $event->Title,
+                "start"        => $event->StartDate,
+                "end"          => $event->EndDate,
+                "color"        => $event->BackgroundColor,
+                "textColor"    => $event->TextColor,
 
-                "eventUrl"  => $event->URLSegment,
-                "content"   => $this->getShortDescription($event),
+                "startDate"    => $this->getDateFormat($event, 'StartDate'),
+                "endDate"      => $this->getDateFormat($event, 'EndDate'),
+
+                "eventUrl"     => $event->URLSegment,
+                "content"      => $this->getShortDescription($event),
             );
         }
         return json_encode($result);
