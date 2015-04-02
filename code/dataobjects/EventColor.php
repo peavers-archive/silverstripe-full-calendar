@@ -17,7 +17,7 @@ class EventColor extends DataObject implements PermissionProvider
     );
 
     private static $defaults = array(
-        'HexCode' => '#'
+        'HexCode' => '#',
     );
 
     private static $summary_fields = array(
@@ -32,7 +32,7 @@ class EventColor extends DataObject implements PermissionProvider
 
         $fields->addFieldsToTab("Root.Main", array(
 
-                TextField::create('Title', 'Friendly name')
+                TextField::create('Title', 'Color name')
                     ->setDescription('A name to identify this color'),
 
                 HexColorField::create('HexCode', 'Hex code')
@@ -40,12 +40,12 @@ class EventColor extends DataObject implements PermissionProvider
                     ->setAttribute('Placeholder', '#000000'),
 
                 OptionsetField::create('Type', 'Color type')
+                    ->setDescription('Where is this color allowed to be used')
                     ->setSource(array(
                         'Background' => 'Only for background colors',
-                        'Text'       => 'Only for Text colors',
+                        'Text'       => 'Only for text colors',
                         'Both'       => 'For background and text colors',
-                    ))
-                    ->setDescription('Where is this color allowed to be used'),
+                    )),
             )
         );
 
