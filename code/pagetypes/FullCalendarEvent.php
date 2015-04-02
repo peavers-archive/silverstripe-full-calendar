@@ -42,10 +42,12 @@ class FullCalendarEvent extends Page
             DateField::create("StartDate", "Start date"),
             DateField::create("EndDate", "End date"),
 
-            DropdownField::create('IncludeOnCalendar', 'Include on calendar')->setSource(array(
-                true  => "Yes",
-                false => "No"
-            )),
+            DropdownField::create('IncludeOnCalendar', 'Include on calendar')
+                ->setDescription('Should this event be shown on the calendar')
+                ->setSource(array(
+                    true  => "Yes",
+                    false => "No"
+                )),
 
             DropdownField::create("TextColor", "Text colour")
                 ->setDescription('Colors are created via Full Calendar Settings')

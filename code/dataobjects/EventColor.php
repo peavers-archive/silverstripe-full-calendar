@@ -35,7 +35,7 @@ class EventColor extends DataObject implements PermissionProvider
                 TextField::create('Title', 'Friendly name')
                     ->setDescription('A name to identify this color'),
 
-                TextField::create('HexCode', 'Hex code')
+                HexColorField::create('HexCode', 'Hex code')
                     ->setDescription("Remember to include the '#'")
                     ->setAttribute('Placeholder', '#000000'),
 
@@ -107,5 +107,5 @@ class EventColor extends DataObject implements PermissionProvider
             ),
         );
     }
-
 }
+

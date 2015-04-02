@@ -43,13 +43,13 @@ class FullCalendar extends Page
 
         $fields->addFieldsToTab('Root.FullCalendarSettings', array(
 
-            HeaderField::create('', 'Functional settings'),
+            HeaderField::create('', 'Functional'),
             CheckboxField::create('CacheSetting', 'Enable caching')
                 ->setDescription('Should only disable for debugging/development purposes'),
             CheckboxField::create('LegacyEvents', 'Enable past events')
                 ->setDescription('Show events where the end date has passed today\'s date'),
 
-            HeaderField::create('', 'Display settings'),
+            HeaderField::create('', 'Display'),
             DropdownField::create('CalendarView', 'Calendar view')
                 ->setDescription('<a href="http://fullcalendar.io/docs/views/Available_Views/" target="_blank">Examples here</a>')
                 ->setSource(array(
@@ -60,6 +60,8 @@ class FullCalendar extends Page
                     'agendaDay'  => 'Agenda day'
                 )),
             UploadField::create('LoadAnimation', 'Loading animation'),
+
+            HeaderField::create('', 'Color'),
             GridField::create('EventColor', 'Create color', $this->EventColor(), GridFieldConfig_RecordEditor::create()),
         ));
 
