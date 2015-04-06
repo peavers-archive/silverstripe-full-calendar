@@ -78,11 +78,12 @@ class FullCalendar extends Page
                 DropdownField::create('ColumnFormat', 'Column format')
                     ->setDescription("Determines the text that will be displayed on the calendar's column headings.")
                     ->setSource(array(
-                        'ddd'     => 'Mon',
-                        'ddd M/D' => 'Mon 9/7',
-                        'dddd'    => 'Monday'
+                        'ddd' => 'Mon, Tues, Wed',
+                        'ddd M/D' => 'Mon 9/7, Tues 9/8, Wed 9/9',
+                        'dddd' => 'Monday, Tuesday, Wednesday'
                     )),
-                UploadField::create('LoadAnimation', 'Loading animation'),
+                UploadField::create('LoadAnimation', 'Loading animation')
+                    ->setFolderName(FullCalendarConst::UPLOAD_PREFIX)
             )),
 
             GridField::create('EventColor', 'Create color', $this->EventColor(), GridFieldConfig_RecordEditor::create()),
