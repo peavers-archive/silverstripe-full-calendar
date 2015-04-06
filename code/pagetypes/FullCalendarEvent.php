@@ -7,7 +7,9 @@ class FullCalendarEvent extends Page
 {
     private static $singular_name = "Full Calendar event";
 
-    private static $plural_name = "Event item that belongs has a start and end date";
+    private static $plural_name = "Full Calendar events";
+
+    private static $description = "Event item that belongs has a start and end date";
 
     private static $can_be_root = false;
 
