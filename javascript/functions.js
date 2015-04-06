@@ -37,8 +37,8 @@ jQuery(function ($) {
             events: json,
             eventClick: function (event) {
                 $('.event-header').html(event.title).css('background-color', event.color);
-                $('#fancy-start-date').html(event.startDate);
-                $('#fancy-end-date').html(event.endDate);
+                $('.event-start-date').html(event.startDate);
+                $('.event-end-date').html(event.endDate);
                 $('.event-content').html(event.content);
                 $('.event-button').find('a').attr('href', event.eventUrl).css('color', event.color);
                 fancyboxSettings();
