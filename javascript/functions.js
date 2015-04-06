@@ -36,7 +36,7 @@ jQuery(function ($) {
             // Events
             events: json,
             eventClick: function (event) {
-                $('.event-header').html(event.title).css('background-color', event.color);
+                $('.event-header').html(event.title).css({'background-color': event.color, 'color': event.textColor});
                 $('.event-start-date').html(event.startDate);
                 $('.event-end-date').html(event.endDate);
                 $('.event-content').html(event.content);
