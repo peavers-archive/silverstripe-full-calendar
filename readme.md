@@ -14,7 +14,7 @@ A lightweight calendar module for Silverstripe. Implements the popular javascrip
 ### Javascript
 Common settings can be changed from the CMS, but to add additional options just add
 them to the calendarSettings. 
-```
+```javascript
 function calendarSettings(json) {
     $('#calendar').fullCalendar({
         //custom settings here
