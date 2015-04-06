@@ -24,7 +24,7 @@ function calendarSettings(json) {
 For more setting options see http://fullcalendar.io/docs/
 
 ### CSS
-All libraries that have been imported are using their current versions default flies. All modifications have been made and commented in a single file named style.css
+All libraries that have been imported are using their current versions default files. All modifications have been made and commented in a single file named style.css
 Add to this file to customize the look and feel. 
 
 ## Screen shots
