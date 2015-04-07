@@ -86,3 +86,11 @@ class FullCalendarEvent extends Page
         parent::onAfterWrite();
     }
 }
+
+class FullCalendarEvent_Controller extends Page_Controller
+{
+    public function init()
+    {
+        parent::init();
+    }
+}
