@@ -195,10 +195,12 @@ class FullCalendar_Controller extends Page_Controller
     {
         if ($this->LegacyEvents) {
             $filter = array(
+                'ParentID' => $this->ID,
                 'IncludeOnCalendar' => true,
             );
         } else {
             $filter = array(
+                'ParentID' => $this->ID,
                 'IncludeOnCalendar'   => true,
                 'EndDate:GreaterThan' => date("Y-m-d")
             );
