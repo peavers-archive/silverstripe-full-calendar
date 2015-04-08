@@ -15,6 +15,10 @@
       "email": "chris.turner@minedu.govt.nz"
     }
   ],
+  "require": {
+    "silverstripe/framework": ">=3.1.0",
+    "silverstripe/cms": ">=3.1.0"
+  },
   "extra": {
     "screenshots": [
       "images/screens/calendar.png",
