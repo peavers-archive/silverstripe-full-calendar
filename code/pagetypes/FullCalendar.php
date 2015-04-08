@@ -78,9 +78,9 @@ class FullCalendar extends Page
                 DropdownField::create('ColumnFormat', 'Column format')
                     ->setDescription("Determines the text that will be displayed on the calendar's column headings.")
                     ->setSource(array(
-                        'ddd' => 'Mon, Tues, Wed',
+                        'ddd'     => 'Mon, Tues, Wed',
                         'ddd M/D' => 'Mon 9/7, Tues 9/8, Wed 9/9',
-                        'dddd' => 'Monday, Tuesday, Wednesday'
+                        'dddd'    => 'Monday, Tuesday, Wednesday'
                     )),
                 UploadField::create('LoadAnimation', 'Loading animation')
                     ->setFolderName(FullCalendarConst::UPLOAD_PREFIX)
@@ -138,7 +138,6 @@ class FullCalendar_Controller extends Page_Controller
         ));
 
         Requirements::set_combined_files_folder(ASSETS_DIR . '/_combinedfiles/calendar-module');
-
     }
 
     /**
@@ -195,12 +194,12 @@ class FullCalendar_Controller extends Page_Controller
     {
         if ($this->LegacyEvents) {
             $filter = array(
-                'ParentID' => $this->ID,
+                'ParentID'          => $this->ID,
                 'IncludeOnCalendar' => true,
             );
         } else {
             $filter = array(
-                'ParentID' => $this->ID,
+                'ParentID'            => $this->ID,
                 'IncludeOnCalendar'   => true,
                 'EndDate:GreaterThan' => date("Y-m-d")
             );
