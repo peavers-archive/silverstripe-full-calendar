@@ -15,7 +15,7 @@ A lightweight calendar module for Silverstripe. Implements the popular javascrip
 Ideally composer will be used to install this module. 
 ```composer require "moe/full-calendar:@stable"```
 
-### From Github
+### From source
 1. Download the latest [release] (https://github.com/peavers/silverstripe-full-calendar/releases)
 1. Extract the files
 1. Make sure the folder after being extracted is named 'full-calendar'
