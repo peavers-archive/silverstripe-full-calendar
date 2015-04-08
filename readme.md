@@ -9,6 +9,18 @@ A lightweight calendar module for Silverstripe. Implements the popular javascrip
 * Easily change the style/theme to match your brand
 * Change between month and agenda views
 
+## Installation
+
+### Composer
+Ideally composer will be used to install this module. 
+```composer require "moe/full-calendar:@stable"```
+
+### From Github
+1. Download the latest [release] (https://github.com/peavers/silverstripe-full-calendar/releases)
+1. Extract the files
+1. Make sure the folder after being extracted is named 'full-calendar'
+1. Upload to your site root
+
 ## Basic modification
 
 ### Javascript
