@@ -1,7 +1,6 @@
 {
   "name": "moe/full-calendar",
   "description": "A lightweight calendar module for Silverstripe. Implements the popular javascript http://fullcalendar.io/ library.",
-  "type": "silverstripe-module",
   "homepage": "https://github.com/peavers/silverstripe-full-calendar",
   "keywords": [
     "silverstripe",
@@ -15,9 +14,11 @@
       "email": "chris.turner@minedu.govt.nz"
     }
   ],
+  "type": "silverstripe-module",
   "require": {
     "silverstripe/framework": ">=3.1.0",
-    "silverstripe/cms": ">=3.1.0"
+    "silverstripe/cms": ">=3.1.0",
+    "silverstripe/lumberjack": "~1.1"
   },
   "extra": {
     "screenshots": [

@@ -39,6 +39,10 @@ class FullCalendar extends Page
 
     private static $icon = 'full-calendar/images/icons/sitetree_images/holder.png';
 
+    private static $extensions = array(
+        'Lumberjack',
+    );
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
