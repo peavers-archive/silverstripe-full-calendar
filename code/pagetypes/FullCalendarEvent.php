@@ -23,7 +23,7 @@ class FullCalendarEvent extends Page
         'Url'               => 'Varchar(255)',
         'BackgroundColor'   => 'Varchar(7)',
         'TextColor'         => 'Varchar(7)',
-        'ShortDescription'  => 'Varchar(255)'
+        'ShortDescription'  => 'HTMLText'
     );
 
     private static $defaults = array(
@@ -67,8 +67,9 @@ class FullCalendarEvent extends Page
                     ->sort(array("Title" => "ASC"))
                     ->map('HexCode', 'Title')),
 
-            TextareaField::create('ShortDescription', 'A short description')
+            HtmlEditorField::create('ShortDescription', 'A short description')
                 ->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event. <strong>Limit 255 characters</strong>")
+                ->setRows(2),
 
         ), "Content");
 
