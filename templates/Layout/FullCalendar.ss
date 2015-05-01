@@ -1,9 +1,3 @@
-$Title
-
-<h1>$getDocumentRoot.Link</h1>
-
-$Content
-
 <div class="document-overlay">
     <% if $LoadAnimation %>
         $LoadAnimation
