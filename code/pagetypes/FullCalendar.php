@@ -223,9 +223,11 @@ class FullCalendar_Controller extends Page_Controller
                 "endDate"      => $this->getDateFormat($event, 'EndDate'),
 
                 "eventUrl"     => $event->URLSegment,
-                "content"      => $this->getShortDescription($event),
+                "content"      => $event->Content,
+                "shortContent" => $this->getShortDescription($event),
             );
         }
+
         return json_encode($result);
     }
 
