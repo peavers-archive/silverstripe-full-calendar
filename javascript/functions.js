@@ -39,8 +39,14 @@ jQuery(function ($) {
                 $('.event-header').html(event.title).css({'background-color': event.color, 'color': event.textColor});
                 $('.event-start-date').html(event.startDate);
                 $('.event-end-date').html(event.endDate);
-                $('.event-content').html(event.content);
-                $('.event-button').find('a').attr('href', event.eventUrl).css('color', event.color);
+                $('.event-content').html(event.shortContent);
+
+                // Hide the button if you don't have any content to link through to.
+                if (event.content == null) {
+                    $('.event-button').hide();
+                } else {
+                    $('.event-button').show().find('a').attr('href', event.eventUrl).css('color', event.color);
+                }
                 fancyboxSettings();
             }
         })
