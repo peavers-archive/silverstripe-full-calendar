@@ -20,8 +20,8 @@ class FullCalendarEvent extends Page
     private static $db = array(
         'IncludeOnCalendar' => 'Boolean',
         'Title'             => 'Varchar(255)',
-        'StartDate'         => 'Date',
-        'EndDate'           => 'Date',
+        'StartDate'         => 'SS_Datetime',
+        'EndDate'           => 'SS_Datetime',
         'Url'               => 'Varchar(255)',
         'BackgroundColor'   => 'Varchar(7)',
         'TextColor'         => 'Varchar(7)',
@@ -43,8 +43,8 @@ class FullCalendarEvent extends Page
 
         $fields->addFieldsToTab("Root.Main", array(
 
-            DateField::create("StartDate", "Start date"),
-            DateField::create("EndDate", "End date"),
+            DatetimeField::create("StartDate", "Start date"),
+            DatetimeField::create("EndDate", "End date"),
 
             DropdownField::create('IncludeOnCalendar', 'Include on calendar')
                 ->setDescription('Should this event be shown on the calendar')
@@ -76,6 +76,19 @@ class FullCalendarEvent extends Page
         ), "Content");
 
         return $fields;
+    }
+
+    /**
+     * Full calendar will return an error if you're missing one of these values.
+     *
+     * @return RequiredFields
+     */
+    function getCMSValidator()
+    {
+        return new RequiredFields(array(
+            'StartDate',
+            'EndDate',
+        ));
     }
 
     /**
