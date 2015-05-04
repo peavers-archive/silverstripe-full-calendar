@@ -12,7 +12,8 @@ class FullCalendar extends Page
     private static $can_be_root = true;
 
     private static $allowed_children = array(
-        'FullCalendarEvent'
+        'FullCalendarEvent',
+        'FullCalendarEventList',
     );
 
     private static $defaults = array(
