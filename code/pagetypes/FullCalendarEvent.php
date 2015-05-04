@@ -103,6 +103,9 @@ class FullCalendarEvent extends Page
     }
 }
 
+/**
+ * Class FullCalendarEvent_Controller
+ */
 class FullCalendarEvent_Controller extends Page_Controller
 {
     public function init()
