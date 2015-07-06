@@ -20,8 +20,8 @@ class FullCalendarEvent extends Page
     private static $db = array(
         'IncludeOnCalendar' => 'Boolean',
         'Title'             => 'Varchar(255)',
-        'StartDate'         => 'SS_Datetime',
-        'EndDate'           => 'SS_Datetime',
+        'StartDate'         => 'Date',
+        'EndDate'           => 'Date',
         'Url'               => 'Varchar(255)',
         'BackgroundColor'   => 'Varchar(7)',
         'TextColor'         => 'Varchar(7)',
