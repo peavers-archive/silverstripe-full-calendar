@@ -85,6 +85,7 @@
 }
 
 .fancybox-close {
+    background-image: none;
     position: absolute;
     top: 18px;
     right: 22px;

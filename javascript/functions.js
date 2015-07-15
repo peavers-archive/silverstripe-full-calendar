@@ -45,7 +45,7 @@ jQuery(function ($) {
                 if (event.content == null) {
                     $('.event-button').hide();
                 } else {
-                    $('.event-button').show().find('a').attr('href', event.eventUrl).css('color', event.color);
+                    $('.event-button').show().find('a').attr('href', event.eventUrl).css({color: 'event.color'});
                 }
                 fancyboxSettings();
             }
@@ -65,6 +65,9 @@ jQuery(function ($) {
             autoCenter: true,
             autoSize: false,
             closeBtn: true,
+            tpl: {
+                closeBtn: '<a title="Close" class="fancybox-item fancybox-close custom-close" href="javascript:;"></a>'
+            },
             openEffect: 'fade',
             closeEffect: 'fade',
             'href': '#fancy-box',
