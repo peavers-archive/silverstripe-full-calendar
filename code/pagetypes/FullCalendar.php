@@ -128,18 +128,18 @@ class FullCalendar_Controller extends Page_Controller
         Requirements::block(THIRDPARTY_DIR . '/jquery-ui/jquery-ui.js');
 
         Requirements::combine_files('full-calendar.css', array(
-            'full-calendar/css/lib/font-awesome.css',
-            'full-calendar/css/lib/fullcalendar.css',
-            'full-calendar/css/lib/jquery.fancybox.css',
-            'full-calendar/css/style.css'
+            FULL_CALENDAR . '/css/lib/font-awesome.css',
+            FULL_CALENDAR . '/css/lib/fullcalendar.css',
+            FULL_CALENDAR . '/css/lib/jquery.fancybox.css',
+            FULL_CALENDAR . '/css/style.css'
         ));
 
-        Requirements::javascript('full-calendar/javascript/lib/moment.min.js');
+        Requirements::javascript(FULL_CALENDAR . '/javascript/lib/moment.min.js');
         Requirements::combine_files('full-calendar.js', array(
-            'full-calendar/javascript/lib/jquery.min.js',
-            'full-calendar/javascript/lib/fullcalendar.min.js',
-            'full-calendar/javascript/lib/jquery.fancybox.js',
-            'full-calendar/javascript/functions.js',
+            FULL_CALENDAR . '/javascript/lib/jquery.min.js',
+            FULL_CALENDAR . '/javascript/lib/fullcalendar.min.js',
+            FULL_CALENDAR . '/javascript/lib/jquery.fancybox.js',
+            FULL_CALENDAR . '/javascript/functions.js',
         ));
 
         Requirements::set_combined_files_folder(ASSETS_DIR . '/_combinedfiles/full-calendar');
