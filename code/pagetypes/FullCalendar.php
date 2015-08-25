@@ -131,6 +131,7 @@ class FullCalendar_Controller extends Page_Controller
             FULL_CALENDAR . '/css/lib/font-awesome.css',
             FULL_CALENDAR . '/css/lib/fullcalendar.css',
             FULL_CALENDAR . '/css/lib/jquery.fancybox.css',
+            FULL_CALENDAR . '/css/lib/addthisevent.theme8.css',
             FULL_CALENDAR . '/css/style.css'
         ));
 
@@ -139,6 +140,7 @@ class FullCalendar_Controller extends Page_Controller
             FULL_CALENDAR . '/javascript/lib/jquery.min.js',
             FULL_CALENDAR . '/javascript/lib/fullcalendar.min.js',
             FULL_CALENDAR . '/javascript/lib/jquery.fancybox.js',
+            FULL_CALENDAR . '/javascript/lib/ate-latest.min.js',
             FULL_CALENDAR . '/javascript/functions.js',
         ));
 
@@ -262,7 +264,7 @@ class FullCalendar_Controller extends Page_Controller
      */
     public function getDateFormat($event, $date)
     {
-        return date('l jS F Y', strtotime($event->$date));
+        return date('m/d/Y', strtotime($event->$date));
     }
 
 }
