@@ -19,12 +19,14 @@ class FullCalendar extends Page
     private static $defaults = array(
         'CacheSetting' => '1',
         'LegacyEvents' => '0',
+        'AddEvents' => '0',
         'CalendarView' => 'month',
     );
 
     private static $db = array(
         'CacheSetting' => 'Boolean',
         'LegacyEvents' => 'Boolean',
+        'AddEvents'    => 'Boolean',
         'CalendarView' => 'Varchar(255)',
         'FirstDay'     => 'Int',
         'ColumnFormat' => 'Varchar(255)',
@@ -56,6 +58,8 @@ class FullCalendar extends Page
                     ->setDescription('Should only disable for debugging/development purposes'),
                 CheckboxField::create('LegacyEvents', 'Enable past events')
                     ->setDescription('Show events where the end date has passed today\'s date'),
+                CheckboxField::create('AddEvents', 'Enable addthis ')
+                    ->setDescription('Add to Calendar button'),
             )),
 
             // Display, how the calendar looks to the end user
@@ -171,6 +175,9 @@ class FullCalendar_Controller extends Page_Controller
         } else {
             return $this->getData();
         }
+        if ($this->AddEvents) {
+            return $this->getAddCalendar();
+        }
     }
 
     /**
@@ -192,6 +199,23 @@ class FullCalendar_Controller extends Page_Controller
         return $result;
     }
 
+    public function getAddCalendar()
+    {
+        if($this->AddEvents) {
+            $filter = array(
+                'ParentID'          => $this->ID,
+                'AddButton'         => true,
+            );
+
+        }
+        else {
+            $filter = array(
+                'ParentID'          => $this->ID,
+                'AddButton'         => false,
+            );
+
+        }
+    }
     /**
      * Decides what filter to use based on user settings, returns all events that match
      *
@@ -204,7 +228,8 @@ class FullCalendar_Controller extends Page_Controller
                 'ParentID'          => $this->ID,
                 'IncludeOnCalendar' => true,
             );
-        } else {
+        }
+        else {
             $filter = array(
                 'ParentID'            => $this->ID,
                 'IncludeOnCalendar'   => true,
@@ -232,6 +257,7 @@ class FullCalendar_Controller extends Page_Controller
                 "eventUrl"     => $event->URLSegment,
                 "content"      => $event->Content,
                 "shortContent" => $this->getShortDescription($event),
+                "addButton"    => $this->AddEvents,
             );
         }
 

@@ -25,7 +25,8 @@ class FullCalendarEvent extends Page
         'Url'               => 'Varchar(255)',
         'BackgroundColor'   => 'Varchar(7)',
         'TextColor'         => 'Varchar(7)',
-        'ShortDescription'  => 'HTMLText'
+        'ShortDescription'  => 'HTMLText',
+
     );
 
     private static $defaults = array(
@@ -52,6 +53,8 @@ class FullCalendarEvent extends Page
                     true  => "Yes",
                     false => "No"
                 )),
+
+
 
             DropdownField::create("TextColor", "Text colour")
                 ->setDescription('Colors are created via Full Calendar Settings')
