@@ -56,6 +56,13 @@ jQuery(function ($) {
                 } else {
                     $('.event-button').show().find('a').attr('href', event.eventUrl).css({color: 'event.color'});
                 }
+                // Hide the AddtoCalendar button if you don't have any content to link through to.
+                console.log(event);
+                if (event.addButton == false) {
+                    $('.addthisevent-drop').hide();
+                } else {
+                    $('.addthisevent-drop').show();
+                }
                 fancyboxSettings();
             }
         })
