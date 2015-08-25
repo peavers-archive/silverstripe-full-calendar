@@ -11,6 +11,8 @@
                     <p>$ShortDescription</p>
                 </div>
 
+
+
                 <time itemprop="datePublished">$StartDate.Format(l jS F Y) - $EndDate.Format(l jS F Y)</time>
             </article>
         <% end_loop %>

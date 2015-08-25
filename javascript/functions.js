@@ -6,6 +6,7 @@ jQuery(function ($) {
 
     var rootUrl = $("#calendar").data("root-url");
 
+
     /**
      * Makes ajax call to gather events
      */
@@ -16,6 +17,7 @@ jQuery(function ($) {
             cache: true,
             success: function (json) {
                 calendarSettings(json);
+
             }
         });
     }
@@ -28,6 +30,7 @@ jQuery(function ($) {
     function calendarSettings(json) {
 
         $('#calendar').fullCalendar({
+
             // Settings
             columnFormat: json[0].columnFormat,
             defaultView: json[0].view,
@@ -36,7 +39,13 @@ jQuery(function ($) {
             // Events
             events: json,
             eventClick: function (event) {
+                $('.fa-calendar').css({'color': event.textColor});
+                $('.start').html(event.startDate);
+                $('.end').html(event.endDate);
+                $('.title').html(event.title);
+                $('.description').html(event.shortContent);
                 $('.event-header').html(event.title).css({'background-color': event.color, 'color': event.textColor});
+
                 $('.event-start-date').html(event.startDate);
                 $('.event-end-date').html(event.endDate);
                 $('.event-content').html(event.shortContent);
@@ -75,6 +84,9 @@ jQuery(function ($) {
                 overlay: {
                     locked: false
                 }
+            },
+            afterLoad: function() {
+                addtoCalendar();
             }
         });
     }
@@ -96,9 +108,33 @@ jQuery(function ($) {
     });
 
     /**
+     *
+     */
+    function addtoCalendar(){
+        addthisevent.refresh();
+        addthisevent.settings({
+            license    : "replace-with-your-licensekey",
+            css        : false,
+            outlook    : {show:true, text:"Outlook"},
+            google     : {show:true, text:"Google1 <em>(online)</em>"},
+            yahoo      : {show:true, text:"Yahoo <em>(online)</em>"},
+            outlookcom : {show:true, text:"Outlook.com <em>(online)</em>"},
+            appleical  : {show:true, text:"Apple Calendar"},
+            dropdown   : {order:"appleical,google,outlook,outlookcom,yahoo"}
+        });
+    }
+
+    /**
      * Called when the page is ready
      */
     $(document).ready(function () {
+
+
         loadCalendar();
+
+
+
+
+
     });
 });
