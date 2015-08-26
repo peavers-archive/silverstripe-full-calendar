@@ -271,6 +271,7 @@ class FullCalendar_Controller extends Page_Controller
      * @param $date
      * @return bool|string
      */
+
     public function getDateFormat($event, $date)
     {
         return date('l jS F Y', strtotime($event->$date));
