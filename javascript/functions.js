@@ -39,9 +39,9 @@ jQuery(function ($) {
             // Events
             events: json,
             eventClick: function (event) {
-                $('.fa-calendar').css({'color': event.textColor});
-                $('.start').html(event.startDate);
-                $('.end').html(event.endDate);
+
+                $('.start').html(event.addStartDate);
+                $('.end').html(event.addEndDate);
                 $('.title').html(event.title);
                 $('.description').html(event.shortContent);
                 $('.event-header').html(event.title).css({'background-color': event.color, 'color': event.textColor});
@@ -56,13 +56,7 @@ jQuery(function ($) {
                 } else {
                     $('.event-button').show().find('a').attr('href', event.eventUrl).css({color: 'event.color'});
                 }
-                // Hide the AddtoCalendar button if you don't have any content to link through to.
-                console.log(event);
-                if (event.addButton == false) {
-                    $('.addthisevent-drop').hide();
-                } else {
-                    $('.addthisevent-drop').show();
-                }
+
                 fancyboxSettings();
             }
         })
@@ -92,7 +86,7 @@ jQuery(function ($) {
                     locked: false
                 }
             },
-            afterLoad: function() {
+            afterLoad: function () {
                 addtoCalendar();
             }
         });
@@ -117,17 +111,17 @@ jQuery(function ($) {
     /**
      *
      */
-    function addtoCalendar(){
+    function addtoCalendar() {
         addthisevent.refresh();
         addthisevent.settings({
-            license    : "replace-with-your-licensekey",
-            css        : false,
-            outlook    : {show:true, text:"Outlook"},
-            google     : {show:true, text:"Google1 <em>(online)</em>"},
-            yahoo      : {show:true, text:"Yahoo <em>(online)</em>"},
-            outlookcom : {show:true, text:"Outlook.com <em>(online)</em>"},
-            appleical  : {show:true, text:"Apple Calendar"},
-            dropdown   : {order:"appleical,google,outlook,outlookcom,yahoo"}
+            license: "replace-with-your-licensekey",
+            css: false,
+            outlook: {show: true, text: "Outlook"},
+            google: {show: true, text: "Google1 <em>(online)</em>"},
+            yahoo: {show: true, text: "Yahoo <em>(online)</em>"},
+            outlookcom: {show: true, text: "Outlook.com <em>(online)</em>"},
+            appleical: {show: true, text: "Apple Calendar"},
+            dropdown: {order: "appleical,google,outlook,outlookcom,yahoo"}
         });
     }
 
@@ -138,9 +132,6 @@ jQuery(function ($) {
 
 
         loadCalendar();
-
-
-
 
 
     });

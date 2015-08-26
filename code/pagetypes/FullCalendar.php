@@ -26,9 +26,9 @@ class FullCalendar extends Page
     private static $db = array(
         'CacheSetting' => 'Boolean',
         'LegacyEvents' => 'Boolean',
-        'AddEvents'    => 'Boolean',
+        'AddEvents' => 'Boolean',
         'CalendarView' => 'Varchar(255)',
-        'FirstDay'     => 'Int',
+        'FirstDay' => 'Int',
         'ColumnFormat' => 'Varchar(255)',
     );
 
@@ -67,11 +67,11 @@ class FullCalendar extends Page
                 DropdownField::create('CalendarView', 'Calendar view')
                     ->setDescription('<a href="http://fullcalendar.io/docs/views/Available_Views/" target="_blank">Examples here</a>')
                     ->setSource(array(
-                        'month'      => 'Month',
-                        'basicWeek'  => 'Basic week',
-                        'basicDay'   => 'Basic day',
+                        'month' => 'Month',
+                        'basicWeek' => 'Basic week',
+                        'basicDay' => 'Basic day',
                         'agendaWeek' => 'Agenda week',
-                        'agendaDay'  => 'Agenda day'
+                        'agendaDay' => 'Agenda day'
                     )),
                 DropdownField::create('FirstDay', 'First day of the week')
                     ->setDescription('The day that each week begins.')
@@ -87,9 +87,9 @@ class FullCalendar extends Page
                 DropdownField::create('ColumnFormat', 'Column format')
                     ->setDescription("Determines the text that will be displayed on the calendar's column headings.")
                     ->setSource(array(
-                        'ddd'     => 'Mon, Tues, Wed',
+                        'ddd' => 'Mon, Tues, Wed',
                         'ddd M/D' => 'Mon 9/7, Tues 9/8, Wed 9/9',
-                        'dddd'    => 'Monday, Tuesday, Wednesday'
+                        'dddd' => 'Monday, Tuesday, Wednesday'
                     )),
                 UploadField::create('LoadAnimation', 'Loading animation')
                     ->setFolderName(FullCalendarConst::UPLOAD_PREFIX)
@@ -175,9 +175,6 @@ class FullCalendar_Controller extends Page_Controller
         } else {
             return $this->getData();
         }
-        if ($this->AddEvents) {
-            return $this->getAddCalendar();
-        }
     }
 
     /**
@@ -199,23 +196,6 @@ class FullCalendar_Controller extends Page_Controller
         return $result;
     }
 
-    public function getAddCalendar()
-    {
-        if($this->AddEvents) {
-            $filter = array(
-                'ParentID'          => $this->ID,
-                'AddButton'         => true,
-            );
-
-        }
-        else {
-            $filter = array(
-                'ParentID'          => $this->ID,
-                'AddButton'         => false,
-            );
-
-        }
-    }
     /**
      * Decides what filter to use based on user settings, returns all events that match
      *
@@ -225,14 +205,13 @@ class FullCalendar_Controller extends Page_Controller
     {
         if ($this->LegacyEvents) {
             $filter = array(
-                'ParentID'          => $this->ID,
+                'ParentID' => $this->ID,
                 'IncludeOnCalendar' => true,
             );
-        }
-        else {
+        } else {
             $filter = array(
-                'ParentID'            => $this->ID,
-                'IncludeOnCalendar'   => true,
+                'ParentID' => $this->ID,
+                'IncludeOnCalendar' => true,
                 'EndDate:GreaterThan' => date("Y-m-d")
             );
         }
@@ -241,23 +220,27 @@ class FullCalendar_Controller extends Page_Controller
         foreach (FullCalendarEvent::get()->filter($filter) as $event) {
 
             $result[] = array(
-                "view"         => $this->CalendarView,
-                "firstDay"     => $this->FirstDay,
+                "view" => $this->CalendarView,
+                "firstDay" => $this->FirstDay,
                 "columnFormat" => $this->ColumnFormat,
 
-                "title"        => $event->Title,
-                "start"        => $event->StartDate,
-                "end"          => $event->EndDate,
-                "color"        => $event->BackgroundColor,
-                "textColor"    => $event->TextColor,
+                "title" => $event->Title,
+                "start" => $event->StartDate,
+                "end" => $event->EndDate,
+                "color" => $event->BackgroundColor,
+                "textColor" => $event->TextColor,
 
-                "startDate"    => $this->getDateFormat($event, 'StartDate'),
-                "endDate"      => $this->getDateFormat($event, 'EndDate'),
+                "startDate" => $this->getDateFormat($event, 'StartDate'),
+                "endDate" => $this->getDateFormat($event, 'EndDate'),
 
-                "eventUrl"     => $event->URLSegment,
-                "content"      => $event->Content,
+                "eventUrl" => $event->URLSegment,
+                "content" => $event->Content,
                 "shortContent" => $this->getShortDescription($event),
-                "addButton"    => $this->AddEvents,
+                "addButton" => $this->AddEvents,
+
+                "addStartDate" => $this->getAddDateFormat($event, 'StartDate'),
+                "addEndDate" => $this->getAddDateFormat($event, 'EndDate'),
+
             );
         }
 
@@ -289,6 +272,11 @@ class FullCalendar_Controller extends Page_Controller
      * @return bool|string
      */
     public function getDateFormat($event, $date)
+    {
+        return date('l jS F Y', strtotime($event->$date));
+    }
+
+    public function getAddDateFormat($event, $date)
     {
         return date('m/d/Y', strtotime($event->$date));
     }

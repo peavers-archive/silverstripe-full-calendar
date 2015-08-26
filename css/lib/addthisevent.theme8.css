@@ -5,9 +5,10 @@
 .addthisevent 							{visibility:hidden;}
 .addthisevent span 						{display:none!important;}
 .addthisevent .data 					{display:none!important;}
+.addthisevent-drop .tips                {color: #878787;}
 
 /* The button */
-.addthisevent-drop 						{display:inline-block;position:relative;top:-50px;z-index:999998;font-family:Roboto,Optima,Segoe,"Segoe UI",Candara,Calibri,Arial,sans-serif;font-weight:300;color:#333;text-decoration:none;font-size:16px;cursor:pointer;}
+.addthisevent-drop 						{display:inline-block;position:relative;top:0;padding: 12px 0 5px;z-index:999998;font-family:Roboto,Optima,Segoe,"Segoe UI",Candara,Calibri,Arial,sans-serif;font-weight:300;color:#333;text-decoration:none;font-size:16px;cursor:pointer;}
 .addthisevent-drop:hover 				{color:#555;font-size:16px;text-decoration:underline;}
 
 /* The drop down */
@@ -25,4 +26,4 @@
 .addthisevent_dropdown .atefacebook 	{background-image:url(../../images/gfx/dropdown-facebook-t1.png);background-position:13px 50%;background-repeat:no-repeat;}
 .addthisevent_dropdown .copyx 			{height:21px;display:block;position:relative;cursor:default;}
 .addthisevent_dropdown .brx 			{height:1px;overflow:hidden;background:#e0e0e0;position:absolute;z-index:100;left:10px;right:10px;top:9px;}
-.addthisevent-drop .fa{padding-left:15px;}
+.addthisevent-drop .fa{padding-left: 17px; margin-right: 18px; color: #878787;}
