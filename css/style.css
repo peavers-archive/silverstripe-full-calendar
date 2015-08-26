@@ -117,6 +117,10 @@
     font-family: "FontAwesome";
 }
 
+.fancybox-inner {
+    overflow: visible !important;
+}
+
 /* Calendar overwrites
  ====================*/
 .fc button {
