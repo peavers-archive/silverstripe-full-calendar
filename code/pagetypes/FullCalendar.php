@@ -66,7 +66,7 @@ class FullCalendar extends Page {
 			ToggleCompositeField::create('', 'Display Settings', array(
 
 				DropdownField::create('CalendarView', 'Calendar view')
-					->setDescription('<a href="http://fullcalendar.io/docs/views/Available_Views/" target="_blank">Examples here</a>')
+					->setDescription('(<a href="http://fullcalendar.io/docs/views/Available_Views/" target="_blank">?</a>)')
 					->setSource(array(
 						'month'      => 'Month',
 						'basicWeek'  => 'Basic week',
