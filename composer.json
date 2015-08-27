@@ -21,7 +21,6 @@
 			"images/screens/calendar-event.png"
 		]
 	},
-
 	"require-dev": {
 		"squizlabs/php_codesniffer": "@stable",
 		"phpmd/phpmd": "@stable",
