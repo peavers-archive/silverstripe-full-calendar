@@ -1,30 +1,39 @@
 {
-  "name": "moe/full-calendar",
-  "description": "A lightweight calendar module for Silverstripe. Implements the popular javascript http://fullcalendar.io/ library.",
-  "homepage": "https://github.com/peavers/silverstripe-full-calendar",
-  "keywords": [
-    "silverstripe",
-    "calendar",
-    "events"
-  ],
-  "license": "BSD-3-Clause",
-  "authors": [
-    {
-      "name": "Chris Turner",
-      "email": "chris.turner@minedu.govt.nz"
-    }
-  ],
-  "type": "silverstripe-module",
-  "require": {
-    "silverstripe/framework": ">=3.1.0",
-    "silverstripe/cms": ">=3.1.0",
-    "silverstripe/lumberjack": "~1.1"
-  },
-  "extra": {
-    "screenshots": [
-      "images/screens/calendar.png",
-      "images/screens/calendar-event.png"
-    ]
-  },
-  "minimum-stability": "dev"
+	"name": "moe/full-calendar",
+	"description": "A lightweight calendar module for Silverstripe. Implements the popular javascript http://fullcalendar.io/ library.",
+	"homepage": "https://github.com/peavers/silverstripe-full-calendar",
+	"keywords": [
+		"silverstripe",
+		"calendar",
+		"events"
+	],
+	"license": "BSD-3-Clause",
+	"authors": [
+		{
+			"name": "Chris Turner",
+			"email": "chris.turner@minedu.govt.nz"
+		}
+	],
+	"type": "silverstripe-module",
+	"require": {
+		"silverstripe/framework": ">=3.1.0",
+		"silverstripe/cms": ">=3.1.0",
+		"silverstripe/lumberjack": "~1.1"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "~1.5.*",
+		"phpmd/phpmd": "~2.1.*",
+		"sebastian/phpcpd": "~2.0.*",
+		"pdepend/pdepend": "~2.0.*",
+		"phploc/phploc": "~2.0.*",
+		"phpunit/phpunit": "~4.3.*",
+		"theseer/phpdox": "~0.7.*"
+	},
+	"extra": {
+		"screenshots": [
+			"images/screens/calendar.png",
+			"images/screens/calendar-event.png"
+		]
+	},
+	"minimum-stability": "dev"
 }
