@@ -1,9 +1,7 @@
 <?php
 
 /**
- * Class EventColorTest.php
- *
- * @package: full-calendar
+ * Class BasicTest
  */
 class BasicTest extends PHPUnit_Framework_TestCase {
 
