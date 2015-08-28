@@ -8,7 +8,7 @@
 	<property name="phpdox" value="phpdox"/>
 	<property name="phploc" value="phploc"/>
 	<property name="phpmd" value="phpmd"/>
-	<property name="phpunit" value="phpunit"/>
+	<!--<property name="phpunit" value="phpunit"/>-->
 
     <!--<property name="pdepend" value="${basedir}/build/tools/pdepend.phar"/>-->
     <!--<property name="phpcpd"  value="${basedir}/build/tools/phpcpd.phar"/>-->
@@ -27,11 +27,11 @@
 	<!--<property name="phpunit" value="${basedir}/vendor/bin/phpunit"/>-->
 
 	<target name="full-build"
-			depends="prepare,static-analysis,phpunit,phpdox"
+			depends="prepare,static-analysis,phpdox"
 			description="Performs static analysis, runs the tests, and generates project documentation"/>
 
 	<target name="full-build-parallel"
-			depends="prepare,static-analysis-parallel,phpunit,phpdox,-check-failure"
+			depends="prepare,static-analysis-parallel,phpdox,-check-failure"
 			description="Performs static analysis (executing the tools in parallel), runs the tests, and generates project documentation"/>
 
 	<target name="quick-build"
@@ -224,17 +224,7 @@
 		<property name="phpcpd.done" value="true"/>
 	</target>
 
-	<target name="phpunit"
-			unless="phpunit.done"
-			depends="prepare"
-			description="Run unit tests with PHPUnit">
-		<exec executable="${phpunit}" resultproperty="result.phpunit" taskname="phpunit">
-			<arg value="--configuration"/>
-			<arg path="${basedir}/build/phpunit.xml"/>
-		</exec>
 
-		<property name="phpunit.done" value="true"/>
-	</target>
 
 	<target name="phpunit-no-coverage"
 			unless="phpunit.done"
