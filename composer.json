@@ -21,6 +21,11 @@
 			"images/screens/calendar-event.png"
 		]
 	},
+	"require": {
+		"silverstripe/framework": ">=3.1.0",
+		"silverstripe/cms": ">=3.1.0",
+		"silverstripe/lumberjack": "~1.1"
+	},
 	"require-dev": {
 		"squizlabs/php_codesniffer": "@stable",
 		"phpmd/phpmd": "@stable",
