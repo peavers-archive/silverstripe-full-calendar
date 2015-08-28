@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-	failonerror="false"
-	verbose="true">
+<phpunit backupGlobals="false"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         checkForUnintentionallyCoveredCode="true"
+         forceCoversAnnotation="true"
+         verbose="true">
+    <testsuites>
+        <testsuite name="Money">
+            <directory suffix="Test.php">../tests</directory>
+        </testsuite>
+    </testsuites>
 
-	<logging>
-		<log type="coverage-html" target="coverage"/>
-		<log type="coverage-clover" target="logs/clover.xml"/>
-		<log type="coverage-crap4j" target="logs/crap4j.xml"/>
-		<log type="coverage-xml" target="logs/coverage"/>
-		<log type="junit" target="logs/junit.xml"/>
-	</logging>
+    <logging>
+        <log type="coverage-html" target="coverage"/>
+        <log type="coverage-clover" target="logs/clover.xml"/>
+        <log type="coverage-crap4j" target="logs/crap4j.xml"/>
+        <log type="coverage-xml" target="logs/coverage"/>
+        <log type="junit" target="logs/junit.xml"/>
+    </logging>
 
+    <!--<filter>-->
+        <!--<whitelist processUncoveredFilesFromWhitelist="true">-->
+            <!--<directory suffix=".php">../code</directory>-->
+            <!--<exclude>-->
+                <!--<file>../src/autoload.php</file>-->
+            <!--</exclude>-->
+        <!--</whitelist>-->
+    <!--</filter>-->
 </phpunit>
+
