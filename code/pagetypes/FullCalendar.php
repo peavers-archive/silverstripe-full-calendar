@@ -148,6 +148,8 @@ class FullCalendar_Controller extends Page_Controller {
 			FULL_CALENDAR . '/javascript/lib/fullcalendar.min.js',
 			FULL_CALENDAR . '/javascript/lib/jquery.fancybox.js',
 			FULL_CALENDAR . '/javascript/lib/ate-latest.min.js',
+			FULL_CALENDAR . '/javascript/lib/ics.deps.min.js',
+			FULL_CALENDAR . '/javascript/ics.js',
 			FULL_CALENDAR . '/javascript/functions.js',
 		));
 
