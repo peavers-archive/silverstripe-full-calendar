@@ -8,5 +8,7 @@
 
 <div id="calendar" data-root-url="$getDocumentRoot.Link"></div>
 
+<div class="download-button"><i class="fa fa-download"></i></div>
+
 <% include Fancybox %>
 

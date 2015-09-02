@@ -2,7 +2,10 @@
 
     <div class="event-header"></div>
 
-    <!-- AddThisEvent button -->
+    <div class="event-dates">
+        <p><span class="event-start-date"></span> - <span class="event-end-date"></span></p>
+    </div>
+
 	<% if $AddThisEvents %>
         <div title="Add to Calendar" class="addthisevent">
             <i class="fa fa-calendar"></i>
@@ -17,10 +20,6 @@
             <span class="all_day_event">true</span>
         </div>
 	<% end_if %>
-
-    <div class="event-dates">
-        <p><span class="event-start-date"></span> - <span class="event-end-date"></span></p>
-    </div>
 
     <div class="event-content"></div>
 

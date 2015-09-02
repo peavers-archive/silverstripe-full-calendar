@@ -39,10 +39,9 @@ jQuery(function ($) {
 			// Events
 			events: jsonData,
 			eventClick: function (event) {
-
 				$('.title').html(event.title);
 				$('.description').html(event.shortContent);
-				$('.event-header').html(event.title).css({'background-color': event.color, 'color': event.textColor});
+				$('.event-header').html(event.title).addClass(event.colorClass).addClass(event.textColor);
 				$('.event-start-date').html(event.startDate);
 				$('.event-end-date').html(event.endDate);
 				$('.event-content').html(event.shortContent);
@@ -51,7 +50,6 @@ jQuery(function ($) {
 				$('.start').html(event.addThisStartDate);
 				$('.end').html(event.addThisEndDate);
 
-
 				// Hide the button if you don't have any content to link through to.
 				if (event.content == null) {
 					$('.event-button').hide();
@@ -59,7 +57,9 @@ jQuery(function ($) {
 					$('.event-button').show().find('a').attr('href', event.eventUrl).css({color: 'event.color'});
 				}
 
-				fancyboxSettings();
+				$('.fancybox-skin').addClass(event.textColor);
+
+				fancyboxSettings(event.textColor);
 			}
 		})
 	}
@@ -67,7 +67,7 @@ jQuery(function ($) {
 	/**
 	 * Fancybox
 	 */
-	function fancyboxSettings() {
+	function fancyboxSettings(textColor) {
 		$.fancybox({
 			padding: '',
 			width: 600,
@@ -81,7 +81,7 @@ jQuery(function ($) {
 			closeEffect: 'fade',
 			'href': '#fancy-box',
 			tpl: {
-				closeBtn: '<a title="Close" class="fancybox-item fancybox-close custom-close" href="javascript:;"></a>'
+				closeBtn: '<a title="Close" class="fancybox-item fancybox-close custom-close ' + textColor + '"  href="javascript:;"></a>'
 			},
 			helpers: {
 				overlay: {
@@ -134,15 +134,13 @@ jQuery(function ($) {
 	 * Download calendar all events
 	 */
 	function downloadCal() {
-
 		$(".download-button").click(function () {
 			var cal = ics();
 			$.each(jsonData, function (idx, jsonData) {
 				cal.addEvent(jsonData.title, jsonData.content, jsonData.eventUrl, jsonData.start, jsonData.end);
 			});
-			cal.download("Calendar Events");
+			cal.download("Calendar Events", null);
 		});
-
 	}
 
 	/**

@@ -24,10 +24,6 @@ class FullCalendar extends Page {
 		'LoadAnimation' => 'Image',
 	);
 
-	private static $has_many = array(
-		'EventColor' => 'EventColor',
-	);
-
 	private static $defaults = array(
 		'CacheSetting'  => '1',
 		'LegacyEvents'  => '0',
@@ -54,8 +50,6 @@ class FullCalendar extends Page {
 
 			// Functional, how things work
 			ToggleCompositeField::create('', 'Functional Settings', array(
-				CheckboxField::create('CacheSetting', 'Enable caching')
-					->setDescription('Should only disable for debugging/development purposes'),
 				CheckboxField::create('LegacyEvents', 'Enable past events')
 					->setDescription('Show events where the end date has passed today\'s date'),
 				CheckboxField::create('AddThisEvents', 'Enable \'addthis\' feature')
@@ -97,9 +91,6 @@ class FullCalendar extends Page {
 
 				UploadField::create('LoadAnimation', 'Loading animation'),
 			)),
-
-			GridField::create('EventColor', 'Create color', $this->EventColor(), GridFieldConfig_RecordEditor::create()),
-
 		));
 
 		return $fields;
@@ -175,30 +166,7 @@ class FullCalendar_Controller extends Page_Controller {
 			$this->setStatusCode(400, $message);
 		}
 
-		if ($this->CacheSetting) {
-			return $this->getCachedData();
-		} else {
-			return $this->getData();
-		}
-	}
-
-	/**
-	 * Builds a cache of events if one doesn't exist, store the cache for 12 hours . The cache is cleared / reset
-	 * when a new event is published .
-	 *
-	 * @return json load of events to display
-	 */
-	public function getCachedData() {
-
-		$cache = SS_Cache::factory('calendar');
-		SS_Cache::set_cache_lifetime('calendar', 60 * 60 * 12);
-
-		if (!($result = unserialize($cache->load('events')))) {
-			$result = $this->getData();
-			$cache->save(serialize($result), 'events');
-		}
-
-		return $result;
+		return $this->getData();
 	}
 
 	/**
@@ -208,43 +176,47 @@ class FullCalendar_Controller extends Page_Controller {
 	 */
 	public function getData() {
 
-		if ($this->LegacyEvents) {
-			$filter = array(
-				'ParentID'          => $this->ID,
-				'IncludeOnCalendar' => true,
-			);
-		} else {
-			$filter = array(
-				'ParentID'            => $this->ID,
-				'IncludeOnCalendar'   => true,
-				'EndDate:GreaterThan' => date("Y-m-d"),
-			);
-		}
+		$filter = array(
+			'ParentID'          => $this->ID,
+			'IncludeOnCalendar' => true,
+		);
 
 		$result = array();
+
 		foreach (FullCalendarEvent::get()
 			->filter($filter) as $event) {
 
 			$result[] = array(
+
 				// Calendar settings
 				"view"             => $this->CalendarView,
 				"firstDay"         => $this->FirstDay,
 				"columnFormat"     => $this->ColumnFormat,
+
 				// Event data
 				"title"            => $event->Title,
 				"start"            => $event->StartDate,
 				"end"              => $event->EndDate,
-				"color"            => $event->BackgroundColor,
+
+				// Event settings
+				"colorClass"       => $event->EventColor,
 				"textColor"        => $event->TextColor,
-				"startDate"        => $this->getDateFormat($event, 'StartDate'),
-				"endDate"          => $this->getDateFormat($event, 'EndDate'),
+				"className"        => array(
+					$event->EventColor,
+					$event->TextColor,
+				),
+
+				// Lightbox data
+				"startDate"        => $this->getDateFormat($event, 'StartDate', 'l jS F Y'),
+				"endDate"          => $this->getDateFormat($event, 'EndDate', 'l jS F Y'),
 				"eventUrl"         => $event->URLSegment,
 				"content"          => $event->Content,
 				"shortContent"     => $this->getShortDescription($event),
+
 				// AddThis Feature
 				"addThisButton"    => $this->AddThisEvents,
-				"addThisStartDate" => $this->getAddThisDateFormat($event, 'StartDate'),
-				"addThisEndDate"   => $this->getAddThisDateFormat($event, 'EndDate'),
+				"addThisStartDate" => $this->getDateFormat($event, 'StartDate', 'm/d/Y'),
+				"addThisEndDate"   => $this->getDateFormat($event, 'EndDate', 'm/d/Y'),
 			);
 		}
 
@@ -270,28 +242,17 @@ class FullCalendar_Controller extends Page_Controller {
 	}
 
 	/**
-	 * Date used for calendar events
+	 * Simple date format util
 	 *
 	 * @param $event
 	 * @param $date
+	 * @param $format
 	 *
 	 * @return bool|string
 	 */
-	public function getDateFormat($event, $date) {
+	public function getDateFormat($event, $date, $format) {
 
-		return date('l jS F Y', strtotime($event->$date));
+		return date($format, strtotime($event->$date));
 	}
 
-	/**
-	 * Date used for AddThis function
-	 *
-	 * @param $event
-	 * @param $date
-	 *
-	 * @return bool|string
-	 */
-	public function getAddThisDateFormat($event, $date) {
-
-		return date('m/d/Y', strtotime($event->$date));
-	}
 }

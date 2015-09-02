@@ -22,18 +22,15 @@
 		]
 	},
 	"require": {
-		"silverstripe/framework": ">=3.1.0",
-		"silverstripe/cms": ">=3.1.0",
+		"moe/color-swab": "@stable",
 		"silverstripe/lumberjack": "~1.1"
 	},
-	"require-dev": {
-		"squizlabs/php_codesniffer": "@stable",
-		"phpmd/phpmd": "@stable",
-		"sebastian/phpcpd": "@stable",
-		"pdepend/pdepend": "@stable",
-		"phploc/phploc": "@stable",
-		"phpunit/phpunit": "@stable",
-		"theseer/phpdox": "@stable"
-	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://gitlab.cwp.govt.nz/modules/color-swab.git",
+			"private": "true"
+		}
+	],
 	"minimum-stability": "dev"
 }
