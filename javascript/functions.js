@@ -5,6 +5,7 @@ jQuery(function ($) {
 	"use strict";
 
 	var rootUrl = $("#calendar").data("root-url");
+	var jsonData;
 
 	/**
 	 * Makes ajax call to gather events
@@ -15,7 +16,9 @@ jQuery(function ($) {
 			type: "GET",
 			cache: true,
 			success: function (json) {
-				calendarSettings(json);
+				jsonData = json;
+
+				calendarSettings();
 			}
 		});
 	}
@@ -25,17 +28,18 @@ jQuery(function ($) {
 	 *
 	 * @param json
 	 */
-	function calendarSettings(json) {
+	function calendarSettings() {
 		$('#calendar').fullCalendar({
 
 			// Settings
-			columnFormat: json[0].columnFormat,
-			defaultView: json[0].view,
-			firstDay: json[0].firstDay,
+			columnFormat: jsonData[0].columnFormat,
+			defaultView: jsonData[0].view,
+			firstDay: jsonData[0].firstDay,
 
 			// Events
-			events: json,
+			events: jsonData,
 			eventClick: function (event) {
+
 				$('.title').html(event.title);
 				$('.description').html(event.shortContent);
 				$('.event-header').html(event.title).css({'background-color': event.color, 'color': event.textColor});
@@ -46,6 +50,7 @@ jQuery(function ($) {
 				//AddThis values
 				$('.start').html(event.addThisStartDate);
 				$('.end').html(event.addThisEndDate);
+
 
 				// Hide the button if you don't have any content to link through to.
 				if (event.content == null) {
@@ -126,6 +131,21 @@ jQuery(function ($) {
 	}
 
 	/**
+	 * Download calendar all events
+	 */
+	function downloadCal() {
+
+		$(".download-button").click(function () {
+			var cal = ics();
+			$.each(jsonData, function (idx, jsonData) {
+				cal.addEvent(jsonData.title, jsonData.content, jsonData.eventUrl, jsonData.start, jsonData.end);
+			});
+			cal.download("Calendar Events");
+		});
+
+	}
+
+	/**
 	 * Tidies up the ajax function, removes the loader when ready.
 	 *
 	 * Ensures the calendar is hidden while loading regardless of CSS properties.
@@ -146,5 +166,6 @@ jQuery(function ($) {
 	 */
 	$(document).ready(function () {
 		loadCalendar();
+		downloadCal();
 	});
 });
