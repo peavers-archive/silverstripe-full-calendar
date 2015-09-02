@@ -25,11 +25,13 @@ class FullCalendarEvent extends Page {
 		'Url'               => 'Varchar(255)',
 		'EventColor'        => 'Varchar(255)',
 		'TextColor'         => 'Varchar(255)',
-		'ShortDescription'  => 'HTMLText',
+		'ShortDescription'  => 'Varchar(255)',
 	);
 
 	private static $defaults = array(
 		'IncludeOnCalendar' => true,
+		'TextColor'         => 'text-black',
+		'EventColor'        => 'color-blue-600',
 	);
 
 	/**
@@ -43,14 +45,8 @@ class FullCalendarEvent extends Page {
 
 		$fields->addFieldsToTab("Root.Main", array(
 
-			FieldGroup::create(DateField::create("StartDate", "Starts"), DateField::create("EndDate", "Ends"))->setTitle("Event dates"),
-
-			DropdownField::create('IncludeOnCalendar', 'Include on calendar')
-				->setDescription('Should this event be shown on the calendar')
-				->setSource(array(
-					true  => "Yes",
-					false => "No",
-				)),
+			FieldGroup::create(DateField::create("StartDate", "Starts"), DateField::create("EndDate", "Ends"))
+				->setTitle("Event dates"),
 
 			ColorSwabField::create('EventColor', 'Event colour'),
 			OptionsetField::create('TextColor', 'Text colour')
@@ -60,13 +56,30 @@ class FullCalendarEvent extends Page {
 				))
 				->setDescription('Depending on the background colour, you may want to use black or white text'),
 
-			HtmlEditorField::create('ShortDescription', 'A short description')
-				->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event. <strong>Limit 255 characters</strong>")
-				->setRows(2),
+			OptionsetField::create('IncludeOnCalendar', 'Include on calendar')
+				->setDescription('Should this event be shown on the calendar')
+				->setSource(array(
+					true  => "Yes",
+					false => "No",
+				)),
+
+			TextareaField::create('ShortDescription', 'A short description')
+				->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event. <strong>Limit 255 characters</strong>"),
 
 		), "Content");
 
 		return $fields;
+	}
+
+	/**
+	 * Sets the Date field to the current date.
+	 */
+	public function populateDefaults() {
+
+		$this->StartDate = date('Y-m-d');
+		$this->EndDate = date('Y-m-d');
+
+		parent::populateDefaults();
 	}
 
 	/**

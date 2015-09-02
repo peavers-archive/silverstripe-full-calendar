@@ -5,6 +5,7 @@ jQuery(function ($) {
 	"use strict";
 
 	var rootUrl = $("#calendar").data("root-url");
+
 	var jsonData;
 
 	/**
@@ -99,7 +100,6 @@ jQuery(function ($) {
 	 */
 	function addThisSettings() {
 
-		// reload all the data
 		addthisevent.refresh();
 
 		addthisevent.settings({
