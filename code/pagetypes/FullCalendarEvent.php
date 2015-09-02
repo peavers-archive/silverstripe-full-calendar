@@ -3,8 +3,7 @@
 /**
  * Class FullCalendarEvent
  */
-class FullCalendarEvent extends Page
-{
+class FullCalendarEvent extends Page {
 
 	private static $singular_name = "Full Calendar event";
 
@@ -20,14 +19,13 @@ class FullCalendarEvent extends Page
 
 	private static $db = array(
 		'IncludeOnCalendar' => 'Boolean',
-		'Title' => 'Varchar(255)',
-		'StartDate' => 'Date',
-		'EndDate' => 'Date',
-		'Url' => 'Varchar(255)',
-		'BackgroundColor' => 'Varchar(7)',
-		'TextColor' => 'Varchar(7)',
-		'ShortDescription' => 'HTMLText',
-
+		'Title'             => 'Varchar(255)',
+		'StartDate'         => 'Date',
+		'EndDate'           => 'Date',
+		'Url'               => 'Varchar(255)',
+		'EventColor'        => 'Varchar(255)',
+		'TextColor'         => 'Varchar(255)',
+		'ShortDescription'  => 'HTMLText',
 	);
 
 	private static $defaults = array(
@@ -39,37 +37,28 @@ class FullCalendarEvent extends Page
 	 *
 	 * @return mixed
 	 */
-	public function getCMSFields()
-	{
+	public function getCMSFields() {
 
 		$fields = parent::getCMSFields();
 
 		$fields->addFieldsToTab("Root.Main", array(
 
-			DatetimeField::create("StartDate", "Start date"),
-			DatetimeField::create("EndDate", "End date"),
+			FieldGroup::create(DateField::create("StartDate", "Starts"), DateField::create("EndDate", "Ends"))->setTitle("Event dates"),
+
 			DropdownField::create('IncludeOnCalendar', 'Include on calendar')
 				->setDescription('Should this event be shown on the calendar')
 				->setSource(array(
-					true => "Yes",
+					true  => "Yes",
 					false => "No",
 				)),
 
-			DropdownField::create("TextColor", "Text colour")
-				->setDescription('Colors are created via Full Calendar Settings')
-				->setSource(EventColor::get()
-					->filter(array('FullCalendarID' => $this->ParentID))
-					->where("Type = 'Both' OR Type = 'Text'")
-					->sort(array("Title" => "ASC"))
-					->map('HexCode', 'Title')),
-
-			DropdownField::create("BackgroundColor", "Background colour")
-				->setDescription('Colors are created via Full Calendar Settings')
-				->setSource(EventColor::get()
-					->filter(array('FullCalendarID' => $this->ParentID))
-					->where("Type = 'Both' OR Type = 'Background'")
-					->sort(array("Title" => "ASC"))
-					->map('HexCode', 'Title')),
+			ColorSwabField::create('EventColor', 'Event colour'),
+			OptionsetField::create('TextColor', 'Text colour')
+				->setSource(array(
+					'text-black' => 'Black',
+					'text-white' => 'White',
+				))
+				->setDescription('Depending on the background colour, you may want to use black or white text'),
 
 			HtmlEditorField::create('ShortDescription', 'A short description')
 				->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event. <strong>Limit 255 characters</strong>")
@@ -85,48 +74,32 @@ class FullCalendarEvent extends Page
 	 *
 	 * @return RequiredFields
 	 */
-	function getCMSValidator()
-	{
+	function getCMSValidator() {
 
 		return new RequiredFields(array(
 			'StartDate',
 			'EndDate',
+			'EventColor',
+			'TextColor',
 		));
 	}
 
-	public function onBeforeWrite()
-	{
+	public function onBeforeWrite() {
 
 		$startDate = DateTime::createFromFormat('Y-m-d', $this->StartDate);
 		$endDate = DateTime::createFromFormat('Y-m-d', $this->EndDate);
 
 		if ($startDate > $endDate) {
-			throw new ValidationException("End date (" . $endDate->format("d M Y") . ") cannot be before start date(" . $startDate . ")");
-			return;
+			throw new ValidationException("End date cannot occur before start date");
 		}
 
 		parent::onBeforeWrite();
-
-		return;
-	}
-
-	/**
-	 * Clear the cache if a new event is written
-	 */
-	public function onAfterWrite()
-	{
-
-		$cache = SS_Cache::factory('calendar');
-		$cache->remove('events');
-
-		parent::onAfterWrite();
 	}
 }
 
 /**
  * Class FullCalendarEvent_Controller
  */
-class FullCalendarEvent_Controller extends Page_Controller
-{
+class FullCalendarEvent_Controller extends Page_Controller {
 
 }

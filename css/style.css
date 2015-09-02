@@ -1,142 +1,168 @@
 /* Loading animation
  ====================*/
 #calendar {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.8s linear;
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 0.8s linear;
 }
 
 .document-overlay {
-    visibility: hidden;
-    width: inherit;
-    height: inherit;
-    opacity: 0;
-    transition: opacity 0.5s linear;
+	visibility: hidden;
+	width: inherit;
+	height: inherit;
+	opacity: 0;
+	transition: opacity 0.5s linear;
 }
 
 .document-overlay img {
-    position: relative;
-    display: block;
-    margin: 0 auto;
+	position: relative;
+	display: block;
+	margin: 0 auto;
 }
 
 /* Fancybox style
  ====================*/
 #fancy-box {
-    display: none;
-    font-size: 14px;
+	display: none;
+	font-size: 14px;
 }
 
 .event-header {
-    padding: 60px 50px 20px 50px;
-    background-color: #000000;
-    color: #ffffff;
-    font-size: 24px;
+	padding: 60px 50px 20px 50px;
+	color: #ffffff;
+	font-size: 24px;
 }
 
 .event-dates {
-    padding: 10px 50px;
-    color: #848484;
+	padding: 10px 50px;
+	color: #848484;
 }
 
 .event-dates:before {
-    position: absolute;
-    left: 18px;
-    padding-right: 15px;
-    color: #878787;
-    content: "\f017";
-    font-family: "FontAwesome";
+	position: absolute;
+	left: 18px;
+	padding-right: 15px;
+	color: #878787;
+	content: "\f017";
+	font-family: "FontAwesome";
 }
 
 .event-content {
-    padding: 10px 50px;
-    color: #848484;
+	padding: 10px 50px;
+	color: #848484;
 }
 
 .event-content:before {
-    position: absolute;
-    left: 18px;
-    padding-right: 15px;
-    color: #878787;
-    content: "\f0f6";
-    font-family: "FontAwesome";
+	position: absolute;
+	left: 18px;
+	padding-right: 15px;
+	color: #878787;
+	content: "\f0f6";
+	font-family: "FontAwesome";
 }
 
 .event-button {
-    padding: 15px;
-    color: #848484;
-    position: absolute;
-    bottom: 0;
-    right: 6px;
+	padding: 15px;
+	color: #848484;
+	position: absolute;
+	bottom: 0;
+	right: 6px;
 }
 
 /* Fancybox overwrites
  ====================*/
 #fancybox-loading div {
-    background: url('../../full-calendar/images/fancybox/fancybox_loading.gif') center center no-repeat;
+	background: url('../../full-calendar/images/fancybox/fancybox_loading.gif') center center no-repeat;
 }
 
 .fancybox-nav {
-    background: transparent url('../../full-calendar/images/fancybox/fancybox_loading.gif'); /* helps IE */
+	background: transparent url('../../full-calendar/images/fancybox/fancybox_loading.gif'); /* helps IE */
 }
 
 .fancybox-overlay {
-    background: url('../../full-calendar/images/fancybox/fancybox_overlay.png');
+	background: url('../../full-calendar/images/fancybox/fancybox_overlay.png');
 }
 
 .fancybox-close {
-    background-image: none;
-    position: absolute;
-    top: 18px;
-    right: 22px;
-    z-index: 8040;
-    display: inline-block;
-    width: auto;
-    height: auto;
-    color: #ffffff;
-    cursor: pointer;
+	background-image: none;
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	z-index: 8040;
+	display: inline-block;
+	width: auto;
+	height: auto;
+	cursor: pointer;
 }
 
 .fancybox-skin {
-    border-radius: 0;
-    background: #ffffff;
+	border-radius: 0;
+	background: #ffffff;
 }
 
 .fancybox-opened .fancybox-skin {
-    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 .fancybox-close:hover {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 .fancybox-close:before {
-    content: "\f111";
-    font-family: "FontAwesome";
+	content: "\f057";
+	font-family: "FontAwesome";
 }
 
 .fancybox-inner {
-    overflow: visible !important;
+	overflow: visible !important;
 }
 
 /* Calendar overwrites
  ====================*/
 .fc button {
-    height: auto;
+	height: auto;
 }
 
 .fc-day-grid-event {
-    margin: 0;
-    padding: 10px;
+	margin: 0;
+	padding: 10px;
 }
 
 .fc-event {
-    border-radius: 0;
-    font-size: 1.3em;
+	border-radius: 0;
+	font-size: 1.3em;
 }
 
 .fc-event-container:hover {
-    cursor: pointer;
+	cursor: pointer;
+}
+
+/* AddThisEvent overwrites
+ ====================*/
+.addthisevent-drop {
+	padding: 0;
+	margin: 0;
+	font-family: inherit;
+	font-size: 14px;
+}
+
+.addthisevent-drop:hover {
+	font-size: 14px;
+	text-decoration: inherit;
+}
+
+/* General helpers for style
+ ====================*/
+.text-black {
+	color: #000;
+}
+
+.text-white {
+	color: #fff;
+}
+
+.copyx {
+	display: none !important;
 }
