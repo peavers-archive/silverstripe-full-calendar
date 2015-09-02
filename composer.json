@@ -23,7 +23,7 @@
 	},
 	"require": {
 		"moe/color-swab": "@stable",
-		"silverstripe/lumberjack": "~1.1"
+		"silverstripe/lumberjack": "@stable"
 	},
 	"repositories": [
 		{
