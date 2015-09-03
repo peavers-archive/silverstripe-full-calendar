@@ -147,7 +147,7 @@ jQuery(function ($) {
 			$.each(jsonData, function (idx, jsonData) {
 				cal.addEvent(jsonData.title, jsonData.content, jsonData.eventUrl, jsonData.start, jsonData.end);
 			});
-			cal.download("Calendar Events", null);
+			cal.download("Calendar Events", ".ics");
 		});
 	}
 
