@@ -60,7 +60,7 @@ jQuery(function ($) {
 
 				$('.fancybox-skin').addClass(event.textColor);
 
-				fancyboxSettings(event.textColor);
+				fancyboxSettings(event.textColor, event.colorClass);
 			}
 		})
 	}
@@ -68,7 +68,7 @@ jQuery(function ($) {
 	/**
 	 * Fancybox
 	 */
-	function fancyboxSettings(textColor) {
+	function fancyboxSettings(textColor, backgroundColor) {
 		$.fancybox({
 			padding: '',
 			width: 600,
@@ -82,13 +82,21 @@ jQuery(function ($) {
 			closeEffect: 'fade',
 			'href': '#fancy-box',
 			tpl: {
-				closeBtn: '<a title="Close" class="fancybox-item fancybox-close custom-close ' + textColor + '"  href="javascript:;"></a>'
+				closeBtn: '<a title="Close" id="close-button" class="fancybox-item fancybox-close custom-close ' + textColor + '"  href="javascript:;"></a>'
 			},
 			helpers: {
 				overlay: {
 					locked: false
 				}
 			},
+
+			// Remove the colour classes from everything
+			beforeClose: function () {
+				$('.event-header').removeClass(backgroundColor).removeClass(textColor);
+				$('#close-button').removeClass(textColor);
+			},
+
+			// Refresh the addThis library data
 			afterLoad: function () {
 				addThisSettings();
 			}
