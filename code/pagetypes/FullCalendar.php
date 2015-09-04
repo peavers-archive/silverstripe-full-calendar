@@ -200,6 +200,7 @@ class FullCalendar_Controller extends Page_Controller
 				"title" => $event->Title,
 				"start" => $event->StartDate,
 				"end" => $event->EndDate,
+				"downloadLink" => $event->IcsDownloadLink,
 
 				// Event settings
 				"colorClass" => $event->EventColor,

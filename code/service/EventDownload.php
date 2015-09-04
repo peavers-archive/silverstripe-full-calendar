@@ -77,7 +77,11 @@ class EventDownload
 	 */
 	public function generateEventList($ID = null, $singleEventID = null)
 	{
-		$events = FullCalendarEvent::get()->filter(array("ParentID" => $ID));
+		if (!is_null($ID)) {
+			$events = FullCalendarEvent::get()->filter(array("ParentID" => $ID));
+		} else {
+			$events = DataObject::get_by_id('FullCalendarEvent', $singleEventID);
+		}
 
 		$this->addToFile("BEGIN:VCALENDAR\n");
 		$this->addToFile("VERSION:2.0\n");
