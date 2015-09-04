@@ -46,6 +46,11 @@ class EventDownload {
 		return preg_replace('/([\,;])/', '\\\$1', $string);
 	}
 
+	public function addToFile($string) {
+
+		file_put_contents('../' . $this->filePath, $string, FILE_APPEND);
+	}
+
 	/**
 	 *
 	 */
@@ -61,10 +66,8 @@ class EventDownload {
 
 		$this->file->write();
 
-		file_put_contents('../'
-			. $this->filePath, "BEGIN:VCALENDAR\n", FILE_APPEND);
-		file_put_contents('../'
-			. $this->filePath, "VERSION:2.0\n", FILE_APPEND);
+		$this->addToFile("BEGIN:VCALENDAR\n");
+		$this->addToFile("VERSION:2.0\n");
 	}
 
 	/**
@@ -72,7 +75,8 @@ class EventDownload {
 	 */
 	public function generateEventList($ID) {
 
-		$events = FullCalendarEvent::get()->filter(array("ParentID" => $ID));
+		$events = FullCalendarEvent::get()
+			->filter(array("ParentID" => $ID));
 
 		$content = null;
 		foreach ($events as $event) {
@@ -89,12 +93,10 @@ class EventDownload {
 			$content .= "TRANSP:TRANSPARENT\n";
 			$content .= "END:VEVENT\n";
 
-			file_put_contents('../' . $this->filePath, $content, FILE_APPEND);
+			$this->addToFile($content);
 		}
 
-		file_put_contents('../'
-			. $this->filePath, "END:VCALENDAR\n", FILE_APPEND);
-
+		$this->addToFile("END:VCALENDAR\n");
 	}
 
 }
