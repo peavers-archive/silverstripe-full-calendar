@@ -1,7 +1,7 @@
 /* global saveAs, Blob, BlobBuilder, console */
 /* exported ics */
 
-var ics = function() {
+var ics = function () {
 	'use strict';
 
 	if (navigator.userAgent.indexOf('MSIE') > -1 && navigator.userAgent.indexOf('MSIE 10') == -1) {
@@ -22,7 +22,7 @@ var ics = function() {
 		 * Returns events array
 		 * @return {array} Events
 		 */
-		'events': function() {
+		'events': function () {
 			return calendarEvents;
 		},
 
@@ -30,7 +30,7 @@ var ics = function() {
 		 * Returns calendar
 		 * @return {string} Calendar in iCalendar format
 		 */
-		'calendar': function() {
+		'calendar': function () {
 			return calendarStart + SEPARATOR + calendarEvents.join(SEPARATOR) + calendarEnd;
 		},
 
@@ -42,7 +42,7 @@ var ics = function() {
 		 * @param  {string} begin       Beginning date of event
 		 * @param  {string} stop        Ending date of event
 		 */
-		'addEvent': function(subject, description, location, begin, stop) {
+		'addEvent': function (subject, description, location, begin, stop) {
 			// I'm not in the mood to make these optional... So they are all required
 			if (typeof subject === 'undefined' ||
 				typeof description === 'undefined' ||
@@ -51,7 +51,8 @@ var ics = function() {
 				typeof stop === 'undefined'
 			) {
 				return false;
-			};
+			}
+			;
 
 			//TODO add time and time zone? use moment to format?
 			var start_date = new Date(begin);
@@ -103,7 +104,7 @@ var ics = function() {
 		 * @param  {string} filename Filename
 		 * @param  {string} ext      Extention
 		 */
-		'download': function(filename, ext) {
+		'download': function (filename, ext) {
 			if (calendarEvents.length < 1) {
 				return false;
 			}

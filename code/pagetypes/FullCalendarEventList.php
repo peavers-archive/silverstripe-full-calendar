@@ -3,7 +3,8 @@
 /**
  * Class FullCalendarEventList
  */
-class FullCalendarEventList extends Page {
+class FullCalendarEventList extends Page
+{
 
 	private static $singular_name = 'Full Calendar event list';
 
@@ -20,7 +21,8 @@ class FullCalendarEventList extends Page {
 /**
  * Class FullCalendarEventList_Controller
  */
-class FullCalendarEventList_Controller extends Page_Controller {
+class FullCalendarEventList_Controller extends Page_Controller
+{
 
 	/**
 	 * Return a list of events but we don't care about past events so exclude anything that ended before today.
@@ -28,10 +30,11 @@ class FullCalendarEventList_Controller extends Page_Controller {
 	 *
 	 * @return mixed
 	 */
-	public function getEvent() {
+	public function getEvent()
+	{
 
 		$filter = array(
-			'ParentID'            => $this->Parent()->ID,
+			'ParentID' => $this->Parent()->ID,
 			'EndDate:GreaterThan' => date("Y-m-d"),
 		);
 
