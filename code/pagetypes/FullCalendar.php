@@ -13,12 +13,11 @@ class FullCalendar extends Page
 	private static $can_be_root = true;
 
 	private static $db = array(
-		'CacheSetting' => 'Boolean',
 		'LegacyEvents' => 'Boolean',
-		'AddThisEvents' => 'Boolean',
 		'CalendarView' => 'Varchar(255)',
 		'FirstDay' => 'Int',
 		'ColumnFormat' => 'Varchar(255)',
+		'IcsDownloadLink' => 'Varchar(255)',
 	);
 
 	private static $has_one = array(
@@ -93,14 +92,25 @@ class FullCalendar extends Page
 
 				UploadField::create('LoadAnimation', 'Loading animation'),
 			)),
+
+			TextField::create("IcsDownloadLink", 'IcsDownloadLink')
+
 		));
 
 		return $fields;
 	}
 
+	public function onBeforeWrite()
+	{
+		$service = new EventDownload($this->Title);
+
+		$this->IcsDownloadLink = $service->generateEventList($this->ID);
+
+		parent::onBeforeWrite();
+	}
+
 	public function getDocumentRoot()
 	{
-
 		return $this;
 	}
 }
@@ -151,9 +161,6 @@ class FullCalendar_Controller extends Page_Controller
 
 		Requirements::set_combined_files_folder(ASSETS_DIR
 			. '/_combinedfiles/full-calendar');
-
-		$service = new EventDownload($this->Title);
-		$service->generateEventList($this->ID);
 	}
 
 	/**
