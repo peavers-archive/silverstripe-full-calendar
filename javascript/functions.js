@@ -45,6 +45,7 @@ jQuery(function ($) {
 				$('.event-header').html(event.title).addClass(event.colorClass).addClass(event.textColor);
 				$('.event-start-date').html(event.startDate);
 				$('.event-end-date').html(event.endDate);
+				$('.event-download').find('a').attr('href', event.downloadLink);
 				$('.event-content').html(event.shortContent);
 				$('.event-button').show().find('a').attr('href', event.eventUrl);
 				$('.fancybox-skin').addClass(event.textColor);

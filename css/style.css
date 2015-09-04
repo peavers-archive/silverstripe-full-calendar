@@ -61,6 +61,20 @@
 	font-family: "FontAwesome";
 }
 
+.event-download {
+	padding: 10px 50px;
+	color: #848484;
+}
+
+.event-download:before {
+	position: absolute;
+	left: 18px;
+	padding-right: 15px;
+	color: #878787;
+	content: "\f073";
+	font-family: "FontAwesome";
+}
+
 .event-button {
 	padding: 15px;
 	color: #848484;
@@ -139,20 +153,6 @@
 	cursor: pointer;
 }
 
-/* AddThisEvent overwrites
- ====================*/
-.addthisevent-drop {
-	padding: 0;
-	margin: 0;
-	font-family: inherit;
-	font-size: 14px;
-}
-
-.addthisevent-drop:hover {
-	font-size: 14px;
-	text-decoration: inherit;
-}
-
 /* General helpers for style
  ====================*/
 .text-black {
@@ -161,8 +161,4 @@
 
 .text-white {
 	color: #fff;
-}
-
-.copyx {
-	display: none !important;
 }

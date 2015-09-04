@@ -27,7 +27,7 @@ class FullCalendarEvent extends Page
 		'EventColor' => 'Varchar(255)',
 		'TextColor' => 'Varchar(255)',
 		'ShortDescription' => 'Varchar(255)',
-		'ExportedToICS' => 'Boolean'
+		'IcsDownloadLink' => 'Varchar(255)',
 	);
 
 	private static $defaults = array(
@@ -68,6 +68,8 @@ class FullCalendarEvent extends Page
 
 			TextareaField::create('ShortDescription', 'A short description')
 				->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event. <strong>Limit 255 characters</strong>"),
+
+			TextField::create("IcsDownloadLink", 'IcsDownloadLink'),
 
 		), "Content");
 
@@ -115,6 +117,10 @@ class FullCalendarEvent extends Page
 		if ($this->ShortDescription === "") {
 			$this->ShortDescription = "(No description set)";
 		}
+
+		// Write .ics file for this event
+		$service = new EventDownload($this->Title);
+		$this->IcsDownloadLink = $service->generateEventList(null, $this->ID);
 
 		parent::onBeforeWrite();
 	}
