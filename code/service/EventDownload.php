@@ -46,6 +46,9 @@ class EventDownload {
 		return preg_replace('/([\,;])/', '\\\$1', $string);
 	}
 
+	/**
+	 * @param $string
+	 */
 	public function addToFile($string) {
 
 		file_put_contents('../' . $this->filePath, $string, FILE_APPEND);
