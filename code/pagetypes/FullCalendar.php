@@ -3,8 +3,7 @@
 /**
  * Class FullCalendar
  */
-class FullCalendar extends Page
-{
+class FullCalendar extends Page {
 
 	private static $singular_name = 'Full Calendar';
 
@@ -13,12 +12,12 @@ class FullCalendar extends Page
 	private static $can_be_root = true;
 
 	private static $db = array(
-		'CacheSetting' => 'Boolean',
-		'LegacyEvents' => 'Boolean',
+		'CacheSetting'  => 'Boolean',
+		'LegacyEvents'  => 'Boolean',
 		'AddThisEvents' => 'Boolean',
-		'CalendarView' => 'Varchar(255)',
-		'FirstDay' => 'Int',
-		'ColumnFormat' => 'Varchar(255)',
+		'CalendarView'  => 'Varchar(255)',
+		'FirstDay'      => 'Int',
+		'ColumnFormat'  => 'Varchar(255)',
 	);
 
 	private static $has_one = array(
@@ -26,10 +25,10 @@ class FullCalendar extends Page
 	);
 
 	private static $defaults = array(
-		'CacheSetting' => '1',
-		'LegacyEvents' => '0',
+		'CacheSetting'  => '1',
+		'LegacyEvents'  => '0',
 		'AddThisEvents' => '0',
-		'CalendarView' => 'month',
+		'CalendarView'  => 'month',
 	);
 
 	private static $allowed_children = array(
@@ -43,8 +42,7 @@ class FullCalendar extends Page
 		'Lumberjack',
 	);
 
-	public function getCMSFields()
-	{
+	public function getCMSFields() {
 
 		$fields = parent::getCMSFields();
 
@@ -64,11 +62,11 @@ class FullCalendar extends Page
 				DropdownField::create('CalendarView', 'Calendar view')
 					->setDescription('(<a href="http://fullcalendar.io/docs/views/Available_Views/" target="_blank">?</a>)')
 					->setSource(array(
-						'month' => 'Month',
-						'basicWeek' => 'Basic week',
-						'basicDay' => 'Basic day',
+						'month'      => 'Month',
+						'basicWeek'  => 'Basic week',
+						'basicDay'   => 'Basic day',
 						'agendaWeek' => 'Agenda week',
-						'agendaDay' => 'Agenda day',
+						'agendaDay'  => 'Agenda day',
 					)),
 
 				DropdownField::create('FirstDay', 'First day of the week')
@@ -86,9 +84,9 @@ class FullCalendar extends Page
 				DropdownField::create('ColumnFormat', 'Column format')
 					->setDescription("Determines the text that will be displayed on the calendar's column headings.")
 					->setSource(array(
-						'ddd' => 'Mon, Tues, Wed',
+						'ddd'     => 'Mon, Tues, Wed',
 						'ddd M/D' => 'Mon 9/7, Tues 9/8, Wed 9/9',
-						'dddd' => 'Monday, Tuesday, Wednesday',
+						'dddd'    => 'Monday, Tuesday, Wednesday',
 					)),
 
 				UploadField::create('LoadAnimation', 'Loading animation'),
@@ -98,8 +96,7 @@ class FullCalendar extends Page
 		return $fields;
 	}
 
-	public function getDocumentRoot()
-	{
+	public function getDocumentRoot() {
 
 		return $this;
 	}
@@ -108,8 +105,7 @@ class FullCalendar extends Page
 /**
  * Class FullCalendar_Controller
  */
-class FullCalendar_Controller extends Page_Controller
-{
+class FullCalendar_Controller extends Page_Controller {
 
 	private static $allowed_actions = array(
 		'eventsAsJSON',
@@ -121,8 +117,7 @@ class FullCalendar_Controller extends Page_Controller
 	 * Note: moment.min.js breaks javascript minimisation so is excluded from the
 	 * combine_files call.
 	 */
-	public function init()
-	{
+	public function init() {
 
 		parent::init();
 
@@ -146,11 +141,14 @@ class FullCalendar_Controller extends Page_Controller
 			FULL_CALENDAR . '/javascript/lib/ate-latest.min.js',
 			FULL_CALENDAR . '/javascript/lib/ics.deps.min.js',
 			FULL_CALENDAR . '/javascript/lib/ics.js',
-//			FULL_CALENDAR . '/javascript/functions.js',
+			//			FULL_CALENDAR . '/javascript/functions.js',
 		));
 
 		Requirements::set_combined_files_folder(ASSETS_DIR
 			. '/_combinedfiles/full-calendar');
+
+		$service = new EventDownload();
+		$service->generateEventList($this->ID);
 	}
 
 	/**
@@ -162,8 +160,7 @@ class FullCalendar_Controller extends Page_Controller
 	 *
 	 * @return string
 	 */
-	public function eventsAsJSON($message = "", $status = "success")
-	{
+	public function eventsAsJSON($message = "", $status = "success") {
 
 		$this->getResponse()
 			->addHeader('Content-Type', 'application/json; charset=utf-8');
@@ -180,50 +177,49 @@ class FullCalendar_Controller extends Page_Controller
 	 *
 	 * @return string
 	 */
-	public function getData()
-	{
+	public function getData() {
 
 		$filter = array(
-			'ParentID' => $this->ID,
+			'ParentID'          => $this->ID,
 			'IncludeOnCalendar' => true,
 		);
 
 		$result = array();
 
 		foreach (FullCalendarEvent::get()
-					 ->filter($filter) as $event) {
+			->filter($filter) as $event) {
 
 			$result[] = array(
 
 				// Calendar settings
-				"view" => $this->CalendarView,
-				"firstDay" => $this->FirstDay,
-				"columnFormat" => $this->ColumnFormat,
+				"view"             => $this->CalendarView,
+				"firstDay"         => $this->FirstDay,
+				"columnFormat"     => $this->ColumnFormat,
 
 				// Event data
-				"title" => $event->Title,
-				"start" => $event->StartDate,
-				"end" => $event->EndDate,
+				"title"            => $event->Title,
+				"start"            => $event->StartDate,
+				"end"              => $event->EndDate,
 
 				// Event settings
-				"colorClass" => $event->EventColor,
-				"textColor" => $event->TextColor,
-				"className" => array(
+				"colorClass"       => $event->EventColor,
+				"textColor"        => $event->TextColor,
+				"className"        => array(
 					$event->EventColor,
 					$event->TextColor,
 				),
 
 				// Lightbox data
-				"startDate" => $this->getDateFormat($event, 'StartDate', 'l jS F Y'),
-				"endDate" => $this->getDateFormat($event, 'EndDate', 'l jS F Y'),
-				"eventUrl" => $event->URLSegment,
-				"content" => $event->Content,
-				"shortContent" => $this->getShortDescription($event),
+				"startDate"        => $this->getDateFormat($event, 'StartDate', 'l jS F Y'),
+				"endDate"          => $this->getDateFormat($event, 'EndDate', 'l jS F Y'),
+				"eventUrl"         => $event->URLSegment,
+				"content"          => $event->Content,
+				"shortContent"     => $this->getShortDescription($event),
 
 				// AddThis Feature
-				"addThisButton" => $this->AddThisEvents,
+				"addThisButton"    => $this->AddThisEvents,
 				"addThisStartDate" => $this->getDateFormat($event, 'StartDate', 'm/d/Y'),
-				"addThisEndDate" => $this->getDateFormat($event, 'EndDate', 'm/d/Y'),
+				"addThisEndDate"   => $this->getDateFormat($event, 'EndDate', 'm/d/Y'),
 			);
 		}
 
@@ -237,8 +233,7 @@ class FullCalendar_Controller extends Page_Controller
 	 *
 	 * @return string either a description or a message saying no description
 	 */
-	public function getShortDescription($event)
-	{
+	public function getShortDescription($event) {
 
 		$event = strip_tags($event->ShortDescription);
 
@@ -258,24 +253,9 @@ class FullCalendar_Controller extends Page_Controller
 	 *
 	 * @return bool|string
 	 */
-	public function getDateFormat($event, $date, $format)
-	{
+	public function getDateFormat($event, $date, $format) {
 
 		return date($format, strtotime($event->$date));
 	}
 
-
-	/**
-	 * Used for debugging
-	 */
-	public function testMethod()
-	{
-		$service = new EventDownload();
-
-		$download_link = $service->download();
-		return $download_link;
-//		$service->createTemplateFile();
-
-//		$service->getEvents();
-	}
 }

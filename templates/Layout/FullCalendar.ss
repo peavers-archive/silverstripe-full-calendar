@@ -12,7 +12,5 @@
 
 <%--<% include Fancybox %>--%>
 <h1>Test Method</h1>
-<pre>
 
-    <a href="<?=$testMethod;?>" >Dowload Invite</a>
-</pre>
+$generateEventList
