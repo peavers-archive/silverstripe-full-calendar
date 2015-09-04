@@ -3,7 +3,8 @@
 /**
  * Class FullCalendarEvent
  */
-class FullCalendarEvent extends Page {
+class FullCalendarEvent extends Page
+{
 
 	private static $singular_name = "Full Calendar event";
 
@@ -19,19 +20,20 @@ class FullCalendarEvent extends Page {
 
 	private static $db = array(
 		'IncludeOnCalendar' => 'Boolean',
-		'Title'             => 'Varchar(255)',
-		'StartDate'         => 'Date',
-		'EndDate'           => 'Date',
-		'Url'               => 'Varchar(255)',
-		'EventColor'        => 'Varchar(255)',
-		'TextColor'         => 'Varchar(255)',
-		'ShortDescription'  => 'Varchar(255)',
+		'Title' => 'Varchar(255)',
+		'StartDate' => 'Date',
+		'EndDate' => 'Date',
+		'Url' => 'Varchar(255)',
+		'EventColor' => 'Varchar(255)',
+		'TextColor' => 'Varchar(255)',
+		'ShortDescription' => 'Varchar(255)',
+		'ExportedToICS' => 'Boolean'
 	);
 
 	private static $defaults = array(
 		'IncludeOnCalendar' => true,
-		'TextColor'         => 'text-black',
-		'EventColor'        => 'color-blue-600',
+		'TextColor' => 'text-black',
+		'EventColor' => 'color-blue-600',
 	);
 
 	/**
@@ -39,7 +41,8 @@ class FullCalendarEvent extends Page {
 	 *
 	 * @return mixed
 	 */
-	public function getCMSFields() {
+	public function getCMSFields()
+	{
 
 		$fields = parent::getCMSFields();
 
@@ -59,7 +62,7 @@ class FullCalendarEvent extends Page {
 			OptionsetField::create('IncludeOnCalendar', 'Include on calendar')
 				->setDescription('Should this event be shown on the calendar')
 				->setSource(array(
-					true  => "Yes",
+					true => "Yes",
 					false => "No",
 				)),
 
@@ -74,7 +77,8 @@ class FullCalendarEvent extends Page {
 	/**
 	 * Sets the Date field to the current date.
 	 */
-	public function populateDefaults() {
+	public function populateDefaults()
+	{
 
 		$this->StartDate = date('Y-m-d');
 		$this->EndDate = date('Y-m-d');
@@ -87,7 +91,8 @@ class FullCalendarEvent extends Page {
 	 *
 	 * @return RequiredFields
 	 */
-	function getCMSValidator() {
+	function getCMSValidator()
+	{
 
 		return new RequiredFields(array(
 			'StartDate',
@@ -97,7 +102,8 @@ class FullCalendarEvent extends Page {
 		));
 	}
 
-	public function onBeforeWrite() {
+	public function onBeforeWrite()
+	{
 
 		$startDate = DateTime::createFromFormat('Y-m-d', $this->StartDate);
 		$endDate = DateTime::createFromFormat('Y-m-d', $this->EndDate);
@@ -113,6 +119,7 @@ class FullCalendarEvent extends Page {
 /**
  * Class FullCalendarEvent_Controller
  */
-class FullCalendarEvent_Controller extends Page_Controller {
+class FullCalendarEvent_Controller extends Page_Controller
+{
 
 }
