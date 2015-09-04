@@ -107,6 +107,7 @@ class FullCalendarEvent extends Page
 	public function onBeforeWrite()
 	{
 
+		// Make sure a valid date range is entered
 		$startDate = DateTime::createFromFormat('Y-m-d', $this->StartDate);
 		$endDate = DateTime::createFromFormat('Y-m-d', $this->EndDate);
 
@@ -114,9 +115,20 @@ class FullCalendarEvent extends Page
 			throw new ValidationException("End date cannot occur before start date");
 		}
 
+		// Make sure SOMETHING is set...
 		if ($this->ShortDescription === "") {
 			$this->ShortDescription = "(No description set)";
 		}
+
+		/**
+		 * @TODO
+		 *
+		 * @Lucy
+		 *
+		 * We need to check if there is already a .ics file for this event, if so delete it. Otherwise we are
+		 * going to end up with millions of files per event which isn't what we want.
+		 *
+		 */
 
 		// Write .ics file for this event
 		$service = new EventDownload($this->Title);
