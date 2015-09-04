@@ -46,18 +46,7 @@ jQuery(function ($) {
 				$('.event-start-date').html(event.startDate);
 				$('.event-end-date').html(event.endDate);
 				$('.event-content').html(event.shortContent);
-
-				//AddThis values
-				$('.start').html(event.addThisStartDate);
-				$('.end').html(event.addThisEndDate);
-
-				// Hide the button if you don't have any content to link through to.
-				if (event.content == null) {
-					$('.event-button').hide();
-				} else {
-					$('.event-button').show().find('a').attr('href', event.eventUrl).css({color: 'event.color'});
-				}
-
+				$('.event-button').show().find('a').attr('href', event.eventUrl);
 				$('.fancybox-skin').addClass(event.textColor);
 
 				fancyboxSettings(event.textColor, event.colorClass);
@@ -94,62 +83,10 @@ jQuery(function ($) {
 			beforeClose: function () {
 				$('.event-header').removeClass(backgroundColor).removeClass(textColor);
 				$('#close-button').removeClass(textColor);
-			},
-
-			// Refresh the addThis library data
-			afterLoad: function () {
-				addThisSettings();
 			}
 		});
 	}
 
-	/**
-	 * Enables AddThis on the calendar
-	 */
-	function addThisSettings() {
-
-		addthisevent.refresh();
-
-		addthisevent.settings({
-			css: false,
-			outlook: {
-				show: true,
-				text: "Outlook"
-			},
-			google: {
-				show: true,
-				text: "Google <em>(online)</em>"
-			},
-			yahoo: {
-				show: true,
-				text: "Yahoo <em>(online)</em>"
-			},
-			outlookcom: {
-				show: true,
-				text: "Outlook.com <em>(online)</em>"
-			},
-			appleical: {
-				show: true,
-				text: "Apple Calendar"
-			},
-			dropdown: {
-				order: "appleical,google,outlook,outlookcom,yahoo"
-			}
-		});
-	}
-
-	/**
-	 * Download calendar all events
-	 */
-	function downloadCal() {
-		$(".download-button").click(function () {
-			var cal = ics();
-			$.each(jsonData, function (idx, jsonData) {
-				cal.addEvent(jsonData.title, jsonData.content, jsonData.eventUrl, jsonData.start, jsonData.end);
-			});
-			cal.download("Calendar Events", ".ics");
-		});
-	}
 
 	/**
 	 * Tidies up the ajax function, removes the loader when ready.
@@ -172,6 +109,5 @@ jQuery(function ($) {
 	 */
 	$(document).ready(function () {
 		loadCalendar();
-		downloadCal();
 	});
 });
