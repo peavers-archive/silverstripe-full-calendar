@@ -112,6 +112,10 @@ class FullCalendarEvent extends Page
 			throw new ValidationException("End date cannot occur before start date");
 		}
 
+		if ($this->ShortDescription === "") {
+			$this->ShortDescription = "(No description set)";
+		}
+
 		parent::onBeforeWrite();
 	}
 }

@@ -133,7 +133,6 @@ class FullCalendar_Controller extends Page_Controller
 	 */
 	public function init()
 	{
-
 		parent::init();
 
 		Requirements::block(THIRDPARTY_DIR . '/jquery/jquery.js');
@@ -143,24 +142,16 @@ class FullCalendar_Controller extends Page_Controller
 			FULL_CALENDAR . '/css/lib/font-awesome.css',
 			FULL_CALENDAR . '/css/lib/fullcalendar.css',
 			FULL_CALENDAR . '/css/lib/jquery.fancybox.css',
-			FULL_CALENDAR . '/css/lib/addthisevent.theme8.css',
 			FULL_CALENDAR . '/css/style.css',
 		));
 
-		Requirements::javascript(FULL_CALENDAR
-			. '/javascript/lib/moment.min.js');
+		Requirements::javascript(FULL_CALENDAR . '/javascript/lib/moment.min.js');
 		Requirements::combine_files('full-calendar.js', array(
 			FULL_CALENDAR . '/javascript/lib/jquery.min.js',
 			FULL_CALENDAR . '/javascript/lib/fullcalendar.min.js',
 			FULL_CALENDAR . '/javascript/lib/jquery.fancybox.js',
-			FULL_CALENDAR . '/javascript/lib/ate-latest.min.js',
-			FULL_CALENDAR . '/javascript/lib/ics.deps.min.js',
-			FULL_CALENDAR . '/javascript/lib/ics.js',
-			//			FULL_CALENDAR . '/javascript/functions.js',
+			FULL_CALENDAR . '/javascript/functions.js',
 		));
-
-		Requirements::set_combined_files_folder(ASSETS_DIR
-			. '/_combinedfiles/full-calendar');
 	}
 
 	/**
@@ -174,9 +165,7 @@ class FullCalendar_Controller extends Page_Controller
 	 */
 	public function eventsAsJSON($message = "", $status = "success")
 	{
-
-		$this->getResponse()
-			->addHeader('Content-Type', 'application/json; charset=utf-8');
+		$this->getResponse()->addHeader('Content-Type', 'application/json; charset=utf-8');
 
 		if ($status != "success") {
 			$this->setStatusCode(400, $message);
@@ -192,16 +181,13 @@ class FullCalendar_Controller extends Page_Controller
 	 */
 	public function getData()
 	{
-
 		$filter = array(
 			'ParentID' => $this->ID,
 			'IncludeOnCalendar' => true,
 		);
 
 		$result = array();
-
-		foreach (FullCalendarEvent::get()
-					 ->filter($filter) as $event) {
+		foreach (FullCalendarEvent::get()->filter($filter) as $event) {
 
 			$result[] = array(
 
@@ -224,54 +210,14 @@ class FullCalendar_Controller extends Page_Controller
 				),
 
 				// Lightbox data
-				"startDate" => $this->getDateFormat($event, 'StartDate', 'l jS F Y'),
-				"endDate" => $this->getDateFormat($event, 'EndDate', 'l jS F Y'),
+				'startDate' => date('l jS F Y', strtotime($event->StartDate)),
+				'endDate' => date('l jS F Y', strtotime($event->EndDate)),
 				"eventUrl" => $event->URLSegment,
 				"content" => $event->Content,
-				"shortContent" => $this->getShortDescription($event),
-
-				// AddThis Feature
-				"addThisButton" => $this->AddThisEvents,
-				"addThisStartDate" => $this->getDateFormat($event, 'StartDate', 'm/d/Y'),
-				"addThisEndDate" => $this->getDateFormat($event, 'EndDate', 'm/d/Y'),
+				"shortContent" => $event->ShortDescription,
 			);
 		}
 
 		return json_encode($result);
 	}
-
-	/**
-	 * Simple date format util
-	 *
-	 * @param $event
-	 * @param $date
-	 * @param $format
-	 *
-	 * @return bool|string
-	 */
-	public function getDateFormat($event, $date, $format)
-	{
-
-		return date($format, strtotime($event->$date));
-	}
-
-	/**
-	 * Returns the description, or a placeholder message if no description
-	 *
-	 * @param $event
-	 *
-	 * @return string either a description or a message saying no description
-	 */
-	public function getShortDescription($event)
-	{
-
-		$event = strip_tags($event->ShortDescription);
-
-		if ($event == "") {
-			return "No description is set";
-		} else {
-			return $event;
-		}
-	}
-
 }
