@@ -30,6 +30,10 @@ class FullCalendarEvent extends Page
 		'IcsDownloadLink' => 'Varchar(255)',
 	);
 
+	private static $has_one = array(
+		'CalFile' => 'File'
+	);
+
 	private static $defaults = array(
 		'IncludeOnCalendar' => true,
 		'TextColor' => 'text-black',
@@ -71,6 +75,8 @@ class FullCalendarEvent extends Page
 
 			TextField::create("IcsDownloadLink", 'IcsDownloadLink'),
 
+			UploadField::create("CalFile", "CalFile")
+
 		), "Content");
 
 		return $fields;
@@ -107,6 +113,8 @@ class FullCalendarEvent extends Page
 	public function onBeforeWrite()
 	{
 
+		parent::onBeforeWrite();
+
 		// Make sure a valid date range is entered
 		$startDate = DateTime::createFromFormat('Y-m-d', $this->StartDate);
 		$endDate = DateTime::createFromFormat('Y-m-d', $this->EndDate);
@@ -132,9 +140,9 @@ class FullCalendarEvent extends Page
 
 		// Write .ics file for this event
 		$service = new EventDownload($this->Title);
-		$this->IcsDownloadLink = $service->generateEventList(null, $this->ID);
 
-		parent::onBeforeWrite();
+		$service->generateEventList(null, $this->ID);
+		$this->CalFileID = $service->getFile()->ID;
 	}
 }
 
