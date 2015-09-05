@@ -18,6 +18,8 @@ class EventDownload
 
 	/**
 	 * @param $title
+	 * @param $ownerID
+	 * @internal param $id
 	 */
 	public function __construct($title)
 	{
@@ -25,7 +27,18 @@ class EventDownload
 	}
 
 	/**
+	 * @return mixed
+	 */
+	public function getFile()
+	{
+		return $this->file;
+	}
+
+
+	/**
 	 * @param $title
+	 * @param $ownerID
+	 * @internal param $id
 	 */
 	private function setupFile($title)
 	{
