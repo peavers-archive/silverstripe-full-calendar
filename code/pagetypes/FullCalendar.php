@@ -17,11 +17,11 @@ class FullCalendar extends Page
 		'CalendarView' => 'Varchar(255)',
 		'FirstDay' => 'Int',
 		'ColumnFormat' => 'Varchar(255)',
-		'IcsDownloadLink' => 'Varchar(255)',
 	);
 
 	private static $has_one = array(
 		'LoadAnimation' => 'Image',
+		'CalFile' => 'File',
 	);
 
 	private static $defaults = array(
@@ -36,11 +36,11 @@ class FullCalendar extends Page
 		'FullCalendarEventList',
 	);
 
-	private static $icon = 'full-calendar/images/icons/sitetree_images/holder.png';
-
 	private static $extensions = array(
 		'Lumberjack',
 	);
+
+	private static $icon = 'full-calendar/images/icons/sitetree_images/holder.png';
 
 	public function getCMSFields()
 	{
@@ -93,7 +93,7 @@ class FullCalendar extends Page
 				UploadField::create('LoadAnimation', 'Loading animation'),
 			)),
 
-			TextField::create("IcsDownloadLink", 'IcsDownloadLink')
+			UploadField::create("CalFile", "CalFile")
 
 		));
 
@@ -102,11 +102,12 @@ class FullCalendar extends Page
 
 	public function onBeforeWrite()
 	{
-		$service = new EventDownload($this->Title);
-
-		$this->IcsDownloadLink = $service->generateEventList($this->ID);
-
 		parent::onBeforeWrite();
+
+		$service = new EventDownload($this->Title);
+		$service->generateEventList($this->ID, null);
+
+		$this->CalFileID = $service->getFileObject()->ID;
 	}
 
 	public function getDocumentRoot()
@@ -200,7 +201,7 @@ class FullCalendar_Controller extends Page_Controller
 				"title" => $event->Title,
 				"start" => $event->StartDate,
 				"end" => $event->EndDate,
-				"downloadLink" => $event->IcsDownloadLink,
+				"downloadLink" => $event->CalFileURL,
 
 				// Event settings
 				"colorClass" => $event->EventColor,

@@ -7,54 +7,84 @@ class EventDownload
 {
 
 	/**
+	 * Silverstripe object that is the file
+	 *
 	 * @var
 	 */
-	private $file;
+	private $fileObject;
 
 	/**
+	 * Relative location of the file on the server
+	 *
 	 * @var
 	 */
 	private $filePath;
 
 	/**
-	 * @param $title
-	 * @param $ownerID
-	 * @internal param $id
+	 * Name of the file
+	 *
+	 * @var
 	 */
-	public function __construct($title)
+	private $fileName;
+
+	/**
+	 * sets up base file and folder ready for file generating
+	 * @param $filename
+	 */
+	public function __construct($filename)
 	{
-		$this->setupFile($title);
+		$folder = Folder::find_or_make('/ics-files/');
+
+		$this->fileName = strtolower($filename);
+
+		$this->fileObject = new File();
+		$this->fileObject->SetName($this->fileName . ".ics");
+		$this->fileObject->setParentID($folder->ID);
+		$this->fileObject->write();
+
+		$this->filePath = $this->fileObject->getFullPath();
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getFile()
+	public function getFileObject()
 	{
-		return $this->file;
+		return $this->fileObject;
 	}
 
-
 	/**
-	 * @param $title
-	 * @param $ownerID
-	 * @internal param $id
+	 * @param $fullCalendarID int the id of the FullCalendar page to return events for
+	 * @param $singleEventID int the fullCalendarID of a single event
 	 */
-	private function setupFile($title)
+	public function generateEventList($fullCalendarID = null, $singleEventID = null)
 	{
-		$folder = Folder::find_or_make('/ics-files/');
+		if (!is_null($fullCalendarID)) {
+			$events = FullCalendarEvent::get()->filter(array("ParentID" => $fullCalendarID));
+		} else {
+			$events = DataObject::get_by_id('FullCalendarEvent', $singleEventID);
+		}
 
-		$this->file = new File();
-		$this->file->SetName($title . ".ics");
-		$this->file->setParentID($folder->ID);
-		$this->file->write();
+		$this->addToFile("BEGIN:VCALENDAR\n" . "VERSION:2.0\n");
 
-		$this->filePath = $this->file->getFullPath();
+		foreach ($events as $event) {
+			$content = "BEGIN:VEVENT\n";
+			$content .= "CLASS:PUBLIC\n";
+			$content .= "DESCRIPTION:{$this->escapeString($event->ShortDescription)}\n";
+			$content .= "DTSTART:{$this->dateToCal(strtotime($event->StartDate . "H:i:s"))}\n";
+			$content .= "DTEND:{$this->dateToCal(strtotime($event->EndDate . "H:i:s"))}\n";
+			$content .= "LOCATION:(null)\n";
+			$content .= "TRANSP:TRANSPARENT\n";
+			$content .= "END:VEVENT\n";
+
+			$this->addToFile($content);
+		}
+
+		$this->addToFile("END:VCALENDAR\n");
 	}
 
 	/**
 	 * @param $string
-	 * @throws ValidationException
 	 */
 	private function addToFile($string)
 	{
@@ -82,38 +112,5 @@ class EventDownload
 		$string = substr($string, 0, 100);
 
 		return preg_replace('/([\,;])/', '\\\$1', $string);
-	}
-
-	/**
-	 * @param null $ID the id of the FullCalendar page to return events for
-	 * @param null $singleEventID the ID of a single event
-	 */
-	public function generateEventList($ID = null, $singleEventID = null)
-	{
-		if (!is_null($ID)) {
-			$events = FullCalendarEvent::get()->filter(array("ParentID" => $ID));
-		} else {
-			$events = DataObject::get_by_id('FullCalendarEvent', $singleEventID);
-		}
-
-		$this->addToFile("BEGIN:VCALENDAR\n");
-		$this->addToFile("VERSION:2.0\n");
-
-		foreach ($events as $event) {
-			$content = "BEGIN:VEVENT\n";
-			$content .= "CLASS:PUBLIC\n";
-			$content .= "DESCRIPTION:{$this->escapeString($event->ShortDescription)}\n";
-			$content .= "DTSTART:{$this->dateToCal(strtotime($event->StartDate . "H:i:s"))}\n";
-			$content .= "DTEND:{$this->dateToCal(strtotime($event->EndDate . "H:i:s"))}\n";
-			$content .= "LOCATION:(null)\n";
-			$content .= "TRANSP:TRANSPARENT\n";
-			$content .= "END:VEVENT\n";
-
-			$this->addToFile($content);
-		}
-
-		$this->addToFile("END:VCALENDAR\n");
-
-		return $this->file->getURL();
 	}
 }

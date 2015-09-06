@@ -27,7 +27,7 @@ class FullCalendarEvent extends Page
 		'EventColor' => 'Varchar(255)',
 		'TextColor' => 'Varchar(255)',
 		'ShortDescription' => 'Varchar(255)',
-		'IcsDownloadLink' => 'Varchar(255)',
+		'CalFileURL' => 'Varchar(255)',
 	);
 
 	private static $has_one = array(
@@ -73,9 +73,7 @@ class FullCalendarEvent extends Page
 			TextareaField::create('ShortDescription', 'A short description')
 				->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event. <strong>Limit 255 characters</strong>"),
 
-			TextField::create("IcsDownloadLink", 'IcsDownloadLink'),
-
-			UploadField::create("CalFile", "CalFile")
+			UploadField::create("CalFile", ".ics file"),
 
 		), "Content");
 
@@ -87,7 +85,6 @@ class FullCalendarEvent extends Page
 	 */
 	public function populateDefaults()
 	{
-
 		$this->StartDate = date('Y-m-d');
 		$this->EndDate = date('Y-m-d');
 
@@ -101,7 +98,6 @@ class FullCalendarEvent extends Page
 	 */
 	function getCMSValidator()
 	{
-
 		return new RequiredFields(array(
 			'StartDate',
 			'EndDate',
@@ -123,7 +119,7 @@ class FullCalendarEvent extends Page
 			throw new ValidationException("End date cannot occur before start date");
 		}
 
-		// Make sure SOMETHING is set...
+		// Make sure something is set...
 		if ($this->ShortDescription === "") {
 			$this->ShortDescription = "(No description set)";
 		}
@@ -137,12 +133,11 @@ class FullCalendarEvent extends Page
 		 * going to end up with millions of files per event which isn't what we want.
 		 *
 		 */
-
-		// Write .ics file for this event
 		$service = new EventDownload($this->Title);
-
 		$service->generateEventList(null, $this->ID);
-		$this->CalFileID = $service->getFile()->ID;
+
+		$this->CalFileID = $service->getFileObject()->ID;
+		$this->CalFileURL = $service->getFileObject()->getURL();
 	}
 }
 
