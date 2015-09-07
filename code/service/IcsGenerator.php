@@ -33,7 +33,7 @@ class IcsGenerator
 	 */
 	public function __construct($filename)
 	{
-		$folder = Folder::find_or_make('/ics-files/');
+		$folder = Folder::find_or_make('/ics-files/' . $filename);
 
 		$this->fileName = strtolower($filename);
 
