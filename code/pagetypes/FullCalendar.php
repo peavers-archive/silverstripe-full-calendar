@@ -92,9 +92,6 @@ class FullCalendar extends Page
 
 				UploadField::create('LoadAnimation', 'Loading animation'),
 			)),
-
-			UploadField::create("CalFile", "CalFile")
-
 		));
 
 		return $fields;
