@@ -21,8 +21,8 @@ class FullCalendarEvent extends Page
 	private static $db = array(
 		'IncludeOnCalendar' => 'Boolean',
 		'Title' => 'Varchar(255)',
-		'StartDate' => 'Date',
-		'EndDate' => 'Date',
+		'StartDate' => 'SS_Datetime',
+		'EndDate' => 'SS_Datetime',
 		'Url' => 'Varchar(255)',
 		'EventColor' => 'Varchar(255)',
 		'TextColor' => 'Varchar(255)',
@@ -52,7 +52,9 @@ class FullCalendarEvent extends Page
 
 		$fields->addFieldsToTab("Root.Main", array(
 
-			FieldGroup::create(DateField::create("StartDate", "Starts"), DateField::create("EndDate", "Ends"))
+			FieldGroup::create(
+				DatetimeField::create("StartDate", "Starts"),
+				DatetimeField::create("EndDate", "Ends"))
 				->setTitle("Event dates"),
 
 			ColorSwabField::create('EventColor', 'Event colour'),
@@ -72,8 +74,6 @@ class FullCalendarEvent extends Page
 
 			TextareaField::create('ShortDescription', 'A short description')
 				->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event. <strong>Limit 255 characters</strong>"),
-
-			UploadField::create("CalFile", ".ics file"),
 
 		), "Content");
 
@@ -108,7 +108,6 @@ class FullCalendarEvent extends Page
 
 	public function onBeforeWrite()
 	{
-
 		parent::onBeforeWrite();
 
 		// Make sure a valid date range is entered
@@ -124,15 +123,6 @@ class FullCalendarEvent extends Page
 			$this->ShortDescription = "(No description set)";
 		}
 
-		/**
-		 * @TODO
-		 *
-		 * @Lucy
-		 *
-		 * We need to check if there is already a .ics file for this event, if so delete it. Otherwise we are
-		 * going to end up with millions of files per event which isn't what we want.
-		 *
-		 */
 		$service = new EventDownload($this->Title);
 		$service->generateEventList(null, $this->ID);
 
