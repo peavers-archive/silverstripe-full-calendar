@@ -1,0 +1,25 @@
+//Overwrites fullcalendar default settings
+// -----------------------------------------
+@import 'base';
+
+// scss-lint:disable IdSelector
+#calendar {
+  @include transition(all .5s ease-in-out);
+  visibility: hidden;
+  opacity: 0;
+}
+// scss-lint:enable IdSelector
+
+.document-overlay {
+  @include transition(all .5s ease-in-out);
+  visibility: hidden;
+  width: inherit;
+  height: inherit;
+  opacity: 0;
+
+  img {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+  }
+}
