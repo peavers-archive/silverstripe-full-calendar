@@ -3,7 +3,7 @@
 /**
  * Class EventDownload
  */
-class EventDownload
+class IcsGenerator
 {
 
 	/**

@@ -4,8 +4,16 @@
 
 .text-black {
   color: $black;
+
+  &:hover {
+    color: rgba(0, 0, 0, .65);
+  }
 }
 
 .text-white {
   color: $white;
+
+  &:hover {
+    color: rgba(255, 255, 255, .65);
+  }
 }

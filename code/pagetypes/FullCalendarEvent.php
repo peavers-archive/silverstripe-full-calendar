@@ -123,7 +123,7 @@ class FullCalendarEvent extends Page
 			$this->ShortDescription = "(No description set)";
 		}
 
-		$service = new EventDownload($this->Title);
+		$service = new IcsGenerator($this->Title);
 		$service->generateEventList(null, $this->ID);
 
 		$this->CalFileID = $service->getFileObject()->ID;
