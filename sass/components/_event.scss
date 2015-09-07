@@ -1,0 +1,54 @@
+// Styles used in the opened event light-box
+// -----------------------------------------
+@import 'base';
+
+.event-header {
+  @include safe-rem(padding, 60 50 20 50);
+}
+
+.event-title {
+  @include safe-rem(font-size, 24);
+}
+
+.event-dates,
+.event-download,
+.event-content {
+  @include safe-rem(margin-left, 10);
+  @include safe-rem(padding, 10 15);
+}
+
+.event-dates {
+  color: $grey-500;
+
+  &:before {
+    @include safe-rem(font-size, 15);
+    @include safe-rem(padding-right, 5);
+    @include icon(f017);
+    color: $grey-600;
+  }
+}
+
+.event-download {
+  color: $grey-500;
+
+  &:before {
+    @include safe-rem(font-size, 15);
+    @include safe-rem(padding-right, 5);
+    @include icon(f073);
+    color: $grey-600;
+  }
+}
+
+.event-content {
+  @include safe-rem(height, 85);
+  overflow: hidden;
+  color: $grey-500;
+}
+
+.event-button {
+  @include safe-rem(padding, 15);
+  position: absolute;
+  right: 6px;
+  bottom: 0;
+  color: $grey-500;
+}

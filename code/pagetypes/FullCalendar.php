@@ -137,10 +137,7 @@ class FullCalendar_Controller extends Page_Controller
 		Requirements::block(THIRDPARTY_DIR . '/jquery-ui/jquery-ui.js');
 
 		Requirements::combine_files('full-calendar.css', array(
-			FULL_CALENDAR . '/css/lib/font-awesome.css',
-			FULL_CALENDAR . '/css/lib/fullcalendar.css',
-			FULL_CALENDAR . '/css/lib/jquery.fancybox.css',
-			FULL_CALENDAR . '/css/style.css',
+			FULL_CALENDAR . '/css/style.css'
 		));
 
 		Requirements::javascript(FULL_CALENDAR . '/javascript/lib/moment.min.js');
@@ -212,11 +209,17 @@ class FullCalendar_Controller extends Page_Controller
 				'startDate' => date('l jS F Y', strtotime($event->StartDate)),
 				'endDate' => date('l jS F Y', strtotime($event->EndDate)),
 				"eventUrl" => $event->URLSegment,
-				"content" => $event->Content,
-				"shortContent" => $event->ShortDescription,
+				"shortContent" => $this->escapeString($event->ShortDescription),
 			);
 		}
 
 		return json_encode($result);
 	}
+
+	private function escapeString($string)
+	{
+		$string = strip_tags($string);
+		return preg_replace('/([\,;])/', '\\\$1', $string);
+	}
+
 }

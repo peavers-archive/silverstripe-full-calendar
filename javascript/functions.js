@@ -41,12 +41,12 @@ jQuery(function ($) {
 			events: jsonData,
 			eventClick: function (event) {
 				$('.title').html(event.title);
-				$('.description').html(event.shortContent);
-				$('.event-header').html(event.title).addClass(event.colorClass).addClass(event.textColor);
+				$('.event-header').addClass(event.colorClass);
+				$('.event-title').html(event.title).addClass(event.textColor);
 				$('.event-start-date').html(event.startDate);
 				$('.event-end-date').html(event.endDate);
 				$('.event-download').find('a').attr('href', event.downloadLink);
-				$('.event-content').html(event.shortContent);
+				$('.event-description').html(event.shortContent);
 				$('.event-button').show().find('a').attr('href', event.eventUrl);
 				$('.fancybox-skin').addClass(event.textColor);
 
@@ -72,7 +72,7 @@ jQuery(function ($) {
 			closeEffect: 'fade',
 			'href': '#fancy-box',
 			tpl: {
-				closeBtn: '<a title="Close" id="close-button" class="fancybox-item fancybox-close custom-close ' + textColor + '"  href="javascript:;"></a>'
+				closeBtn: '<a title="Close" id="close-button" class="fancybox-item fancybox-close custom-close ' + textColor + '"  href=""></a>'
 			},
 			helpers: {
 				overlay: {
@@ -82,7 +82,8 @@ jQuery(function ($) {
 
 			// Remove the colour classes from everything
 			beforeClose: function () {
-				$('.event-header').removeClass(backgroundColor).removeClass(textColor);
+				$('.event-header').removeClass(backgroundColor);
+				$('.event-title').removeClass(textColor);
 				$('#close-button').removeClass(textColor);
 			}
 		});
