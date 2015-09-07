@@ -1,0 +1,31 @@
+// Generate both pixel and rem value for objects
+//-------------------------------
+
+@function parse-int($n) {
+  @return $n / ($n * 0 + 1);
+}
+
+@mixin safe-rem($property, $values) {
+  $rem-base: 16;
+  $px: ();
+  $rem: ();
+
+  @each $value in $values {
+    @if $value == 0 or $value == auto {
+      $px: append($px, $value);
+      $rem: append($rem, $value);
+    } @else {
+      $unit: unit($value);
+      $val: parse-int($value);
+      $px: append($px, $value + px);
+      $rem: append($rem, ($val / $rem-base + rem));
+    }
+  }
+
+  @if $px == $rem {
+    #{$property}: $px;
+  } @else {
+    #{$property}: $px;
+    #{$property}: $rem;
+  }
+}

@@ -3,7 +3,8 @@
 /**
  * Class FullCalendar
  */
-class FullCalendar extends Page {
+class FullCalendar extends Page
+{
 
 	private static $singular_name = 'Full Calendar';
 
@@ -12,27 +13,22 @@ class FullCalendar extends Page {
 	private static $can_be_root = true;
 
 	private static $db = array(
-		'CacheSetting'  => 'Boolean',
-		'LegacyEvents'  => 'Boolean',
-		'AddThisEvents' => 'Boolean',
-		'CalendarView'  => 'Varchar(255)',
-		'FirstDay'      => 'Int',
-		'ColumnFormat'  => 'Varchar(255)',
+		'LegacyEvents' => 'Boolean',
+		'CalendarView' => 'Varchar(255)',
+		'FirstDay' => 'Int',
+		'ColumnFormat' => 'Varchar(255)',
 	);
 
 	private static $has_one = array(
 		'LoadAnimation' => 'Image',
-	);
-
-	private static $has_many = array(
-		'EventColor' => 'EventColor',
+		'CalFile' => 'File',
 	);
 
 	private static $defaults = array(
-		'CacheSetting'  => '1',
-		'LegacyEvents'  => '0',
+		'CacheSetting' => '1',
+		'LegacyEvents' => '0',
 		'AddThisEvents' => '0',
-		'CalendarView'  => 'month',
+		'CalendarView' => 'month',
 	);
 
 	private static $allowed_children = array(
@@ -40,13 +36,14 @@ class FullCalendar extends Page {
 		'FullCalendarEventList',
 	);
 
-	private static $icon = 'full-calendar/images/icons/sitetree_images/holder.png';
-
 	private static $extensions = array(
 		'Lumberjack',
 	);
 
-	public function getCMSFields() {
+	private static $icon = 'full-calendar/images/icons/sitetree_images/holder.png';
+
+	public function getCMSFields()
+	{
 
 		$fields = parent::getCMSFields();
 
@@ -54,8 +51,6 @@ class FullCalendar extends Page {
 
 			// Functional, how things work
 			ToggleCompositeField::create('', 'Functional Settings', array(
-				CheckboxField::create('CacheSetting', 'Enable caching')
-					->setDescription('Should only disable for debugging/development purposes'),
 				CheckboxField::create('LegacyEvents', 'Enable past events')
 					->setDescription('Show events where the end date has passed today\'s date'),
 				CheckboxField::create('AddThisEvents', 'Enable \'addthis\' feature')
@@ -68,11 +63,11 @@ class FullCalendar extends Page {
 				DropdownField::create('CalendarView', 'Calendar view')
 					->setDescription('(<a href="http://fullcalendar.io/docs/views/Available_Views/" target="_blank">?</a>)')
 					->setSource(array(
-						'month'      => 'Month',
-						'basicWeek'  => 'Basic week',
-						'basicDay'   => 'Basic day',
+						'month' => 'Month',
+						'basicWeek' => 'Basic week',
+						'basicDay' => 'Basic day',
 						'agendaWeek' => 'Agenda week',
-						'agendaDay'  => 'Agenda day',
+						'agendaDay' => 'Agenda day',
 					)),
 
 				DropdownField::create('FirstDay', 'First day of the week')
@@ -90,23 +85,30 @@ class FullCalendar extends Page {
 				DropdownField::create('ColumnFormat', 'Column format')
 					->setDescription("Determines the text that will be displayed on the calendar's column headings.")
 					->setSource(array(
-						'ddd'     => 'Mon, Tues, Wed',
+						'ddd' => 'Mon, Tues, Wed',
 						'ddd M/D' => 'Mon 9/7, Tues 9/8, Wed 9/9',
-						'dddd'    => 'Monday, Tuesday, Wednesday',
+						'dddd' => 'Monday, Tuesday, Wednesday',
 					)),
 
 				UploadField::create('LoadAnimation', 'Loading animation'),
 			)),
-
-			GridField::create('EventColor', 'Create color', $this->EventColor(), GridFieldConfig_RecordEditor::create()),
-
 		));
 
 		return $fields;
 	}
 
-	public function getDocumentRoot() {
+	public function onBeforeWrite()
+	{
+		parent::onBeforeWrite();
 
+		$service = new IcsGenerator($this->Title);
+		$service->generateEventList($this->ID, null);
+
+		$this->CalFileID = $service->getFileObject()->ID;
+	}
+
+	public function getDocumentRoot()
+	{
 		return $this;
 	}
 }
@@ -114,7 +116,8 @@ class FullCalendar extends Page {
 /**
  * Class FullCalendar_Controller
  */
-class FullCalendar_Controller extends Page_Controller {
+class FullCalendar_Controller extends Page_Controller
+{
 
 	private static $allowed_actions = array(
 		'eventsAsJSON',
@@ -126,33 +129,24 @@ class FullCalendar_Controller extends Page_Controller {
 	 * Note: moment.min.js breaks javascript minimisation so is excluded from the
 	 * combine_files call.
 	 */
-	public function init() {
-
+	public function init()
+	{
 		parent::init();
 
 		Requirements::block(THIRDPARTY_DIR . '/jquery/jquery.js');
 		Requirements::block(THIRDPARTY_DIR . '/jquery-ui/jquery-ui.js');
 
 		Requirements::combine_files('full-calendar.css', array(
-			FULL_CALENDAR . '/css/lib/font-awesome.css',
-			FULL_CALENDAR . '/css/lib/fullcalendar.css',
-			FULL_CALENDAR . '/css/lib/jquery.fancybox.css',
-			FULL_CALENDAR . '/css/lib/addthisevent.theme8.css',
-			FULL_CALENDAR . '/css/style.css',
+			FULL_CALENDAR . '/css/style.css'
 		));
 
-		Requirements::javascript(FULL_CALENDAR
-			. '/javascript/lib/moment.min.js');
+		Requirements::javascript(FULL_CALENDAR . '/javascript/lib/moment.min.js');
 		Requirements::combine_files('full-calendar.js', array(
 			FULL_CALENDAR . '/javascript/lib/jquery.min.js',
 			FULL_CALENDAR . '/javascript/lib/fullcalendar.min.js',
 			FULL_CALENDAR . '/javascript/lib/jquery.fancybox.js',
-			FULL_CALENDAR . '/javascript/lib/ate-latest.min.js',
 			FULL_CALENDAR . '/javascript/functions.js',
 		));
-
-		Requirements::set_combined_files_folder(ASSETS_DIR
-			. '/_combinedfiles/full-calendar');
 	}
 
 	/**
@@ -164,39 +158,15 @@ class FullCalendar_Controller extends Page_Controller {
 	 *
 	 * @return string
 	 */
-	public function eventsAsJSON($message = "", $status = "success") {
-
-		$this->getResponse()
-			->addHeader('Content-Type', 'application/json; charset=utf-8');
+	public function eventsAsJSON($message = "", $status = "success")
+	{
+		$this->getResponse()->addHeader('Content-Type', 'application/json; charset=utf-8');
 
 		if ($status != "success") {
 			$this->setStatusCode(400, $message);
 		}
 
-		if ($this->CacheSetting) {
-			return $this->getCachedData();
-		} else {
-			return $this->getData();
-		}
-	}
-
-	/**
-	 * Builds a cache of events if one doesn't exist, store the cache for 12 hours . The cache is cleared / reset
-	 * when a new event is published .
-	 *
-	 * @return json load of events to display
-	 */
-	public function getCachedData() {
-
-		$cache = SS_Cache::factory('calendar');
-		SS_Cache::set_cache_lifetime('calendar', 60 * 60 * 12);
-
-		if (!($result = unserialize($cache->load('events')))) {
-			$result = $this->getData();
-			$cache->save(serialize($result), 'events');
-		}
-
-		return $result;
+		return $this->getData();
 	}
 
 	/**
@@ -204,92 +174,52 @@ class FullCalendar_Controller extends Page_Controller {
 	 *
 	 * @return string
 	 */
-	public function getData() {
-
-		if ($this->LegacyEvents) {
-			$filter = array(
-				'ParentID'          => $this->ID,
-				'IncludeOnCalendar' => true,
-			);
-		} else {
-			$filter = array(
-				'ParentID'            => $this->ID,
-				'IncludeOnCalendar'   => true,
-				'EndDate:GreaterThan' => date("Y-m-d"),
-			);
-		}
+	public function getData()
+	{
+		$filter = array(
+			'ParentID' => $this->ID,
+			'IncludeOnCalendar' => true,
+		);
 
 		$result = array();
-		foreach (FullCalendarEvent::get()
-			->filter($filter) as $event) {
+		foreach (FullCalendarEvent::get()->filter($filter) as $event) {
 
 			$result[] = array(
+
 				// Calendar settings
-				"view"             => $this->CalendarView,
-				"firstDay"         => $this->FirstDay,
-				"columnFormat"     => $this->ColumnFormat,
+				"view" => $this->CalendarView,
+				"firstDay" => $this->FirstDay,
+				"columnFormat" => $this->ColumnFormat,
+
 				// Event data
-				"title"            => $event->Title,
-				"start"            => $event->StartDate,
-				"end"              => $event->EndDate,
-				"color"            => $event->BackgroundColor,
-				"textColor"        => $event->TextColor,
-				"startDate"        => $this->getDateFormat($event, 'StartDate'),
-				"endDate"          => $this->getDateFormat($event, 'EndDate'),
-				"eventUrl"         => $event->URLSegment,
-				"content"          => $event->Content,
-				"shortContent"     => $this->getShortDescription($event),
-				// AddThis Feature
-				"addThisButton"    => $this->AddThisEvents,
-				"addThisStartDate" => $this->getAddThisDateFormat($event, 'StartDate'),
-				"addThisEndDate"   => $this->getAddThisDateFormat($event, 'EndDate'),
+				"title" => $event->Title,
+				"start" => $event->StartDate,
+				"end" => $event->EndDate,
+				"downloadLink" => $event->CalFileURL,
+
+				// Event settings
+				"colorClass" => $event->EventColor,
+				"textColor" => $event->TextColor,
+				"className" => array(
+					$event->EventColor,
+					$event->TextColor,
+				),
+
+				// Lightbox data
+				'startDate' => date('l jS F Y', strtotime($event->StartDate)),
+				'endDate' => date('l jS F Y', strtotime($event->EndDate)),
+				"eventUrl" => $event->URLSegment,
+				"shortContent" => $this->escapeString($event->ShortDescription),
 			);
 		}
 
 		return json_encode($result);
 	}
 
-	/**
-	 * Returns the description, or a placeholder message if no description
-	 *
-	 * @param $event
-	 *
-	 * @return string either a description or a message saying no description
-	 */
-	public function getShortDescription($event) {
-
-		$event = strip_tags($event->ShortDescription);
-
-		if ($event == "") {
-			return "No description is set";
-		} else {
-			return $event;
-		}
+	private function escapeString($string)
+	{
+		$string = strip_tags($string);
+		return preg_replace('/([\,;])/', '\\\$1', $string);
 	}
 
-	/**
-	 * Date used for calendar events
-	 *
-	 * @param $event
-	 * @param $date
-	 *
-	 * @return bool|string
-	 */
-	public function getDateFormat($event, $date) {
-
-		return date('l jS F Y', strtotime($event->$date));
-	}
-
-	/**
-	 * Date used for AddThis function
-	 *
-	 * @param $event
-	 * @param $date
-	 *
-	 * @return bool|string
-	 */
-	public function getAddThisDateFormat($event, $date) {
-
-		return date('m/d/Y', strtotime($event->$date));
-	}
 }

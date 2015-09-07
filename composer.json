@@ -1,28 +1,36 @@
 {
-  "name": "moe/full-calendar",
-  "description": "A lightweight calendar module for Silverstripe. Implements the popular javascript http://fullcalendar.io/ library.",
-  "homepage": "https://github.com/peavers/silverstripe-full-calendar",
-  "keywords": [
-    "silverstripe",
-    "calendar",
-    "events"
-  ],
-  "license": "BSD-3-Clause",
-  "authors": [
-    {
-      "name": "Chris Turner",
-      "email": "chris.turner@minedu.govt.nz"
-    }
-  ],
-  "type": "silverstripe-module",
-  "extra": {
-    "screenshots": [
-      "images/screens/calendar.png",
-      "images/screens/calendar-event.png"
-    ]
-  },
-  "require": {
-    "silverstripe/lumberjack": "~1.1"
-  },
-  "minimum-stability": "dev"
+	"name": "moe/full-calendar",
+	"description": "A lightweight calendar module for Silverstripe. Implements the popular javascript http://fullcalendar.io/ library.",
+	"homepage": "https://github.com/peavers/silverstripe-full-calendar",
+	"keywords": [
+		"silverstripe",
+		"calendar",
+		"events"
+	],
+	"license": "BSD-3-Clause",
+	"authors": [
+		{
+			"name": "Chris Turner",
+			"email": "chris.turner@minedu.govt.nz"
+		}
+	],
+	"type": "silverstripe-module",
+	"extra": {
+		"screenshots": [
+			"images/screens/calendar.png",
+			"images/screens/calendar-event.png"
+		]
+	},
+	"require": {
+		"moe/color-swab": "@stable",
+		"silverstripe/lumberjack": "@stable"
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://gitlab.cwp.govt.nz/modules/color-swab.git",
+			"private": "true"
+		}
+	],
+	"minimum-stability": "dev"
 }
