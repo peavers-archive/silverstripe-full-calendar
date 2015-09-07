@@ -101,7 +101,7 @@ class FullCalendar extends Page
 	{
 		parent::onBeforeWrite();
 
-		$service = new EventDownload($this->Title);
+		$service = new IcsGenerator($this->Title);
 		$service->generateEventList($this->ID, null);
 
 		$this->CalFileID = $service->getFileObject()->ID;
