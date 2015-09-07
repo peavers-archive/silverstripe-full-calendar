@@ -1,0 +1,173 @@
+// Base column layout file
+// @requires vendor/_guff.scss
+//-------------------------------
+
+.col-1 {
+  @include breakpoint($mobile) {
+    @include col(12);
+  }
+
+  @include breakpoint($tablet) {
+    @include col(12);
+  }
+
+  @include breakpoint($desktop) {
+    @include col(1);
+  }
+}
+
+.col-2 {
+  @include breakpoint($mobile) {
+    @include col(12);
+  }
+
+  @include breakpoint($tablet) {
+    @include col(12);
+  }
+
+  @include breakpoint($desktop) {
+    @include col(2);
+  }
+}
+
+.col-3 {
+  @include breakpoint($mobile) {
+    @include col(12);
+  }
+
+  @include breakpoint($tablet) {
+    @include col(12);
+  }
+
+  @include breakpoint($desktop) {
+    @include col(3);
+  }
+}
+
+.col-4 {
+  @include breakpoint($mobile) {
+    @include col(12);
+  }
+
+  @include breakpoint($tablet) {
+    @include col(12);
+  }
+
+  @include breakpoint($desktop) {
+    @include col(4);
+  }
+}
+
+.col-5 {
+  @include breakpoint($mobile) {
+    @include col(12);
+  }
+
+  @include breakpoint($tablet) {
+    @include col(12);
+  }
+
+  @include breakpoint($desktop) {
+    @include col(5);
+  }
+}
+
+.col-6 {
+  @include breakpoint($mobile) {
+    @include col(12);
+  }
+
+  @include breakpoint($tablet) {
+    @include col(12);
+  }
+
+  @include breakpoint($desktop) {
+    @include col(6);
+  }
+}
+
+.col-7 {
+  @include breakpoint($mobile) {
+    @include col(12);
+  }
+
+  @include breakpoint($tablet) {
+    @include col(12);
+  }
+
+  @include breakpoint($desktop) {
+    @include col(7);
+  }
+}
+
+.col-8 {
+  @include breakpoint($mobile) {
+    @include col(12);
+  }
+
+  @include breakpoint($tablet) {
+    @include col(12);
+  }
+
+  @include breakpoint($desktop) {
+    @include col(8);
+  }
+}
+
+.col-9 {
+  @include breakpoint($mobile) {
+    @include col(12);
+  }
+
+  @include breakpoint($tablet) {
+    @include col(12);
+  }
+
+  @include breakpoint($desktop) {
+    @include col(9);
+  }
+}
+
+.col-10 {
+  @include breakpoint($mobile) {
+    @include col(12);
+  }
+
+  @include breakpoint($tablet) {
+    @include col(12);
+  }
+
+  @include breakpoint($desktop) {
+    @include col(10);
+  }
+}
+
+.col-11 {
+  @include breakpoint($mobile) {
+    @include col(12);
+  }
+
+  @include breakpoint($tablet) {
+    @include col(12);
+  }
+
+  @include breakpoint($desktop) {
+    @include col(11);
+  }
+}
+
+.col-12 {
+  @include breakpoint($mobile) {
+    @include col(12);
+  }
+
+  @include breakpoint($tablet) {
+    @include col(12);
+  }
+
+  @include breakpoint($desktop) {
+    @include col(12);
+  }
+}
+
+

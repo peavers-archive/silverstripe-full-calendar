@@ -4,3 +4,14 @@ name: full-calendar
 DateField:
   default_config:
     showcalendar: true
+
+# File validation
+File:
+  allowed_extensions:
+   - ics
+Injector:
+  Upload_Validator:
+    class: MimeUploadValidator
+HTTP:
+  MimeTypes:
+    ics: 'text/plain'

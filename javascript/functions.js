@@ -6,6 +6,8 @@ jQuery(function ($) {
 
 	var rootUrl = $("#calendar").data("root-url");
 
+	var jsonData;
+
 	/**
 	 * Makes ajax call to gather events
 	 */
@@ -15,7 +17,9 @@ jQuery(function ($) {
 			type: "GET",
 			cache: true,
 			success: function (json) {
-				calendarSettings(json);
+				jsonData = json;
+
+				calendarSettings();
 			}
 		});
 	}
@@ -25,36 +29,28 @@ jQuery(function ($) {
 	 *
 	 * @param json
 	 */
-	function calendarSettings(json) {
+	function calendarSettings() {
 		$('#calendar').fullCalendar({
 
 			// Settings
-			columnFormat: json[0].columnFormat,
-			defaultView: json[0].view,
-			firstDay: json[0].firstDay,
+			columnFormat: jsonData[0].columnFormat,
+			defaultView: jsonData[0].view,
+			firstDay: jsonData[0].firstDay,
 
 			// Events
-			events: json,
+			events: jsonData,
 			eventClick: function (event) {
 				$('.title').html(event.title);
-				$('.description').html(event.shortContent);
-				$('.event-header').html(event.title).css({'background-color': event.color, 'color': event.textColor});
+				$('.event-header').addClass(event.colorClass);
+				$('.event-title').html(event.title).addClass(event.textColor);
 				$('.event-start-date').html(event.startDate);
 				$('.event-end-date').html(event.endDate);
-				$('.event-content').html(event.shortContent);
+				$('.event-download').find('a').attr('href', event.downloadLink);
+				$('.event-description').html(event.shortContent);
+				$('.event-button').show().find('a').attr('href', event.eventUrl);
+				$('.fancybox-skin').addClass(event.textColor);
 
-				//AddThis values
-				$('.start').html(event.addThisStartDate);
-				$('.end').html(event.addThisEndDate);
-
-				// Hide the button if you don't have any content to link through to.
-				if (event.content == null) {
-					$('.event-button').hide();
-				} else {
-					$('.event-button').show().find('a').attr('href', event.eventUrl).css({color: 'event.color'});
-				}
-
-				fancyboxSettings();
+				fancyboxSettings(event.textColor, event.colorClass);
 			}
 		})
 	}
@@ -62,7 +58,7 @@ jQuery(function ($) {
 	/**
 	 * Fancybox
 	 */
-	function fancyboxSettings() {
+	function fancyboxSettings(textColor, backgroundColor) {
 		$.fancybox({
 			padding: '',
 			width: 600,
@@ -76,54 +72,23 @@ jQuery(function ($) {
 			closeEffect: 'fade',
 			'href': '#fancy-box',
 			tpl: {
-				closeBtn: '<a title="Close" class="fancybox-item fancybox-close custom-close" href="javascript:;"></a>'
+				closeBtn: '<a title="Close" id="close-button" class="fancybox-item fancybox-close custom-close ' + textColor + '"  href=""></a>'
 			},
 			helpers: {
 				overlay: {
 					locked: false
 				}
 			},
-			afterLoad: function () {
-				addThisSettings();
+
+			// Remove the colour classes from everything
+			beforeClose: function () {
+				$('.event-header').removeClass(backgroundColor);
+				$('.event-title').removeClass(textColor);
+				$('#close-button').removeClass(textColor);
 			}
 		});
 	}
 
-	/**
-	 * Enables AddThis on the calendar
-	 */
-	function addThisSettings() {
-
-		// reload all the data
-		addthisevent.refresh();
-
-		addthisevent.settings({
-			css: false,
-			outlook: {
-				show: true,
-				text: "Outlook"
-			},
-			google: {
-				show: true,
-				text: "Google <em>(online)</em>"
-			},
-			yahoo: {
-				show: true,
-				text: "Yahoo <em>(online)</em>"
-			},
-			outlookcom: {
-				show: true,
-				text: "Outlook.com <em>(online)</em>"
-			},
-			appleical: {
-				show: true,
-				text: "Apple Calendar"
-			},
-			dropdown: {
-				order: "appleical,google,outlook,outlookcom,yahoo"
-			}
-		});
-	}
 
 	/**
 	 * Tidies up the ajax function, removes the loader when ready.

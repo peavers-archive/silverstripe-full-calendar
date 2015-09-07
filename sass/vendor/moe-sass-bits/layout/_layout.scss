@@ -1,0 +1,35 @@
+// Include as base layout file for builds
+//-------------------------------
+@import 'vendor/guff';
+@import 'layout__grid';
+@import 'layout__offset';
+
+// Set base font size
+$rem-base: 16px !default;
+// Set line height ratio base
+$line-height-base: 26px !default;
+// Vertical rhythm ratio
+$type-rhythm-ratio: 1.14 !default;
+// Desktop Media Query
+$desktop: '(min-width: 1024px)' !default;
+// Tablet Media Query
+$tablet: '(min-width: 768px) and (max-width: 1023px)' !default;
+// Mobile Media Query
+$mobile: '(max-width: 767px)' !default;
+// Set Grid Column Count
+$grid-columns: 12 !default;
+// Set Grid Gutter (as px)
+$grid-gutter: 20px !default;
+// Set Grid Padding (as px)
+$grid-padding: 20px !default;
+// Set Grid Max Width (as px)
+$grid-max-width: 1140px !default;
+
+.container {
+  @include col-container;
+}
+
+.row {
+  @include col-container;
+  margin: auto;
+}

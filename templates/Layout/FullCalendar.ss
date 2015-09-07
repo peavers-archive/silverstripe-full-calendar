@@ -6,6 +6,8 @@
 	<% end_if %>
 </div>
 
+<h1>Download <a href=$CalFile.Filename>.ics</a></h1>
+
 <div id="calendar" data-root-url="$getDocumentRoot.Link"></div>
 
 <% include Fancybox %>
