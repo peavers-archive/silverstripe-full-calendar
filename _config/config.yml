@@ -5,7 +5,11 @@ DateField:
   default_config:
     showcalendar: true
 
-# File validation
+---
+Name: mimevalidator-ics
+Only:
+  moduleexists: mimevalidator
+---
 File:
   allowed_extensions:
    - ics

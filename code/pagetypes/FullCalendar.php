@@ -27,13 +27,11 @@ class FullCalendar extends Page
 	private static $defaults = array(
 		'CacheSetting' => '1',
 		'LegacyEvents' => '0',
-		'AddThisEvents' => '0',
 		'CalendarView' => 'month',
 	);
 
 	private static $allowed_children = array(
-		'FullCalendarEvent',
-		'FullCalendarEventList',
+		'FullCalendarEvent'
 	);
 
 	private static $extensions = array(
@@ -53,8 +51,6 @@ class FullCalendar extends Page
 			ToggleCompositeField::create('', 'Functional Settings', array(
 				CheckboxField::create('LegacyEvents', 'Enable past events')
 					->setDescription('Show events where the end date has passed today\'s date'),
-				CheckboxField::create('AddThisEvents', 'Enable \'addthis\' feature')
-					->setDescription('Allow users to download an event/add to their own calendar (<a href="http://addthisevent.com/">?</a>)'),
 			)),
 
 			// Display, how the calendar looks to the end user
@@ -97,6 +93,9 @@ class FullCalendar extends Page
 		return $fields;
 	}
 
+	/**
+	 * Generate the .ics file and attach it to this page
+	 */
 	public function onBeforeWrite()
 	{
 		parent::onBeforeWrite();
@@ -107,6 +106,11 @@ class FullCalendar extends Page
 		$this->CalFileID = $service->getFileObject()->ID;
 	}
 
+	/**
+	 * Get the root of this page, used for the ajax call
+	 *
+	 * @return $this
+	 */
 	public function getDocumentRoot()
 	{
 		return $this;
@@ -176,10 +180,15 @@ class FullCalendar_Controller extends Page_Controller
 	 */
 	public function getData()
 	{
+
 		$filter = array(
 			'ParentID' => $this->ID,
 			'IncludeOnCalendar' => true,
 		);
+
+		if (!$this->LegacyEvents) {
+			$filter['StartDate:GreaterThan'] = date("Y-m-d");
+		}
 
 		$result = array();
 		foreach (FullCalendarEvent::get()->filter($filter) as $event) {
@@ -209,17 +218,10 @@ class FullCalendar_Controller extends Page_Controller
 				'startDate' => date('l jS F Y', strtotime($event->StartDate)),
 				'endDate' => date('l jS F Y', strtotime($event->EndDate)),
 				"eventUrl" => $event->URLSegment,
-				"shortContent" => $this->escapeString($event->ShortDescription),
+				"shortContent" => strip_tags($event->ShortDescription),
 			);
 		}
 
 		return json_encode($result);
 	}
-
-	private function escapeString($string)
-	{
-		$string = strip_tags($string);
-		return preg_replace('/([\,;])/', '\\\$1', $string);
-	}
-
 }
