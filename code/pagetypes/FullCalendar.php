@@ -100,9 +100,11 @@ class FullCalendar extends Page
 	{
 		parent::onBeforeWrite();
 
+		// Write the ics file for the event
 		$service = new IcsGenerator($this->Title);
 		$service->generateEventList($this->ID, null);
 
+		// Attach the file to this page
 		$this->CalFileID = $service->getFileObject()->ID;
 	}
 
