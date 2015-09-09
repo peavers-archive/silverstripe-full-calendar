@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class EventDownload
+ * Class IcsGenerator
  */
 class IcsGenerator
 {
