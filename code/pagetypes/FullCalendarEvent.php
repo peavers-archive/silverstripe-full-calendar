@@ -111,10 +111,7 @@ class FullCalendarEvent extends Page
 		parent::onBeforeWrite();
 
 		// Make sure a valid date range is entered
-		$startDate = DateTime::createFromFormat('Y-m-d', $this->StartDate);
-		$endDate = DateTime::createFromFormat('Y-m-d', $this->EndDate);
-
-		if ($startDate > $endDate) {
+		if (DateTime::createFromFormat('Y-m-d', $this->StartDate) > DateTime::createFromFormat('Y-m-d', $this->EndDate)) {
 			throw new ValidationException("End date cannot occur before start date");
 		}
 
@@ -123,9 +120,11 @@ class FullCalendarEvent extends Page
 			$this->ShortDescription = "(No description set)";
 		}
 
+		// Write the ics file for the event
 		$service = new IcsGenerator($this->Title);
 		$service->generateEventList(null, $this->ID);
 
+		// Attach the file to this page
 		$this->CalFileID = $service->getFileObject()->ID;
 		$this->CalFileURL = $service->getFileObject()->getURL();
 	}
