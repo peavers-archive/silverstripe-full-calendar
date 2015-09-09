@@ -4,8 +4,16 @@
 jQuery(function ($) {
 	"use strict";
 
+	/**
+	 * Used to fet ajax call
+	 *
+	 * @type {*|jQuery}
+	 */
 	var rootUrl = $("#calendar").data("root-url");
 
+	/**
+	 * Holds the current json objected used for displaying all events
+	 */
 	var jsonData;
 
 	/**
@@ -39,6 +47,7 @@ jQuery(function ($) {
 
 			// Events
 			events: jsonData,
+			timeFormat: 'H:mm',
 			eventClick: function (event) {
 				$('.title').html(event.title);
 				$('.event-header').addClass(event.colorClass);
@@ -88,7 +97,6 @@ jQuery(function ($) {
 			}
 		});
 	}
-
 
 	/**
 	 * Tidies up the ajax function, removes the loader when ready.

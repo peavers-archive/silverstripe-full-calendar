@@ -182,7 +182,6 @@ class FullCalendar_Controller extends Page_Controller
 	 */
 	public function getData()
 	{
-
 		$filter = array(
 			'ParentID' => $this->ID,
 			'IncludeOnCalendar' => true,
@@ -206,6 +205,7 @@ class FullCalendar_Controller extends Page_Controller
 				"title" => $event->Title,
 				"start" => $event->StartDate,
 				"end" => $event->EndDate,
+				"allDay" => false,
 				"downloadLink" => $event->CalFileURL,
 
 				// Event settings
@@ -217,8 +217,8 @@ class FullCalendar_Controller extends Page_Controller
 				),
 
 				// Lightbox data
-				'startDate' => date('l jS F Y', strtotime($event->StartDate)),
-				'endDate' => date('l jS F Y', strtotime($event->EndDate)),
+				'startDate' => date('F j, Y, g:i a', strtotime($event->StartDate)),
+				'endDate' => date('F j, Y, g:i a', strtotime($event->EndDate)),
 				"eventUrl" => $event->URLSegment,
 				"shortContent" => strip_tags($event->ShortDescription),
 			);
