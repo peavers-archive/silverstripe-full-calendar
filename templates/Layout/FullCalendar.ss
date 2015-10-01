@@ -1,13 +1,7 @@
-<div class="document-overlay">
-	<% if $LoadAnimation %>
-		$LoadAnimation
-	<% else %>
-        <img src="full-calendar/images/pre-loading.gif" alt="loading"/>
-	<% end_if %>
-</div>
+<% include FC_LoadScreen %>
 
-<div id="calendar" data-root-url="$getDocumentRoot.Link"></div>
+<% include FC_Calendar %>
 
-<a class="button-download" href=$CalFile.Filename>Download calendar <i class="fa fa-download"></i></a>
+<% include FC_DownloadButton %>
 
-<% include Fancybox %>
+<% include FC_EventLightBox %>
