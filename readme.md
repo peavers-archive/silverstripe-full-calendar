@@ -51,6 +51,12 @@ For more setting options see http://fullcalendar.io/docs/
 ---------------------------------------
 ### Event view
 ![Event view](https://github.com/peavers/silverstripe-full-calendar/blob/master/images/screens/calendar-event.png?raw=true "Event view")
+---------------------------------------
+### Calendar settings
+![Event view](https://github.com/peavers/silverstripe-full-calendar/blob/master/images/screens/settings-calendar.png?raw=true "Event view")
+---------------------------------------
+### Event settings
+![Event view](https://github.com/peavers/silverstripe-full-calendar/blob/master/images/screens/settings-event.png?raw=true "Event view")
 
 ## Libraries used
 * Fullcalendar
