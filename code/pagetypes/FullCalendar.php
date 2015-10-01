@@ -226,4 +226,16 @@ class FullCalendar_Controller extends Page_Controller
 
 		return json_encode($result);
 	}
+
+	public function getUpcomingEvents()
+	{
+		$filter = array(
+			'ParentID' => $this->ID,
+			'IncludeOnCalendar' => true,
+			'EndDate:GreaterThan' => date("Y-m-d")
+		);
+
+		return FullCalendarEvent::get()->filter($filter)->limit(5)->sort('StartDate ASC');
+	}
+
 }
