@@ -4,7 +4,6 @@ name: full-calendar
 DateField:
   default_config:
     showcalendar: true
-
 ---
 Name: mimevalidator-ics
 Only:

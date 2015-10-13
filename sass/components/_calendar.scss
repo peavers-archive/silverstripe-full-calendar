@@ -7,15 +7,18 @@
 }
 
 .fc-day-grid-event {
-  @include safe-rem(padding, 10);
+  @include safe-rem(padding, 5);
   margin: 0;
 }
 
 .fc-event {
-  @include safe-rem(font-size, 16);
+  @include safe-rem(font-size, 14);
   border-radius: 0;
 }
 
-.fc-event-container:hover {
-  cursor: pointer;
+.fc-event-container {
+
+  &:hover {
+    cursor: pointer;
+  }
 }

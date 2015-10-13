@@ -23,7 +23,7 @@
   &:before {
     @include safe-rem(font-size, 15);
     @include safe-rem(padding-right, 5);
-    @include icon(f017);
+    @include icon('\f017');
     color: $grey-600;
   }
 }
@@ -34,7 +34,7 @@
   &:before {
     @include safe-rem(font-size, 15);
     @include safe-rem(padding-right, 5);
-    @include icon(f073);
+    @include icon('\f073');
     color: $grey-600;
   }
 }

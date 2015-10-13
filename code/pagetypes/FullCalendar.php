@@ -5,7 +5,6 @@
  */
 class FullCalendar extends Page
 {
-
 	private static $singular_name = 'Full Calendar';
 
 	private static $description = 'Calendar page that displays events';
@@ -35,7 +34,7 @@ class FullCalendar extends Page
 	);
 
 	private static $extensions = array(
-		'Lumberjack',
+		'EventFilter',
 	);
 
 	private static $icon = 'full-calendar/images/icons/sitetree_images/holder.png';
@@ -117,6 +116,26 @@ class FullCalendar extends Page
 	{
 		return $this;
 	}
+
+	/**
+	 * This sets the title for our gridfield.
+	 *
+	 * @return string
+	 */
+	public function getLumberjackTitle()
+	{
+		return 'Calendar Events';
+	}
+
+	/**
+	 * This overwrites lumberjacks default gridfield config.
+	 *
+	 * @return GridFieldConfig
+	 */
+	public function getLumberjackGridFieldConfig()
+	{
+		return GridFieldConfig_CalendarEvent::create();
+	}
 }
 
 /**
@@ -124,9 +143,13 @@ class FullCalendar extends Page
  */
 class FullCalendar_Controller extends Page_Controller
 {
-
 	private static $allowed_actions = array(
 		'eventsAsJSON',
+		'viewCalendarEvent',
+	);
+
+	private static $url_handlers = array(
+		'viewCalendarEvent/$ID!' => 'viewCalendarEvent',
 	);
 
 	/**
@@ -206,7 +229,7 @@ class FullCalendar_Controller extends Page_Controller
 				"start" => $event->StartDate,
 				"end" => $event->EndDate,
 				"allDay" => false,
-				"downloadLink" => $event->CalFileURL,
+				"fancybox" => Director::absoluteURL($this) . "/viewCalendarEvent/" . $event->ID,
 
 				// Event settings
 				"colorClass" => $event->EventColor,
@@ -214,28 +237,35 @@ class FullCalendar_Controller extends Page_Controller
 				"className" => array(
 					$event->EventColor,
 					$event->TextColor,
+					'light-box'
 				),
-
-				// Lightbox data
-				'startDate' => date('F j, Y, g:i a', strtotime($event->StartDate)),
-				'endDate' => date('F j, Y, g:i a', strtotime($event->EndDate)),
-				"eventUrl" => $event->URLSegment,
-				"shortContent" => strip_tags($event->ShortDescription),
 			);
 		}
 
 		return json_encode($result);
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getUpcomingEvents()
 	{
 		$filter = array(
 			'ParentID' => $this->ID,
 			'IncludeOnCalendar' => true,
-			'EndDate:GreaterThan' => date("Y-m-d")
+			'EndDate:GreaterThanOrEqual' => date("Y-m-d")
 		);
 
 		return FullCalendarEvent::get()->filter($filter)->limit(5)->sort('StartDate ASC');
+	}
+
+	/**
+	 * @param SS_HTTPRequest $request
+	 * @return mixed
+	 */
+	public function viewCalendarEvent(SS_HTTPRequest $request)
+	{
+		return Page::get()->byId($request->param('ID'))->renderWith('FC_EventAjax');
 	}
 
 }

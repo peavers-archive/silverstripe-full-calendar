@@ -18,6 +18,13 @@ class FullCalendarEvent extends Page
 
 	private static $allowed_children = array();
 
+	private static $summary_fields = array(
+		'Title' => 'Title',
+		'ShortDescription' => 'ShortDescription',
+		'StartDate' => 'StartDate',
+		'EndDate' => 'EndDate',
+	);
+
 	private static $db = array(
 		'IncludeOnCalendar' => 'Boolean',
 		'Title' => 'Varchar(255)',
@@ -26,7 +33,7 @@ class FullCalendarEvent extends Page
 		'Url' => 'Varchar(255)',
 		'EventColor' => 'Varchar(255)',
 		'TextColor' => 'Varchar(255)',
-		'ShortDescription' => 'Varchar(255)',
+		'ShortDescription' => 'HTMLText',
 		'CalFileURL' => 'Varchar(255)',
 	);
 
@@ -72,7 +79,8 @@ class FullCalendarEvent extends Page
 					false => "No",
 				)),
 
-			TextareaField::create('ShortDescription', 'A short description')
+			HtmlEditorField::create('ShortDescription', 'A short description')
+				->setRows(1)
 				->setDescription("Text shown when an event is first clicked on. Should be a quick description of the event. <strong>Limit 255 characters</strong>"),
 
 		), "Content");
@@ -135,5 +143,14 @@ class FullCalendarEvent extends Page
  */
 class FullCalendarEvent_Controller extends Page_Controller
 {
+
+	private static $allowed_actions = array(
+		'viewCalendarEvent',
+	);
+
+	public function init()
+	{
+		parent::init();
+	}
 
 }

@@ -2,18 +2,30 @@
 // -----------------------------------------
 @import 'base';
 
-.text-black {
-  color: $black;
+a {
+  &.text-black {
+    color: $black;
 
-  &:hover {
-    color: rgba(0, 0, 0, .65);
+    &:hover {
+      color: rgba(0, 0, 0, .65);
+    }
+  }
+
+  &.text-white {
+    color: $white;
+
+    &:hover {
+      color: rgba(255, 255, 255, .65);
+    }
   }
 }
 
-.text-white {
-  color: $white;
+.event-header {
+  &.text-white {
+    color: $white;
+  }
 
-  &:hover {
-    color: rgba(255, 255, 255, .65);
+  &.text-black {
+    color: $black;
   }
 }
