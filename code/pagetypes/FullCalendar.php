@@ -179,6 +179,9 @@ class FullCalendar_Controller extends Page_Controller
 			FULL_CALENDAR . '/javascript/lib/jquery.fancybox.js',
 			FULL_CALENDAR . '/javascript/functions.js',
 		));
+
+		// Extra folder to keep the relative paths consistent when combining.
+		Requirements::set_combined_files_folder(ASSETS_DIR . '/_combinedfiles/full-calendar');
 	}
 
 	/**
