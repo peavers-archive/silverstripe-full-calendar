@@ -31,6 +31,7 @@ jQuery(function ($) {
 	 * @param json
 	 */
 	function calendarSettings(json) {
+
 		$('#calendar').fullCalendar({
 
 			// Settings

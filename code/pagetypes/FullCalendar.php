@@ -44,17 +44,18 @@ class FullCalendar extends Page
 
 		$fields = parent::getCMSFields();
 
-		$fields->addFieldsToTab('Root.FullCalendarSettings', array(
+		$fields->addFieldsToTab('Root.FullCalendarSettings', TabSet::create("FullCalendarSettings",
 
-			// Functional, how things work
-			ToggleCompositeField::create('', 'Functional Settings', array(
-				CheckboxField::create('LegacyEvents', 'Enable past events')
-					->setDescription('Show events where the end date has passed today\'s date'),
-			)),
+			Tab::create('Functional Settings',
+				DropdownField::create('LegacyEvents', 'Enable past events')
+					->setDescription('Show events where the end date has passed today\'s date')
+					->setSource(array(
+						true => 'Yes',
+						false => 'No'
+					))
+			),
 
-			// Display, how the calendar looks to the end user
-			ToggleCompositeField::create('', 'Display Settings', array(
-
+			Tab::create('Display Settings',
 				DropdownField::create('CalendarView', 'Calendar view')
 					->setDescription('(<a href="http://fullcalendar.io/docs/views/Available_Views/" target="_blank">?</a>)')
 					->setSource(array(
@@ -85,9 +86,10 @@ class FullCalendar extends Page
 						'dddd' => 'Monday, Tuesday, Wednesday',
 					)),
 
-				UploadField::create('LoadAnimation', 'Loading animation'),
-			)),
+				UploadField::create('LoadAnimation', 'Loading animation')
+			)
 		));
+
 
 		return $fields;
 	}
@@ -149,6 +151,7 @@ class FullCalendar_Controller extends Page_Controller
 	);
 
 	private static $url_handlers = array(
+		'eventsAsJSON' => 'eventsAsJSON',
 		'viewCalendarEvent/$ID!' => 'viewCalendarEvent',
 	);
 
@@ -195,30 +198,19 @@ class FullCalendar_Controller extends Page_Controller
 			$this->setStatusCode(400, $message);
 		}
 
-		return $this->getData();
-	}
-
-	/**
-	 * Decides what filter to use based on user settings, returns all events that match
-	 *
-	 * @return string
-	 */
-	public function getData()
-	{
 		$filter = array(
 			'ParentID' => $this->ID,
 			'IncludeOnCalendar' => true,
 		);
 
 		if (!$this->LegacyEvents) {
-			$filter['StartDate:GreaterThan'] = date("Y-m-d");
+			$filter['StartDate:GreaterThanOrEqual'] = date("Y-m-d");
 		}
 
 		$result = array();
 		foreach (FullCalendarEvent::get()->filter($filter) as $event) {
 
 			$result[] = array(
-
 				// Calendar settings
 				"view" => $this->CalendarView,
 				"firstDay" => $this->FirstDay,
@@ -235,9 +227,9 @@ class FullCalendar_Controller extends Page_Controller
 				"colorClass" => $event->EventColor,
 				"textColor" => $event->TextColor,
 				"className" => array(
+					'light-box',
 					$event->EventColor,
 					$event->TextColor,
-					'light-box'
 				),
 			);
 		}

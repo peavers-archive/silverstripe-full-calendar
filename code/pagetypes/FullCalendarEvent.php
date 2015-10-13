@@ -5,7 +5,6 @@
  */
 class FullCalendarEvent extends Page
 {
-
 	private static $singular_name = "Full Calendar event";
 
 	private static $plural_name = "Full Calendar events";
@@ -20,7 +19,12 @@ class FullCalendarEvent extends Page
 
 	private static $summary_fields = array(
 		'Title' => 'Title',
-		'ShortDescription' => 'ShortDescription',
+		'StartDate' => 'StartDate',
+		'EndDate' => 'EndDate',
+	);
+
+	private static $field_labels = array(
+		'Title' => 'Title',
 		'StartDate' => 'StartDate',
 		'EndDate' => 'EndDate',
 	);
@@ -58,13 +62,13 @@ class FullCalendarEvent extends Page
 		$fields = parent::getCMSFields();
 
 		$fields->addFieldsToTab("Root.Main", array(
-
 			FieldGroup::create(
 				DatetimeField::create("StartDate", "Starts"),
 				DatetimeField::create("EndDate", "Ends"))
 				->setTitle("Event dates"),
 
 			ColorSwabField::create('EventColor', 'Event colour'),
+
 			OptionsetField::create('TextColor', 'Text colour')
 				->setSource(array(
 					'text-black' => 'Black',
@@ -143,14 +147,5 @@ class FullCalendarEvent extends Page
  */
 class FullCalendarEvent_Controller extends Page_Controller
 {
-
-	private static $allowed_actions = array(
-		'viewCalendarEvent',
-	);
-
-	public function init()
-	{
-		parent::init();
-	}
 
 }
