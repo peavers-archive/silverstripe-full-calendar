@@ -3,8 +3,8 @@
 </div>
 
 <div class="event-dates">
-    <span class="event-start-date">$StartDate.Format('F j Y g:i a')</span> - <span
-        class="event-end-date">$EndDate.Format('F j Y g:i a')</span>
+    <span class="event-start-date">$StartDate.Nice</span> - <span
+        class="event-end-date">$EndDate.Nice</span>
 </div>
 
 <div class="event-download">
