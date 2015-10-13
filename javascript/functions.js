@@ -5,7 +5,7 @@ jQuery(function ($) {
 	"use strict";
 
 	/**
-	 * Used to fet ajax call
+	 * Used to fetch ajax call
 	 *
 	 * @type {*|jQuery}
 	 */
