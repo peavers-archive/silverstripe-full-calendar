@@ -68,6 +68,7 @@ jQuery(function ($) {
 					},
 					beforeShow: function () {
 						$("body").css({'overflow-y': 'hidden'});
+						$("a[href^='http']").attr('target','_blank');
 					},
 					afterClose: function () {
 						$("body").css({'overflow-y': 'visible'});
