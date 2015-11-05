@@ -40,7 +40,7 @@
 }
 
 .event-content {
-  @include safe-rem(height, 85);
+  @include safe-rem(height, 90);
   overflow: hidden;
   color: $grey-500;
 }
