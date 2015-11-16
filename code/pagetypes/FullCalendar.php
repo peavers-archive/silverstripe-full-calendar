@@ -34,7 +34,7 @@ class FullCalendar extends Page
 	);
 
 	private static $extensions = array(
-		'EventFilter',
+		'Lumberjack',
 	);
 
 	private static $icon = 'full-calendar/images/icons/sitetree_images/holder.png';
