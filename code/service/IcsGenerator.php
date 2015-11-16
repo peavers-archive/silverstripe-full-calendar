@@ -81,8 +81,8 @@ class IcsGenerator
 				"BEGIN:VEVENT\r\n" .
 				"CLASS:PUBLIC\r\n" .
 				"UID:{$this->generateRandomString()}\r\n" .
-				"DTSTART:{$this->dateToCal(strtotime($event->StartDate))}\r\n" .
-				"DTEND:{$this->dateToCal(strtotime($event->EndDate))}\r\n" .
+				"DTSTART:{$this->dateToCal($event->StartDate)}\r\n" .
+				"DTEND:{$this->dateToCal($event->EndDate)}\r\n" .
 				"DESCRIPTION:{$this->escapeString($event->ShortDescription)}\r\n" .
 				"SUMMARY;LANGUAGE=en-gb:{$this->escapeString($event->Title)}\r\n" .
 				"SEQUENCE:0\r\n" .
@@ -125,7 +125,10 @@ class IcsGenerator
 	 */
 	private function dateToCal($timestamp)
 	{
-		return date('Ymd\THis\Z', $timestamp);
+		$timezone = new \DateTimeZone('Pacific/Auckland');
+		$eventDate = new DateTime($timestamp, $timezone);
+		$eventDate->setTimezone(new DateTimeZone('UTC'));
+		return $eventDate->format('Ymd\THis\Z');
 	}
 
 	/**

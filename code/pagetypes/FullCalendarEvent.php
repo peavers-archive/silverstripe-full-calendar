@@ -97,8 +97,8 @@ class FullCalendarEvent extends Page
 	 */
 	public function populateDefaults()
 	{
-		$this->StartDate = date('Y-m-d');
-		$this->EndDate = date('Y-m-d');
+		$this->StartDate = date('Y-m-d 07:00:00');
+		$this->EndDate = date('Y-m-d 07:00:00');
 
 		parent::populateDefaults();
 	}
