@@ -4,6 +4,7 @@ name: full-calendar
 DateField:
   default_config:
     showcalendar: true
+
 ---
 Name: mimevalidator-ics
 Only:
@@ -18,3 +19,7 @@ Injector:
 HTTP:
   MimeTypes:
     ics: 'text/plain'
+
+FullCalendar:
+  extensions:
+    - 'Lumberjack'
