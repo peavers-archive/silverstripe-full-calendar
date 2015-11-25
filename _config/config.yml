@@ -20,6 +20,6 @@ HTTP:
   MimeTypes:
     ics: 'text/plain'
 
-FullCalendar:
-  extensions:
-    - 'Lumberjack'
+#FullCalendar:
+#  extensions:
+#    - 'Lumberjack'
