@@ -33,9 +33,9 @@ class FullCalendar extends Page
 		'FullCalendarEvent'
 	);
 
-	private static $extensions = array(
-		'Lumberjack',
-	);
+//	private static $extensions = array(
+//		'Lumberjack',
+//	);
 
 	private static $icon = 'full-calendar/images/icons/sitetree_images/holder.png';
 
@@ -124,20 +124,20 @@ class FullCalendar extends Page
 	 *
 	 * @return string
 	 */
-	public function getLumberjackTitle()
-	{
-		return 'Calendar Events';
-	}
+//	public function getLumberjackTitle()
+//	{
+//		return 'Calendar Events';
+//	}
 
 	/**
 	 * This overwrites lumberjacks default gridfield config.
 	 *
 	 * @return GridFieldConfig
 	 */
-	public function getLumberjackGridFieldConfig()
-	{
-		return GridFieldConfig_CalendarEvent::create();
-	}
+//	public function getLumberjackGridFieldConfig()
+//	{
+//		return GridFieldConfig_CalendarEvent::create();
+//	}
 }
 
 /**
