@@ -65,82 +65,30 @@ class IcsGenerator
 			$events = FullCalendarEvent::get()->filter(array('ID' => $singleEventID))->first();
 		}
 
-		// Nuke current the file contents
 		file_put_contents($this->filePath, '');
 
-		$this->addToFile(
-			"BEGIN:VCALENDAR\r\n" .
-			"VERSION:2.0\r\n" .
-			"METHOD:PUBLISH\r\n" .
-			"PRODID:-//hacksw/handcal//NONSGML v1.0//EN\r\n" .
-			"CALSCALE:GREGORIAN\r\n"
+		// Events
+		$calendarEvents = array();
+		foreach ($events as $event) {
+			$params = array(
+				'start' => new DateTime($event->StartDate),
+				'end' => new DateTime($event->EndDate),
+				'summary' => $event->Title,
+				'description' => $event->ShortDescription,
+				'location' => "",
+			);
+			$calendarEvent = new CalendarEvent($params);
+			array_push($calendarEvents, $calendarEvent->generateString());
+		}
+
+		// Calendar
+		$calendarParams = array(
+			'events' => $calendarEvents,
+			'title' => 'Calendar',
+			'author' => 'Calender Generator'
 		);
 
-		foreach ($events as $event) {
-			$this->addToFile(
-				"BEGIN:VEVENT\r\n" .
-				"CLASS:PUBLIC\r\n" .
-				"UID:{$this->generateRandomString()}\r\n" .
-				"DTSTART:{$this->dateToCal($event->StartDate)}\r\n" .
-				"DTEND:{$this->dateToCal($event->EndDate)}\r\n" .
-				"DESCRIPTION:{$this->escapeString($event->ShortDescription)}\r\n" .
-				"SUMMARY;LANGUAGE=en-gb:{$this->escapeString($event->Title)}\r\n" .
-				"SEQUENCE:0\r\n" .
-				"STATUS:NEEDS-ACTION\r\n" .
-				"TRANSP:OPAQUE\r\n" .
-				"END:VEVENT\r\n"
-			);
-		}
-
-		$this->addToFile("END:VCALENDAR\r\n");
-	}
-
-	/**
-	 * @param $string
-	 */
-	private function addToFile($string)
-	{
-		file_put_contents($this->filePath, $string, FILE_APPEND);
-	}
-
-	/**
-	 * @param int $length
-	 * @return string
-	 */
-	function generateRandomString($length = 10)
-	{
-		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$charactersLength = strlen($characters);
-		$randomString = '';
-		for ($i = 0; $i < $length; $i++) {
-			$randomString .= $characters[rand(0, $charactersLength - 1)];
-		}
-		return $randomString;
-	}
-
-	/**
-	 * @param $timestamp
-	 *
-	 * @return bool|string
-	 */
-	private function dateToCal($timestamp)
-	{
-		$timezone = new \DateTimeZone('Pacific/Auckland');
-		$eventDate = new DateTime($timestamp, $timezone);
-		$eventDate->setTimezone(new DateTimeZone('UTC'));
-		return $eventDate->format('Ymd\THis\Z');
-	}
-
-	/**
-	 * @param $string
-	 *
-	 * @return mixed
-	 */
-	private function escapeString($string)
-	{
-		$string = strip_tags($string);
-		$string = substr($string, 0, 100);
-
-		return preg_replace('/([\,;])/', '\\\$1', $string);
+		$calendar = new Calendar($calendarParams);
+		file_put_contents($this->filePath, $calendar->generateDownload(), FILE_APPEND);
 	}
 }
