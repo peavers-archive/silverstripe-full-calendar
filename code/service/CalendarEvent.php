@@ -61,6 +61,7 @@ class CalendarEvent
 	 */
 	private function formatDate($date)
 	{
+
 		return $date->format('Ymd\THis\Z');
 	}
 
