@@ -63,7 +63,9 @@ class CalendarEvent
 	 */
 	private function formatDate($date)
 	{
-		return $date->format('Ymd\THis\Z');
+		$timezone = date_default_timezone_get() . ' => ' . date('e') . ' => ' . date('T');
+
+		return $date->format('Ymd\THis\\' . $timezone);
 	}
 
 	private function formatValue($str)
@@ -118,8 +120,6 @@ class Calendar
 	 */
 	public function generateDownload()
 	{
-		$serverTimeZone = date_default_timezone_get() . ' => ' . date('e') . ' => ' . date('T');
-
 		$generated = $this->generateString();
 		header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); //date in the past
 		header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' NZDT'); //tell it we just updated
