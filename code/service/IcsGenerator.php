@@ -85,7 +85,7 @@ class IcsGenerator
 		$calendarParams = array(
 			'events' => $calendarEvents,
 			'title' => 'Calendar',
-			'author' => 'Calender Generator'
+			'author' => 'CalenderGenerator'
 		);
 
 		$calendar = new Calendar($calendarParams);
