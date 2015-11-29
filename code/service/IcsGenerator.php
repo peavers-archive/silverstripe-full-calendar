@@ -53,6 +53,8 @@ class IcsGenerator
 		return $this->fileObject;
 	}
 
+
+
 	/**
 	 * @param $fullCalendarID int the id of the FullCalendar page to return events for
 	 * @param $singleEventID int the fullCalendarID of a single event
@@ -74,7 +76,7 @@ class IcsGenerator
 				'start' => new DateTime($event->StartDate),
 				'end' => new DateTime($event->EndDate),
 				'summary' => $event->Title,
-				'description' => $event->ShortDescription,
+				'description' => strip_tags($event->ShortDescription),
 				'location' => "",
 			);
 			$calendarEvent = new CalendarEvent($params);
