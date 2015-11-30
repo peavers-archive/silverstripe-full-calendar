@@ -42,11 +42,13 @@ class CalendarEvent
 			'description' => '',
 			'location' => ''
 		);
+
 		if (isset($parameters['uid'])) {
 			$this->uid = $parameters['uid'];
 		} else {
 			$this->uid = uniqid(rand(0, getmypid()));
 		}
+
 		$this->start = $parameters['start'];
 		$this->end = $parameters['end'];
 		$this->summary = $parameters['summary'];
@@ -61,8 +63,9 @@ class CalendarEvent
 	 */
 	private function formatDate($date)
 	{
+		$timezone = date_default_timezone_get() . ' => ' . date('e') . ' => ' . date('T');
 
-		return $date->format('Ymd\THis\Z');
+		return $date->format('Ymd\THis\\' . $timezone);
 	}
 
 	private function formatValue($str)
@@ -105,6 +108,7 @@ class Calendar
 			'title' => 'Calendar',
 			'author' => 'Calender Generator'
 		);
+
 		$this->events = $parameters['events'];
 		$this->title = $parameters['title'];
 		$this->author = $parameters['author'];
@@ -118,7 +122,7 @@ class Calendar
 	{
 		$generated = $this->generateString();
 		header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); //date in the past
-		header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); //tell it we just updated
+		header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' NZDT'); //tell it we just updated
 		header('Cache-Control: no-store, no-cache, must-revalidate'); //force revaidation
 		header('Cache-Control: post-check=0, pre-check=0', false);
 		header('Pragma: no-cache');
