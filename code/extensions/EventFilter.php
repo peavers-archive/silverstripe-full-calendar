@@ -5,18 +5,18 @@
  */
 class EventFilter extends Lumberjack
 {
-	public function updateCMSFields(FieldList $fields)
-	{
-		$events = FullCalendarEvent::get()->filter(array('ParentID' => $this->owner->ID))->sort('StartDate ASC');
+    public function updateCMSFields(FieldList $fields)
+    {
+        $events = FullCalendarEvent::get()->filter(array('ParentID' => $this->owner->ID))->sort('StartDate ASC');
 
-		$gridField = EventFilter_GridField::create('CalendarEvents',
-			$this->getLumberjackTitle(),
-			$events,
-			$this->owner->getLumberjackGridFieldConfig()
-		);
+        $gridField = EventFilter_GridField::create('CalendarEvents',
+            $this->getLumberjackTitle(),
+            $events,
+            $this->owner->getLumberjackGridFieldConfig()
+        );
 
-		$fields->insertBefore(Tab::create('CalendarEvents', $this->getLumberjackTitle(), $gridField), 'Main');
-	}
+        $fields->insertBefore(Tab::create('CalendarEvents', $this->getLumberjackTitle(), $gridField), 'Main');
+    }
 }
 
 /**
@@ -24,8 +24,8 @@ class EventFilter extends Lumberjack
  */
 class EventFilter_GridField extends GridField
 {
-	public function transform(FormTransformation $transformation)
-	{
-		return $this;
-	}
+    public function transform(FormTransformation $transformation)
+    {
+        return $this;
+    }
 }
