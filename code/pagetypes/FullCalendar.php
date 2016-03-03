@@ -33,10 +33,6 @@ class FullCalendar extends Page
         'FullCalendarEvent'
     );
 
-//	private static $extensions = array(
-//		'Lumberjack',
-//	);
-
     private static $icon = 'full-calendar/images/icons/sitetree_images/holder.png';
 
     public function getCMSFields()
@@ -96,9 +92,9 @@ class FullCalendar extends Page
     /**
      * Generate the .ics file and attach it to this page
      */
-    public function onBeforeWrite()
+    public function onAfterWrite()
     {
-        parent::onBeforeWrite();
+        parent::onAfterWrite();
 
         // Write the ics file for the event
         $service = new IcsGenerator($this->Title);
@@ -117,26 +113,6 @@ class FullCalendar extends Page
     {
         return $this;
     }
-
-    /**
-     * This sets the title for our gridfield.
-     *
-     * @return string
-     */
-//	public function getLumberjackTitle()
-//	{
-//		return 'Calendar Events';
-//	}
-
-    /**
-     * This overwrites lumberjacks default gridfield config.
-     *
-     * @return GridFieldConfig
-     */
-//	public function getLumberjackGridFieldConfig()
-//	{
-//		return GridFieldConfig_CalendarEvent::create();
-//	}
 }
 
 /**
