@@ -92,17 +92,17 @@ class FullCalendar extends Page
     /**
      * Generate the .ics file and attach it to this page
      */
-    public function onAfterWrite()
-    {
-        parent::onAfterWrite();
-
-        // Write the ics file for the event
-        $service = new IcsGenerator($this->Title);
-        $service->generateEventList($this->ID, null);
-
-        // Attach the file to this page
-        $this->CalFileID = $service->getFileObject()->ID;
-    }
+//    public function onAfterWrite()
+//    {
+//        parent::onAfterWrite();
+//
+//        // Write the ics file for the event
+//        $service = new IcsGenerator($this->Title);
+//        $service->generateEventList($this->ID, null);
+//
+//        // Attach the file to this page
+//        $this->CalFileID = $service->getFileObject()->ID;
+//    }
 
     /**
      * Get the root of this page, used for the ajax call
