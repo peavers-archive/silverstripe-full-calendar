@@ -13,8 +13,6 @@ class FullCalendarEvent extends Page
 
     private static $can_be_root = false;
 
-    private static $show_in_sitetree = true;
-
     private static $summary_fields = array(
         'Title' => 'Title',
         'StartDate' => 'StartDate',
@@ -130,12 +128,12 @@ class FullCalendarEvent extends Page
         }
 
         // Write the ics file for the event
-        $service = new IcsGenerator($this->Title);
-        $service->generateEventList(null, $this->ID);
+//        $service = new IcsGenerator($this->Title);
+//        $service->generateEventList(null, $this->ID);
 
         // Attach the file to this page
-        $this->CalFileID = $service->getFileObject()->ID;
-        $this->CalFileURL = $service->getFileObject()->getURL();
+//        $this->CalFileID = $service->getFileObject()->ID;
+//        $this->CalFileURL = $service->getFileObject()->getURL();
     }
 }
 

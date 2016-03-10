@@ -7,10 +7,6 @@
         class="event-end-date">$EndDate.Nice</span>
 </div>
 
-<div class="event-download">
-    <a href="$CalFileURL">Download .ics file</a>
-</div>
-
 <div class="event-content">
     <span class="event-description">$ShortDescription</span>
 </div>
