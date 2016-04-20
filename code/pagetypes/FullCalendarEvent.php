@@ -37,16 +37,6 @@ class FullCalendarEvent extends Page
         'CalFileURL' => 'Varchar(255)',
     );
 
-    private static $has_one = array(
-        'CalFile' => 'File'
-    );
-
-    private static $defaults = array(
-        'IncludeOnCalendar' => true,
-        'TextColor' => 'text-black',
-        'EventColor' => 'color-blue-600',
-    );
-
     /**
      * Setup the basic CMS user fields
      *
@@ -88,17 +78,6 @@ class FullCalendarEvent extends Page
     }
 
     /**
-     * Sets the Date field to the current date.
-     */
-    public function populateDefaults()
-    {
-        $this->StartDate = date('Y-m-d 07:00:00');
-        $this->EndDate = date('Y-m-d 07:00:00');
-
-        parent::populateDefaults();
-    }
-
-    /**
      * Full calendar will return an error if you're missing one of these values.
      *
      * @return RequiredFields
@@ -113,28 +92,6 @@ class FullCalendarEvent extends Page
         ));
     }
 
-    public function onBeforeWrite()
-    {
-        parent::onBeforeWrite();
-
-        // Make sure a valid date range is entered
-        if (DateTime::createFromFormat('Y-m-d', $this->StartDate) > DateTime::createFromFormat('Y-m-d', $this->EndDate)) {
-            throw new ValidationException("End date cannot occur before start date");
-        }
-
-        // Make sure something is set...
-        if ($this->ShortDescription === "") {
-            $this->ShortDescription = "(No description set)";
-        }
-
-        // Write the ics file for the event
-//        $service = new IcsGenerator($this->Title);
-//        $service->generateEventList(null, $this->ID);
-
-        // Attach the file to this page
-//        $this->CalFileID = $service->getFileObject()->ID;
-//        $this->CalFileURL = $service->getFileObject()->getURL();
-    }
 }
 
 /**
@@ -142,4 +99,5 @@ class FullCalendarEvent extends Page
  */
 class FullCalendarEvent_Controller extends Page_Controller
 {
+    
 }
