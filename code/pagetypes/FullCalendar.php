@@ -90,21 +90,6 @@ class FullCalendar extends Page
     }
 
     /**
-     * Generate the .ics file and attach it to this page
-     */
-//    public function onAfterWrite()
-//    {
-//        parent::onAfterWrite();
-//
-//        // Write the ics file for the event
-//        $service = new IcsGenerator($this->Title);
-//        $service->generateEventList($this->ID, null);
-//
-//        // Attach the file to this page
-//        $this->CalFileID = $service->getFileObject()->ID;
-//    }
-
-    /**
      * Get the root of this page, used for the ajax call
      *
      * @return $this
@@ -154,9 +139,6 @@ class FullCalendar_Controller extends Page_Controller
             FULL_CALENDAR . '/javascript/lib/jquery.fancybox.js',
             FULL_CALENDAR . '/javascript/functions.js',
         ));
-
-        // Extra folder to keep the relative paths consistent when combining.
-        Requirements::set_combined_files_folder(ASSETS_DIR . '/_combinedfiles/full-calendar');
     }
 
     /**
