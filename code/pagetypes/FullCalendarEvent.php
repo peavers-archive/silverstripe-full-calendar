@@ -13,6 +13,10 @@ class FullCalendarEvent extends Page
 
     private static $can_be_root = false;
 
+    private static $show_in_sitetree = false;
+
+    private static $allowed_children = array();
+
     private static $summary_fields = array(
         'Title' => 'Title',
         'StartDate' => 'StartDate',
@@ -99,5 +103,5 @@ class FullCalendarEvent extends Page
  */
 class FullCalendarEvent_Controller extends Page_Controller
 {
-    
+
 }
