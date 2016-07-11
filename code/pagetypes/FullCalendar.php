@@ -11,6 +11,10 @@ class FullCalendar extends Page
 
     private static $can_be_root = true;
 
+    private static $extensions = array(
+        'Lumberjack',
+    );
+
     private static $db = array(
         'LegacyEvents' => 'Boolean',
         'CalendarView' => 'Varchar(255)',
@@ -97,6 +101,21 @@ class FullCalendar extends Page
     public function getDocumentRoot()
     {
         return $this;
+    }
+
+    /**
+     * Create the .ics file and save it to the Calendar
+     */
+    public function onBeforeWrite()
+    {
+        // Write the ics file for the event
+        $service = new IcsGenerator($this->Title);
+        $service->generateEventList($this->ID, null);
+
+        // Attach the file to this page
+        $this->CalFileID = $service->getFileObject()->ID;
+
+        parent::onBeforeWrite();
     }
 }
 
@@ -204,7 +223,7 @@ class FullCalendar_Controller extends Page_Controller
         $filter = array(
             'ParentID' => $this->ID,
             'IncludeOnCalendar' => true,
-            'EndDate:GreaterThanOrEqual' => date("Y-m-d")
+            'StartDate:GreaterThanOrEqual' => date("Y-m-d")
         );
 
         return FullCalendarEvent::get()->filter($filter)->limit(5)->sort('StartDate ASC');

@@ -53,19 +53,13 @@ class IcsGenerator
         return $this->fileObject;
     }
 
-
-
     /**
      * @param $fullCalendarID int the id of the FullCalendar page to return events for
      * @param $singleEventID int the fullCalendarID of a single event
      */
     public function generateEventList($fullCalendarID = null, $singleEventID = null)
     {
-        if (!is_null($fullCalendarID)) {
-            $events = FullCalendarEvent::get()->filter(array('ParentID' => $fullCalendarID));
-        } else {
-            $events = FullCalendarEvent::get()->filter(array('ID' => $singleEventID))->first();
-        }
+        $events = !is_null($fullCalendarID) ? FullCalendarEvent::get()->filter(array('ParentID' => $fullCalendarID)) : FullCalendarEvent::get()->filter(array('ID' => $singleEventID))->first();
 
         file_put_contents($this->filePath, '');
 
