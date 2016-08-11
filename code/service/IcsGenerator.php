@@ -1,44 +1,44 @@
 <?php
 
 /**
- * Class IcsGenerator
+ * Class IcsGenerator.
  */
 class IcsGenerator
 {
-
     /**
-     * Silverstripe object that is the file
+     * Silverstripe object that is the file.
      *
      * @var
      */
     private $fileObject;
 
     /**
-     * Relative location of the file on the server
+     * Relative location of the file on the server.
      *
      * @var
      */
     private $filePath;
 
     /**
-     * Name of the file
+     * Name of the file.
      *
      * @var
      */
     private $fileName;
 
     /**
-     * sets up base file and folder ready for file generating
+     * sets up base file and folder ready for file generating.
+     *
      * @param $filename
      */
     public function __construct($filename)
     {
-        $folder = Folder::find_or_make('/ics-files/' . $filename);
+        $folder = Folder::find_or_make('/ics-files/'.$filename);
 
         $this->fileName = strtolower($filename);
 
         $this->fileObject = new File();
-        $this->fileObject->SetName($this->fileName . ".ics");
+        $this->fileObject->SetName($this->fileName.'.ics');
         $this->fileObject->setParentID($folder->ID);
         $this->fileObject->write();
 
@@ -59,30 +59,30 @@ class IcsGenerator
      */
     public function generateEventList($fullCalendarID = null, $singleEventID = null)
     {
-        $events = !is_null($fullCalendarID) ? FullCalendarEvent::get()->filter(array('ParentID' => $fullCalendarID)) : FullCalendarEvent::get()->filter(array('ID' => $singleEventID))->first();
+        $events = !is_null($fullCalendarID) ? FullCalendarEvent::get()->filter(['ParentID' => $fullCalendarID]) : FullCalendarEvent::get()->filter(['ID' => $singleEventID])->first();
 
         file_put_contents($this->filePath, '');
 
         // Events
-        $calendarEvents = array();
+        $calendarEvents = [];
         foreach ($events as $event) {
-            $params = array(
-                'start' => new DateTime($event->StartDate),
-                'end' => new DateTime($event->EndDate),
-                'summary' => $event->Title,
+            $params = [
+                'start'       => new DateTime($event->StartDate),
+                'end'         => new DateTime($event->EndDate),
+                'summary'     => $event->Title,
                 'description' => strip_tags($event->ShortDescription),
-                'location' => "",
-            );
+                'location'    => '',
+            ];
             $calendarEvent = new CalendarEvent($params);
             array_push($calendarEvents, $calendarEvent->generateString());
         }
 
         // Calendar
-        $calendarParams = array(
+        $calendarParams = [
             'events' => $calendarEvents,
-            'title' => 'Calendar',
-            'author' => 'CalenderGenerator'
-        );
+            'title'  => 'Calendar',
+            'author' => 'CalenderGenerator',
+        ];
 
         $calendar = new Calendar($calendarParams);
         file_put_contents($this->filePath, $calendar->generateDownload(), FILE_APPEND);
