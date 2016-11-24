@@ -1,90 +1,97 @@
 <?php
 
+use Jsvrcek\ICS\CalendarExport;
+use Jsvrcek\ICS\CalendarStream;
+use Jsvrcek\ICS\Model\Calendar;
+use Jsvrcek\ICS\Model\CalendarEvent;
+use Jsvrcek\ICS\Model\Relationship\Attendee;
+use Jsvrcek\ICS\Model\Relationship\Organizer;
+use Jsvrcek\ICS\Utility\Formatter;
+
 /**
  * Class IcsGenerator.
  */
 class IcsGenerator
 {
-    /**
-     * Silverstripe object that is the file.
-     *
-     * @var
-     */
-    private $fileObject;
+	/**
+	 * Silverstripe object that is the file.
+	 *
+	 * @var
+	 */
+	private $fileObject;
 
-    /**
-     * Relative location of the file on the server.
-     *
-     * @var
-     */
-    private $filePath;
+	/**
+	 * Relative location of the file on the server.
+	 *
+	 * @var
+	 */
+	private $filePath;
 
-    /**
-     * Name of the file.
-     *
-     * @var
-     */
-    private $fileName;
+	/**
+	 * Name of the file.
+	 *
+	 * @var
+	 */
+	private $fileName;
 
-    /**
-     * sets up base file and folder ready for file generating.
-     *
-     * @param $filename
-     */
-    public function __construct($filename)
-    {
-        $folder = Folder::find_or_make('/ics-files/'.$filename);
+	public function getFileObject()
+	{
+		return $this->fileObject;
+	}
 
-        $this->fileName = strtolower($filename);
+	/**
+	 * sets up base file and folder ready for file generating.
+	 *
+	 * @param $filename
+	 */
+	public function __construct($filename)
+	{
+		$folder = Folder::find_or_make('/ics-files/' . $filename);
 
-        $this->fileObject = new File();
-        $this->fileObject->SetName($this->fileName.'.ics');
-        $this->fileObject->setParentID($folder->ID);
-        $this->fileObject->write();
+		$this->fileName = strtolower($filename);
 
-        $this->filePath = $this->fileObject->getFullPath();
-    }
+		$this->fileObject = new File();
+		$this->fileObject->SetName($this->fileName . '.ics');
+		$this->fileObject->setParentID($folder->ID);
+		$this->fileObject->write();
 
-    /**
-     * @return mixed
-     */
-    public function getFileObject()
-    {
-        return $this->fileObject;
-    }
+		$this->filePath = $this->fileObject->getFullPath();
+	}
 
-    /**
-     * @param $fullCalendarID int the id of the FullCalendar page to return events for
-     * @param $singleEventID int the fullCalendarID of a single event
-     */
-    public function generateEventList($fullCalendarID = null, $singleEventID = null)
-    {
-        $events = !is_null($fullCalendarID) ? FullCalendarEvent::get()->filter(['ParentID' => $fullCalendarID]) : FullCalendarEvent::get()->filter(['ID' => $singleEventID])->first();
+	/**
+	 * Get all events from a specific calendar, put them into a .ics file.
+	 *
+	 * @param $fullCalendarID
+	 */
+	public function generateEvent($fullCalendarID)
+	{
+		if (!is_null($fullCalendarID)) {
+			$calendarPage = FullCalendar::get()->filter(['ID' => $fullCalendarID]);
+			$events = FullCalendarEvent::get()->filter(['ParentID' => $fullCalendarID]);
+		}
 
-        file_put_contents($this->filePath, '');
+		$calendar = new Calendar();
+		$calendar->setProdId('-//' . $calendarPage->Title . '//EN');
 
-        // Events
-        $calendarEvents = [];
-        foreach ($events as $event) {
-            $params = [
-                'start'       => new DateTime($event->StartDate),
-                'end'         => new DateTime($event->EndDate),
-                'summary'     => $event->Title,
-                'description' => strip_tags($event->ShortDescription),
-                'location'    => '',
-            ];
-            $calendarEvent = new CalendarEvent($params);
-            array_push($calendarEvents, $calendarEvent->generateString());
-        }
+		foreach ($events as $event) {
+			$organizer = new Organizer(new Formatter());
+			$organizer->setLanguage('en');
 
-        // Calendar
-        $calendarParams = [
-            'events' => $calendarEvents,
-            'title'  => 'Calendar',
-            'author' => 'CalenderGenerator',
-        ];
+			$item = new CalendarEvent();
+			$item
+				->setStart(new \DateTime($event->StartDate))
+				->setEnd(new \DateTime($event->EndDate))
+				->setSummary(addcslashes($event->Title, ',\\;'))
+				->setUid(uniqid(rand(0, getmypid())))
+				->setStatus('CONFIRMED')
+				->setOrganizer($organizer);
 
-        $calendar = new Calendar($calendarParams);
-        file_put_contents($this->filePath, $calendar->generateDownload(), FILE_APPEND);
-    }
+			$calendar->addEvent($item);
+		}
+
+		$calendarExport = new CalendarExport(new CalendarStream, new Formatter());
+		$calendarExport->addCalendar($calendar);
+
+		file_put_contents($this->filePath, $calendarExport->getStream());
+	}
 }
