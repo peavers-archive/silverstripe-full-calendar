@@ -65,6 +65,8 @@ class IcsGenerator
 	 */
 	public function generateEvent($fullCalendarID)
 	{
+		$timezone = new \DateTimeZone(date_default_timezone_get());
+
 		if (!is_null($fullCalendarID)) {
 			$calendarPage = FullCalendar::get()->filter(['ID' => $fullCalendarID]);
 			$events = FullCalendarEvent::get()->filter(['ParentID' => $fullCalendarID]);
@@ -79,8 +81,8 @@ class IcsGenerator
 
 			$item = new CalendarEvent();
 			$item
-				->setStart(new \DateTime($event->StartDate))
-				->setEnd(new \DateTime($event->EndDate))
+				->setStart(new \DateTime($event->StartDate, $timezone))
+				->setEnd(new \DateTime($event->EndDate, $timezone))
 				->setSummary(addcslashes($event->Title, ',\\;'))
 				->setUid(uniqid(rand(0, getmypid())))
 				->setStatus('CONFIRMED')
