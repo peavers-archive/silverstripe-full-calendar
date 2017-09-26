@@ -47,16 +47,16 @@ For more setting options see http://fullcalendar.io/docs/
 ## Screen shots
 
 ### Calendar View
-![Calendar view](https://github.com/peavers/silverstripe-full-calendar/blob/master/images/screens/calendar.png?raw=true "Calendar view")
+![Calendar view](https://github.com/peavers/silverstripe-full-calendar/blob/master/theme/src/images/screens/calendar.png "Calendar view")
 ---------------------------------------
 ### Event view
-![Event view](https://github.com/peavers/silverstripe-full-calendar/blob/master/images/screens/calendar-event.png?raw=true "Event view")
+![Event view](https://github.com/peavers/silverstripe-full-calendar/blob/master/theme/src/images/screens/calendar-event.png?raw=true "Event view")
 ---------------------------------------
 ### Calendar settings
-![Event view](https://github.com/peavers/silverstripe-full-calendar/blob/master/images/screens/settings-calendar.png?raw=true "Event view")
+![Event view](https://github.com/peavers/silverstripe-full-calendar/blob/master/theme/src/images/screens/settings-calendar.png?raw=true "Event view")
 ---------------------------------------
 ### Event settings
-![Event view](https://github.com/peavers/silverstripe-full-calendar/blob/master/images/screens/settings-event.png?raw=true "Event view")
+![Event view](https://github.com/peavers/silverstripe-full-calendar/blob/master/theme/src/images/screens/settings-event.png?raw=true "Event view")
 
 ## Libraries used
 * Fullcalendar
