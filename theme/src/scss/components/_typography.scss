@@ -1,0 +1,30 @@
+//Overwrites fullcalendar default settings
+// -----------------------------------------
+
+a {
+  &.text-black {
+    color: #000000;
+
+    &:hover {
+      color: rgba(0, 0, 0, .65);
+    }
+  }
+
+  &.text-white {
+    color: #ffffff;
+
+    &:hover {
+      color: rgba(255, 255, 255, .65);
+    }
+  }
+}
+
+.event-header {
+  &.text-white {
+    color: #ffffff;
+  }
+
+  &.text-black {
+    color: #000000;
+  }
+}

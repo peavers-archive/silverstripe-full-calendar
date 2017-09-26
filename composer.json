@@ -11,14 +11,14 @@
 	"authors": [
 		{
 			"name": "Chris Turner",
-			"email": "chris.turner@minedu.govt.nz"
+			"email": "peavers@gmail.com"
 		}
 	],
 	"type": "silverstripe-module",
 	"extra": {
 		"screenshots": [
-			"images/screens/calendar.png",
-			"images/screens/calendar-event.png"
+			"theme/src/images/screens/calendar.png",
+			"theme/src/images/screens/calendar-event.png"
 		]
 	},
 	"require": {
@@ -30,7 +30,7 @@
 	"repositories": [
 		{
 			"type": "vcs",
-			"url": "https://gitlab.cwp.govt.nz/modules/color-swab.git",
+			"url": "https://github.com/peavers/silverstripe-full-calendar",
 			"private": "true"
 		}
 	],

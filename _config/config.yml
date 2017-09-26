@@ -19,7 +19,3 @@ Injector:
 HTTP:
   MimeTypes:
     ics: 'text/plain'
-
-#FullCalendar:
-#  extensions:
-#    - 'Lumberjack'

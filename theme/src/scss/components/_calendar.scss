@@ -1,0 +1,23 @@
+//Overwrites fullcalendar default settings
+// -----------------------------------------
+
+.fc button {
+  height: auto;
+}
+
+.fc-day-grid-event {
+  padding: 5px;
+  margin: 0;
+}
+
+.fc-event {
+  font-size: 14px;
+  border-radius: 0;
+}
+
+.fc-event-container {
+
+  &:hover {
+    cursor: pointer;
+  }
+}

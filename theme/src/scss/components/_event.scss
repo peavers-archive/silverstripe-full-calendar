@@ -1,0 +1,63 @@
+// Styles used in the opened event light-box
+// -----------------------------------------
+$grey-500: #848484;
+$grey-600: #878787;
+
+.event-header {
+  padding: 60px 50px 20px 50px;
+}
+
+.event-title {
+  font-size: 24px;
+}
+
+.event-dates,
+.event-download,
+.event-content {
+  margin-left: 10px;
+  padding: 10px 15px;
+}
+
+.event-dates {
+  color: $grey-500;
+
+  &:before {
+    font-size: 15px;
+    padding-right: 5px;
+    display: inline-block;
+    font-family: 'FontAwesome', serif;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    content: '\f017';
+    color: $grey-600;
+  }
+}
+
+.event-download {
+  color: $grey-500;
+
+  &:before {
+    font-size: 15px;
+    padding-right: 5px;
+    display: inline-block;
+    font-family: 'FontAwesome', serif;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    content: '\f073';
+    color: $grey-600;
+  }
+}
+
+.event-content {
+  height: 90px;
+  overflow: hidden;
+  color: $grey-500;
+}
+
+.event-button {
+  padding: 15px;
+  position: absolute;
+  right: 6px;
+  bottom: 0;
+  color: $grey-500;
+}

@@ -1,0 +1,57 @@
+//Overwrites fancybox default settings
+// -----------------------------------------
+.fancybox-nav {
+  background: transparent url('images/fancybox_loading.gif');
+}
+
+.fancybox-overlay {
+  background: url('images/fancybox_overlay.png');
+}
+
+.fancybox-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  z-index: 8040;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  background-image: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &::before {
+    display: inline-block;
+    font-family: 'FontAwesome', serif;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    content: '\f057';
+  }
+
+}
+
+.fancybox-skin {
+  border-radius: 0;
+  background: #ffffff;
+}
+
+.fancybox-opened .fancybox-skin {
+  outline-style: none;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .24);
+}
+
+.fancybox-inner {
+  overflow: visible !important;
+}
+
+#fancy-box {
+  font-size: 14px;
+  display: none;
+}
+
+#fancybox-loading div {
+  background: url('images/fancybox_loading.gif') center center no-repeat;
+}
