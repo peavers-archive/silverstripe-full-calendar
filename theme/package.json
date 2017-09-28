@@ -1,5 +1,5 @@
 {
-  "name": "login-screen",
+  "name": "silverstripe-full-calendar",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "lint-js": "node_modules/.bin/eslint src/js",
     "lint-sass": "node_modules/.bin/sass-lint -v"
   },
-  "author": "",
+  "author": "peavers@gamil.com",
   "license": "ISC",
   "dependencies": {
     "fancybox": "^3.0.0",
